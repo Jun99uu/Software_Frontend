@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Sofront</string>
+    <string name="name">이름</string>
+    <string name="age">나이</string>
+    <string name="level">운동수준</string>
+    <string name="type">선호하는 운동 형태</string>
+    <string name="purpose">운동 목적</string>
+    <string name="time">평균 운동 시간</string>
+    <string name="number">주당 운동 횟수</string>
+    <array name="health_level">
+        <item>헬생아</item>
+        <item>헬린이</item>
+        <item>xxx</item>
+        <item>헬창</item>
+    </array>
 </resources>
