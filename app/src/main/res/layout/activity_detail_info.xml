@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailInfoActivity">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/user_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:text="@string/name"
+        android:textSize="@dimen/small_font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/user_name_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:autofillHints="박성규"
+        android:inputType="text"
+        android:hint="이름을 입력하세요"
+        android:singleLine = "true"
+        android:lines = "1"
+        android:textSize="@dimen/medium_font_size"
+        app:layout_constraintLeft_toLeftOf="@id/user_name_tv"
+        app:layout_constraintTop_toBottomOf="@id/user_name_tv" />
+
+    <TextView
+        android:id="@+id/user_age_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/age"
+        android:textSize="@dimen/small_font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_name_et" />
+
+    <EditText
+        android:id="@+id/user_age_et"
+        android:inputType="numberSigned"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:singleLine = "true"
+        android:lines = "1"
+        android:autofillHints="24"
+        android:hint="나이를 입력하세요"
+        android:textSize="@dimen/medium_font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_age_tv" />
+
+    <TextView
+        android:id="@+id/user_level_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/level"
+        android:textSize="@dimen/small_font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_age_et" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@+id/user_level_tv"
+                app:layout_constraintTop_toBottomOf="@+id/user_age_et"
+                android:textSize="@dimen/small_font_size"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:textColor="@color/teal_200"
+                android:id="@+id/level_selected_tv"/>
+
+    <ToggleButton
+        android:id="@+id/user_level_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:checked="true"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_age_et" />
+
+    <LinearLayout
+        android:id="@+id/user_level_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_level_toggle">
+
+        <Button
+            android:id="@+id/hell_embryo_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="헬생아"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+        <Button
+            android:id="@+id/hell_baby_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="헬린이"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+        <Button
+            android:id="@+id/hell_teen_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="헬소년"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+        <Button
+            android:id="@+id/hell_chang_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="헬창"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/user_purpose_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/purpose"
+        android:textSize="@dimen/small_font_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_level_ll" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/teal_200"
+                app:layout_constraintLeft_toRightOf="@+id/user_purpose_tv"
+                app:layout_constraintTop_toBottomOf="@+id/user_level_ll"
+                android:textSize="@dimen/small_font_size"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:id="@+id/purpose_selected_tv"/>
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_purpose_toggle"
+        app:layout_constraintTop_toBottomOf="@+id/user_level_ll"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"/>
+    <LinearLayout
+        android:id="@+id/user_purpose_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/user_purpose_toggle"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/default_margin">
+        <Button
+            android:id="@+id/purpose_diet_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="다이어트"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+        <Button
+            android:id="@+id/purpose_bulkup_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="벌크업"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+        <Button
+            android:id="@+id/purpose_health_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="건강"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/user_type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/type"
+        android:textSize="@dimen/small_font_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_purpose_ll" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/teal_200"
+                app:layout_constraintLeft_toRightOf="@+id/user_type_tv"
+                app:layout_constraintTop_toBottomOf="@+id/user_purpose_ll"
+                android:textSize="@dimen/small_font_size"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:id="@+id/type_selected_tv"/>
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_type_toggle"
+        app:layout_constraintTop_toBottomOf="@+id/user_purpose_ll"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"/>
+    <LinearLayout
+        android:id="@+id/user_type_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/user_type_toggle"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/default_margin">
+        <Button
+            android:id="@+id/type_cardio_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="유산소"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+        <Button
+            android:id="@+id/type_weight_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="무산소"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+        <Button
+            android:id="@+id/type_xxx_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="xxx"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/user_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/time"
+        android:textSize="@dimen/small_font_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_type_ll" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/teal_200"
+                app:layout_constraintLeft_toRightOf="@+id/user_time_tv"
+                app:layout_constraintTop_toBottomOf="@+id/user_type_ll"
+                android:textSize="@dimen/small_font_size"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:id="@+id/time_selected_tv"/>
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_time_toggle"
+        app:layout_constraintTop_toBottomOf="@+id/user_type_ll"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"/>
+    <LinearLayout
+        android:id="@+id/user_time_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/user_time_toggle"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/default_margin">
+        <Button
+            android:id="@+id/time_30m_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="30분"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+        <Button
+            android:id="@+id/time_1h_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="1시간"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+        <Button
+            android:id="@+id/time_1h_30m_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="1시간 반"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_font_size" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/user_number_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/number"
+        android:textSize="@dimen/small_font_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_time_ll" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/teal_200"
+                app:layout_constraintLeft_toRightOf="@+id/user_number_tv"
+                app:layout_constraintTop_toBottomOf="@+id/user_time_ll"
+                android:textSize="@dimen/small_font_size"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:id="@+id/number_selected_tv"/>
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_number_toggle"
+        app:layout_constraintTop_toBottomOf="@+id/user_time_ll"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"/>
+    <LinearLayout
+        android:id="@+id/user_number_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/user_number_toggle"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/default_margin">
+        <Button
+            android:id="@+id/number_1_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="1회"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_font_size" />
+        <Button
+            android:id="@+id/number_2_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="2회"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_font_size" />
+        <Button
+            android:id="@+id/number_3_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="3회"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_font_size" />
+        <Button
+            android:id="@+id/number_4_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="4회"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_font_size" />
+        <Button
+            android:id="@+id/number_5_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="5회"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_font_size" />
+        <Button
+            android:id="@+id/number_6_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="6회"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_font_size" />
+        <Button
+            android:id="@+id/number_7_bt"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_weight="1"
+            android:text="7회"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_font_size" />
+    </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/user_number_ll"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/end_bt"
+                android:text="끝"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
