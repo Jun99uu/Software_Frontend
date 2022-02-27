@@ -18,8 +18,5 @@ class MainActivity : AppCompatActivity() {
         val adapter = IntroViewPagerAdapter(this)
         adapter.fragments = fragmentList
         binding.intro.adapter = adapter
-//        val myIntent = Intent(this, DetailInfoActivity::class.java)
-//        startActivity(myIntent)
-        //이준규멍청이
     }
 }
