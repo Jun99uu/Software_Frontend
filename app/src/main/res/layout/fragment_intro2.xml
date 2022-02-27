@@ -29,7 +29,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="200dp"/>
+            android:layout_marginBottom="200dp"
+            android:shadowColor="#C3434343"
+            android:shadowRadius="5.0"
+            android:shadowDx="5.0"
+            android:shadowDy="5.0"/>
 
         <TextView
             android:fontFamily="@font/nixgonm"
@@ -40,7 +44,11 @@
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintRight_toRightOf="parent"
-            android:gravity="right"/>
+            android:gravity="right"
+            android:shadowColor="#95434343"
+            android:shadowRadius="5.0"
+            android:shadowDx="5.0"
+            android:shadowDy="5.0"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
