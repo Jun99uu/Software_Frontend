@@ -17,5 +17,6 @@ class MainActivity : AppCompatActivity() {
         // 화이팅 (●'◡'●)
 //        val myIntent = Intent(this, DetailInfoActivity::class.java)
 //        startActivity(myIntent)
+        //이준규멍청이
     }
 }
