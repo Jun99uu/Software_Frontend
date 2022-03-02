@@ -2,6 +2,7 @@ package com.example.sofront
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
@@ -19,7 +20,11 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val UID = intent.getStringExtra("UID")
+        val UName = intent.getStringExtra("UName")
 
+        Log.d("UID : ", UID.toString())
+        Log.d("UID : ", UName.toString())
         setToggles()
         setButtons()
 
