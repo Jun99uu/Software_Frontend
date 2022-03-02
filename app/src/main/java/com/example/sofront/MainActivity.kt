@@ -1,5 +1,6 @@
 package com.example.sofront
 
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         // intent는 마지막에 다 하고 연결하면 되니까 따로 작성할 필요는 없구
         // 코드 테스트 할 때 intent 사용하면, 깃에 업로드할 때는 그 부분 지우고 push 해주세영
         // 화이팅 (●'◡'●)
+
         val fragmentList = listOf(IntroFragment1(), IntroFragment2(), IntroFragment3(), IntroFragment4(), IntroFragment5())
         val adapter = IntroViewPagerAdapter(this)
         adapter.fragments = fragmentList
@@ -31,19 +33,17 @@ class MainActivity : AppCompatActivity() {
 //        val keyHash = Utility.getKeyHash(this)
 //        Log.d("Hash", keyHash)
 
-        //로그인 정보 확인
+        //앱 실행시 자동 로그인 정보 확인
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
-            }
-            else if (tokenInfo != null) {
-                Toast.makeText(this, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
+            if (tokenInfo != null) { //토큰이 있다면
+                val UID = tokenInfo.id //회원번호 이걸로 통신해서 있으면 true 없으면 false
                 val intent = Intent(this, TmpActivity::class.java)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
         }
 
+        //카카오 로그인 버튼 클릭하고, 가입을 하던 로그인을 하던 토큰 발급받음
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
@@ -77,10 +77,25 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             else if (token != null) {
+                //카카오 로그인 버튼을 눌러서 성공. 가입일 수도 있고 그냥 로그인일 수도 있음
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, TmpActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                finish()
+
+                //통신을 통해서 회원가입인지, 그냥 로그인인지 파악. 회원가입인 경우를 false라고 하겠음
+                UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                    if (tokenInfo != null) {
+                        val UID = tokenInfo.id
+                        val checked = false
+                        if(!checked){
+                            val intent = Intent(this, DetailInfoActivity::class.java)
+                            intent.putExtra("UID", UID.toString()) //회원 고유번호
+                            UserApiClient.instance.me { user, error ->
+                                intent.putExtra("UName", user?.kakaoAccount?.profile?.nickname) //회원 닉네임(카카오톡 이름)
+                                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                                finish()
+                            }
+                        }
+                    }
+                }
             }
         }
 
