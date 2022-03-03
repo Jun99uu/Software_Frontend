@@ -49,4 +49,5 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'com.tbuonomo:dotsindicator:4.2'
     implementation "com.kakao.sdk:v2-user:2.8.6" // 카카오 로그인
+    implementation 'com.google.android.material:material:1.4.0'
 }
