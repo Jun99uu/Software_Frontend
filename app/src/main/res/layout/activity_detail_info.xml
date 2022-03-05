@@ -64,6 +64,7 @@
         android:autofillHints="24"
         android:hint="나이를 입력하세요"
         android:textSize="@dimen/medium_font_size"
+        android:imeOptions="actionDone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_age_tv" />
 
