@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignInBottomSheet"
+    android:background="@drawable/radius">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="25dp">
+
+        <View
+            android:id="@+id/bar"
+            android:layout_width="100dp"
+            android:layout_height="5dp"
+            android:background="@drawable/radius"
+            android:backgroundTint="#888888"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/title"
+            android:fontFamily="@font/nixgonb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#HealthyTag"
+            android:textSize="50dp"
+            android:textColor="@color/black"
+            android:letterSpacing="-0.06"
+            app:layout_constraintTop_toBottomOf="@id/bar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/intro"
+            android:layout_marginTop="36dp"/>
+
+        <TextView
+            android:id="@+id/intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="헬시태그에서 일상에 운동을 더해보세요!"
+            android:fontFamily="@font/nixgonm"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/ul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🐸 나만의 루틴을 만들고 공유해보세요!\n🐸 혹은 진짜 헬창들의 루틴을 받아보세요.\n🐸 운동은 헬시태그가 도와줄게요.\n🐸 #오운완 인스타그램에 멋지게 인증해야죠!.\n🐸 우리동네 헬스장, 어디가 좋을까요?"
+            android:fontFamily="@font/nixgonm"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintTop_toBottomOf="@id/intro"
+            app:layout_constraintBottom_toTopOf="@id/kakaoBtn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:lineSpacingExtra="5sp"/>
+
+        <ImageButton
+            android:id="@+id/kakaoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/kakao_login_medium_wide"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/policy"
+            android:fontFamily="@font/nixgonl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="개인정보 처리 방침"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/kakaoBtn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

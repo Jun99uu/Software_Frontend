@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Sofront"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MainActivity2"
+            android:exported="false"/>
+        <activity
             android:name=".TmpActivity"
             android:exported="false" />
         <activity
@@ -40,11 +43,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".DetailInfoActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 
 </manifest>
