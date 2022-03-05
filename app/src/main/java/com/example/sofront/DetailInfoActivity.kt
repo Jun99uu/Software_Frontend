@@ -2,12 +2,18 @@ package com.example.sofront
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ToggleButton
 
 import com.example.sofront.databinding.ActivityDetailInfoBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
@@ -30,10 +36,16 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
             //모든 정보가 입력 되었는지 확인
 
             userInfo.user_name = binding.userNameEt.text.toString()
-            userInfo.user_age = binding.userAgeEt.text.toString().toInt()
+            if(binding.userAgeEt.text.toString()!="")
+            userInfo.user_age = binding.userAgeEt.text.toString()
 
-            if(check())
-            println(userInfo)
+            if(check()) {
+                println(userInfo)
+                RetrofitService._postUserInfo(userInfo)
+            }
+            else{
+                println("입력정보확인")
+            }
         }
     }
 
@@ -90,7 +102,7 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
         else{
             expand(4)
             binding.numberSelectedTv.text=button.text.toString()
-            userInfo.user_number = button.text.toString().substring(0,1).toInt()
+            userInfo.user_number = button.text.toString()
         }
     }
     private fun expand(x: Int){
@@ -99,7 +111,7 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
             if(i==x && toggleButton.isChecked) {
                 toggleButton.toggle() }
             else if(i==x+1 && x < toggleList.size ){
-                if(toggleButton.isChecked) toggleButton.toggle()
+                if(!toggleButton.isChecked) toggleButton.toggle()
             }
             else{
                 if(toggleButton.isChecked) {
@@ -139,13 +151,19 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
     private fun check(): Boolean {
 
         return when {
-            userInfo.user_name == "" -> false
-            userInfo.user_age <= 0 -> false
+            userInfo.user_name == "" -> {
+                println("username!!!")
+                false
+            }
+            userInfo.user_age == "" -> {
+                println("userageg!!!!")
+                false
+            }
             userInfo.user_level == "" -> false
             userInfo.user_purpose == "" -> false
             userInfo.user_type == "" -> false
             userInfo.user_time == "" -> false
-            userInfo.user_number==0 -> false
+            userInfo.user_number=="" -> false
             else -> true
         }
     }
