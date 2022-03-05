@@ -11,11 +11,13 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
     <TextView
         android:id="@+id/user_name_tv"
+        android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -26,6 +28,7 @@
 
     <EditText
         android:id="@+id/user_name_et"
+        android:fontFamily="@font/nixgonm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -42,6 +45,7 @@
 
     <TextView
         android:id="@+id/user_age_tv"
+        android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -53,6 +57,7 @@
 
     <EditText
         android:id="@+id/user_age_et"
+        android:fontFamily="@font/nixgonm"
         android:inputType="numberSigned"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,6 +75,7 @@
 
     <TextView
         android:id="@+id/user_level_tv"
+        android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -79,6 +85,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_age_et" />
             <TextView
+                android:fontFamily="@font/nixgonb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toRightOf="@+id/user_level_tv"
@@ -113,6 +120,7 @@
 
         <Button
             android:id="@+id/hell_embryo_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -124,6 +132,7 @@
 
         <Button
             android:id="@+id/hell_baby_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -135,6 +144,7 @@
 
         <Button
             android:id="@+id/hell_teen_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -146,6 +156,7 @@
 
         <Button
             android:id="@+id/hell_chang_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -158,6 +169,7 @@
 
     <TextView
         android:id="@+id/user_purpose_tv"
+        android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -167,6 +179,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_level_ll" />
             <TextView
+                android:fontFamily="@font/nixgonb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_200"
@@ -196,6 +209,7 @@
         android:layout_marginEnd="@dimen/default_margin">
         <Button
             android:id="@+id/purpose_diet_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -207,6 +221,7 @@
 
         <Button
             android:id="@+id/purpose_bulkup_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -218,6 +233,7 @@
 
         <Button
             android:id="@+id/purpose_health_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -231,6 +247,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/user_type_tv"
+        android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -240,6 +257,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_purpose_ll" />
             <TextView
+                android:fontFamily="@font/nixgonb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_200"
@@ -269,6 +287,7 @@
         android:layout_marginEnd="@dimen/default_margin">
         <Button
             android:id="@+id/type_cardio_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -280,6 +299,7 @@
 
         <Button
             android:id="@+id/type_weight_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -291,6 +311,7 @@
 
         <Button
             android:id="@+id/type_xxx_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -305,6 +326,7 @@
 
     <TextView
         android:id="@+id/user_time_tv"
+        android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -314,6 +336,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_type_ll" />
             <TextView
+                android:fontFamily="@font/nixgonb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_200"
@@ -343,6 +366,7 @@
         android:layout_marginEnd="@dimen/default_margin">
         <Button
             android:id="@+id/time_30m_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -354,6 +378,7 @@
 
         <Button
             android:id="@+id/time_1h_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -365,6 +390,7 @@
 
         <Button
             android:id="@+id/time_1h_30m_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -379,6 +405,7 @@
 
     <TextView
         android:id="@+id/user_number_tv"
+        android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -388,6 +415,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_time_ll" />
             <TextView
+                android:fontFamily="@font/nixgonb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/teal_200"
@@ -417,6 +445,7 @@
         android:layout_marginEnd="@dimen/default_margin">
         <Button
             android:id="@+id/number_1_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -427,6 +456,7 @@
             android:textSize="@dimen/small_font_size" />
         <Button
             android:id="@+id/number_2_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -437,6 +467,7 @@
             android:textSize="@dimen/small_font_size" />
         <Button
             android:id="@+id/number_3_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -447,6 +478,7 @@
             android:textSize="@dimen/small_font_size" />
         <Button
             android:id="@+id/number_4_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -457,6 +489,7 @@
             android:textSize="@dimen/small_font_size" />
         <Button
             android:id="@+id/number_5_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -467,6 +500,7 @@
             android:textSize="@dimen/small_font_size" />
         <Button
             android:id="@+id/number_6_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -477,6 +511,7 @@
             android:textSize="@dimen/small_font_size" />
         <Button
             android:id="@+id/number_7_bt"
+            android:fontFamily="@font/nixgonm"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -487,12 +522,14 @@
             android:textSize="@dimen/small_font_size" />
     </LinearLayout>
             <Button
+                android:fontFamily="@font/nixgonm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/user_number_ll"
                 app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/end_bt"
-                android:text="끝"/>
+                android:textSize="16sp"
+                android:text="입력완료"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -25,7 +25,11 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val UID = intent.getStringExtra("UID")
+        val UName = intent.getStringExtra("UName")
 
+        Log.d("UID : ", UID.toString())
+        Log.d("UID : ", UName.toString())
         setToggles()
         setButtons()
 
