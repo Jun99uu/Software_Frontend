@@ -4,47 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".IntroFragment3">
+    tools:context=".IntroFragment3"
+    android:background="#C06C84">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/mangym"
-        android:scaleType="centerCrop"/>
+        android:src="@drawable/thirdsheet"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
-
-        <TextView
-            android:id="@+id/title"
-            android:fontFamily="@font/nixgonb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HealthyTag"
-            android:textSize="70dp"
-            android:textColor="@color/white"
-            android:letterSpacing="-0.06"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginBottom="200dp"
-            android:shadowColor="#F2434343"
-            android:shadowRadius="5.0"
-            android:shadowDx="5.0"
-            android:shadowDy="5.0"/>
+        android:padding="25dp">
 
         <TextView
             android:fontFamily="@font/nixgonm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나만의 루틴을 만들고\n공유해보세요."
-            android:textSize="40dp"
+            android:text="동네 헬스장 평점, 식단 관리…\n신경쓸게 너무 많으니까"
+            android:textSize="30dp"
+            android:letterSpacing="-0.05"
+            android:lineSpacingExtra="8sp"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:gravity="left"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="right"
             android:shadowColor="#CD434343"
             android:shadowRadius="5.0"
             android:shadowDx="5.0"

@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".IntroFragment5">
+    tools:context=".IntroFragment5"
+    android:background="@drawable/login_fourth_gradient">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/secondgym"
-        android:scaleType="centerCrop"/>
+        android:src="@drawable/fifthsheet"
+        android:layout_gravity="bottom"
+        android:scaleType="fitEnd"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,35 +24,56 @@
             android:fontFamily="@font/nixgonb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HealthyTag"
-            android:textSize="70dp"
+            android:text="짐꾼"
+            android:textSize="120dp"
             android:textColor="@color/white"
             android:letterSpacing="-0.06"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="250dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/explain"
+            android:layout_marginTop="30dp"
             android:shadowColor="#434343"
             android:shadowRadius="5.0"
             android:shadowDx="5.0"
             android:shadowDy="5.0"/>
 
         <TextView
+            android:id="@+id/explain"
             android:fontFamily="@font/nixgonm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이 모든 것을,\n지금 #헬시태그 에서."
-            android:textSize="40dp"
+            android:text="그러니까,\n당신의 일상에\n운동이 함께할 수 있도록-"
+            android:textSize="26dp"
             android:textColor="@color/white"
+            android:lineSpacingExtra="5sp"
+            android:letterSpacing="-0.03"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:paddingTop="5dp"
             android:gravity="center"
             android:shadowColor="#434343"
             android:shadowRadius="5.0"
             android:shadowDx="5.0"
             android:shadowDy="5.0"/>
+
+        <TextView
+            android:id="@+id/gk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="우리는,\n짐꾼이니까"
+            android:fontFamily="@font/nixgonb"
+            android:textColor="#474747"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:letterSpacing="-0.07"
+            android:lineSpacingExtra="8sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="105dp"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
