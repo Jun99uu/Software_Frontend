@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="25dp">
+        android:padding="20dp">
 
         <View
             android:id="@+id/bar"
@@ -53,10 +53,11 @@
             android:id="@+id/ul"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🎁 나만의 운동 루틴을 만들고, 공유해보세요.\n🏋️‍♀️ 진짜 헬창들의 루틴을 구독해보세요.\n💪 오늘의 목표는 짐꾼이 도와줄게요.\n📷 #오운완 인스타그램에 멋지게 인증해야죠.\n🤔 우리동네 헬스장… 어디가 좋은지 알려드릴게요."
+            android:text="🎁 나만의 운동 루틴을 만들고, 공유해보세요.\n🏋️‍♀️ 진짜 헬창들의 루틴을 구독해보세요.\n💪 오늘의 목표는 짐꾼이 도와줄게요.\n📷 #오운완 인스타그램에 멋지게 인증해야죠.\n🤔 우리동네 헬스장, 어디가 좋은지 알려드릴게요."
             android:fontFamily="@font/nixgonm"
             android:textColor="@color/black"
             android:textSize="17sp"
+            android:letterSpacing="-0.05"
             app:layout_constraintTop_toBottomOf="@id/intro"
             app:layout_constraintBottom_toTopOf="@id/kakaoBtn"
             app:layout_constraintLeft_toLeftOf="parent"
