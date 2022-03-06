@@ -21,7 +21,7 @@
             android:fontFamily="@font/nixgonm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="동네 헬스장 평점, 식단 관리…\n신경쓸게 너무 많으니까"
+            android:text="동네 헬스장 평점,\n식단 관리…\n신경쓸게 너무 많으니까"
             android:textSize="30dp"
             android:letterSpacing="-0.05"
             android:lineSpacingExtra="8sp"
