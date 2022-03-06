@@ -4,45 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".IntroFragment2">
+    tools:context=".IntroFragment2"
+    android:background="@drawable/login_second_gradient">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/jump"
-        android:scaleType="centerCrop"/>
+        android:src="@drawable/secondsheet" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
-
-        <TextView
-            android:id="@+id/title"
-            android:fontFamily="@font/nixgonb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HealthyTag"
-            android:textSize="70dp"
-            android:textColor="@color/white"
-            android:letterSpacing="-0.06"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="200dp"
-            android:shadowColor="#C3434343"
-            android:shadowRadius="5.0"
-            android:shadowDx="5.0"
-            android:shadowDy="5.0"/>
+        android:padding="25dp">
 
         <TextView
             android:fontFamily="@font/nixgonm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="오늘의 운동 목표를\n달성할 수 있도록."
-            android:textSize="40dp"
+            android:text="운동할 때,\n마음의 짐은\n없어야 하니까"
+            android:textSize="30dp"
+            android:letterSpacing="-0.05"
+            android:lineSpacingExtra="8sp"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/title"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:gravity="right"
             android:shadowColor="#95434343"
