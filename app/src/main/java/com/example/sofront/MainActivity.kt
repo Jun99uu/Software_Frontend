@@ -1,17 +1,16 @@
 package com.example.sofront
 
-import android.content.ContentValues
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import com.example.sofront.databinding.ActivityMainBinding
-import com.kakao.sdk.common.util.Utility
 import android.util.Log
-import android.widget.ImageButton
-import android.widget.Toast
-import com.kakao.sdk.auth.model.OAuthToken
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
+import com.example.sofront.databinding.ActivityMainBinding
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.user.UserApiClient
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +28,20 @@ class MainActivity : AppCompatActivity() {
         adapter.fragments = fragmentList
         binding.intro.adapter = adapter
         binding.wormDotsIndicator.setViewPager2(binding.intro)
+
+        binding.intro.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if(position == 4){
+                    var btShape : GradientDrawable = binding.withBtn.background as GradientDrawable
+                    btShape.setColor(Color.parseColor("#FFB2A6"))
+                }else if(position == 3){
+                    var btShape : GradientDrawable = binding.withBtn.background as GradientDrawable
+                    Log.d("$position :", btShape.toString())
+                    btShape.setColor(Color.parseColor("#F9F9F9"))
+                }
+            }
+        })
 //        키 해시값 구하기 위한 코드
 //        val keyHash = Utility.getKeyHash(this)
 //        Log.d("Hash", keyHash)
@@ -48,5 +61,11 @@ class MainActivity : AppCompatActivity() {
             bottomSheet.show(supportFragmentManager, SignInBottomSheet.TAG)
         }
 
+    }
+
+    private fun changeDP(value : Int) : Int{
+        var displayMetrics = resources.displayMetrics
+        var dp = Math.round(value * displayMetrics.density)
+        return dp
     }
 }

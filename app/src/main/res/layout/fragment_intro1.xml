@@ -4,32 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/login_first_gradient"
     tools:context=".IntroFragment1">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/womanrun"
-        android:scaleType="centerCrop"/>
+        android:src="@drawable/firstsheet"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="25dp">
 
         <TextView
             android:id="@+id/title"
             android:fontFamily="@font/nixgonb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HealthyTag"
-            android:textSize="70dp"
+            android:text="짐꾼"
+            android:textSize="120dp"
             android:textColor="@color/white"
-            android:letterSpacing="-0.06"
+            android:letterSpacing="-0.1"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginBottom="200dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
             android:shadowColor="#C3434343"
             android:shadowRadius="5.0"
             android:shadowDx="5.0"
@@ -39,11 +39,14 @@
             android:fontFamily="@font/nixgonm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나의 일상에,\n운동을 추가하다."
-            android:textSize="40dp"
+            android:text="나만을 위한,\n내 손 안에 PT 플랫폼"
+            android:textSize="30dp"
+            android:gravity="right"
+            android:letterSpacing="-0.05"
+            android:lineSpacingExtra="5sp"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:shadowColor="#95434343"
             android:shadowRadius="5.0"
             android:shadowDx="5.0"
