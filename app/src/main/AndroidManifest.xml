@@ -13,8 +13,6 @@
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.Sofront">
-        android:theme="@style/Theme.Sofront"
-        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity2"
             android:exported="false"/>
@@ -45,7 +43,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailInfoActivity"/>
         <activity
             android:name=".DetailInfoActivity"
             android:exported="false" />
