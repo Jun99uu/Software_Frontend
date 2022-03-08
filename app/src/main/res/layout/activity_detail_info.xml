@@ -98,74 +98,27 @@
 
     <ToggleButton
         android:id="@+id/user_level_toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bread"
+        android:textOn=""
+        android:textOff=""
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:checked="true"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_age_et" />
-
-    <LinearLayout
-        android:id="@+id/user_level_ll"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
+        android:id="@+id/user_level_ll"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:orientation="horizontal"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_level_toggle">
-
-        <Button
-            android:id="@+id/hell_embryo_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="헬생아"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-        <Button
-            android:id="@+id/hell_baby_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="헬린이"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-        <Button
-            android:id="@+id/hell_teen_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="헬소년"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-        <Button
-            android:id="@+id/hell_chang_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="헬창"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-    </LinearLayout>
+        android:layout_marginEnd="@dimen/default_margin"
+        tools:listitem="@layout/select_item_recycler"
+        app:layout_constraintTop_toBottomOf="@+id/user_level_toggle"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/user_purpose_tv"
@@ -190,62 +143,30 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:id="@+id/purpose_selected_tv"/>
     <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/hamburger"
+        android:textOn=""
+        android:textOff=""
         android:id="@+id/user_purpose_toggle"
         app:layout_constraintTop_toBottomOf="@+id/user_level_ll"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"/>
-    <LinearLayout
-        android:id="@+id/user_purpose_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/user_purpose_toggle"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
-        android:visibility="gone"
-        android:layout_marginEnd="@dimen/default_margin">
-        <Button
-            android:id="@+id/purpose_diet_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="다이어트"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-        <Button
-            android:id="@+id/purpose_bulkup_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="벌크업"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-        <Button
-            android:id="@+id/purpose_health_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="건강"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/user_purpose_ll"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                tools:listitem="@layout/select_item_recycler"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/user_purpose_toggle"
+                app:layout_constraintStart_toStartOf="parent"/>
 
 
-    </LinearLayout>
-    <TextView
+            <TextView
         android:id="@+id/user_type_tv"
         android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
@@ -268,63 +189,29 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:id="@+id/type_selected_tv"/>
     <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/hamburger"
+        android:textOn=""
+        android:textOff=""
         android:id="@+id/user_type_toggle"
         app:layout_constraintTop_toBottomOf="@+id/user_purpose_ll"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"/>
-    <LinearLayout
-        android:id="@+id/user_type_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/user_type_toggle"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
-        android:visibility="gone"
-        android:layout_marginEnd="@dimen/default_margin">
-        <Button
-            android:id="@+id/type_cardio_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="유산소"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/user_type_ll"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                tools:listitem="@layout/select_item_recycler"
+                app:layout_constraintTop_toBottomOf="@+id/user_type_toggle"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-        <Button
-            android:id="@+id/type_weight_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="무산소"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-        <Button
-            android:id="@+id/type_xxx_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="xxx"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-
-    </LinearLayout>
-
-    <TextView
+            <TextView
         android:id="@+id/user_time_tv"
         android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
@@ -347,63 +234,29 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:id="@+id/time_selected_tv"/>
     <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/hamburger"
+        android:textOn=""
+        android:textOff=""
         android:id="@+id/user_time_toggle"
         app:layout_constraintTop_toBottomOf="@+id/user_type_ll"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"/>
-    <LinearLayout
-        android:id="@+id/user_time_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/user_time_toggle"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
-        android:visibility="gone"
-        android:layout_marginEnd="@dimen/default_margin">
-        <Button
-            android:id="@+id/time_30m_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="30분"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:id="@+id/user_time_ll"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                tools:listitem="@layout/select_item_recycler"
+                app:layout_constraintTop_toBottomOf="@+id/user_time_toggle"
+                app:layout_constraintStart_toStartOf="parent"/>
 
-        <Button
-            android:id="@+id/time_1h_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="1시간"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-        <Button
-            android:id="@+id/time_1h_30m_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="1시간 반"
-            android:textColor="@color/black"
-            android:textSize="@dimen/medium_font_size" />
-
-
-    </LinearLayout>
-
-    <TextView
+            <TextView
         android:id="@+id/user_number_tv"
         android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
@@ -426,101 +279,27 @@
                 android:layout_marginTop="@dimen/default_margin"
                 android:id="@+id/number_selected_tv"/>
     <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/hamburger"
+        android:textOn=""
+        android:textOff=""
         android:id="@+id/user_number_toggle"
         app:layout_constraintTop_toBottomOf="@+id/user_time_ll"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"/>
-    <LinearLayout
-        android:id="@+id/user_number_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/user_number_toggle"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
-        android:visibility="gone"
-        android:layout_marginEnd="@dimen/default_margin">
-        <Button
-            android:id="@+id/number_1_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="1회"
-            android:textColor="@color/black"
-            android:textSize="@dimen/small_font_size" />
-        <Button
-            android:id="@+id/number_2_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="2회"
-            android:textColor="@color/black"
-            android:textSize="@dimen/small_font_size" />
-        <Button
-            android:id="@+id/number_3_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="3회"
-            android:textColor="@color/black"
-            android:textSize="@dimen/small_font_size" />
-        <Button
-            android:id="@+id/number_4_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="4회"
-            android:textColor="@color/black"
-            android:textSize="@dimen/small_font_size" />
-        <Button
-            android:id="@+id/number_5_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="5회"
-            android:textColor="@color/black"
-            android:textSize="@dimen/small_font_size" />
-        <Button
-            android:id="@+id/number_6_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="6회"
-            android:textColor="@color/black"
-            android:textSize="@dimen/small_font_size" />
-        <Button
-            android:id="@+id/number_7_bt"
-            android:fontFamily="@font/nixgonm"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="7회"
-            android:textColor="@color/black"
-            android:textSize="@dimen/small_font_size" />
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/user_number_ll"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                tools:listitem="@layout/select_item_recycler"
+                app:layout_constraintTop_toBottomOf="@+id/user_number_toggle"
+                app:layout_constraintStart_toStartOf="parent"/>
             <Button
                 android:fontFamily="@font/nixgonm"
                 android:layout_width="wrap_content"

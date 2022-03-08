@@ -4,23 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.ToggleButton
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.example.sofront.databinding.ActivityDetailInfoBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-
-class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
+class DetailInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailInfoBinding
     private lateinit var toggleList: ArrayList<ToggleButton>
-    private lateinit var llList: ArrayList<LinearLayout>
+    private lateinit var llList: ArrayList<RecyclerView>
+    private lateinit var textArray: ArrayList<Array<String>>
     private var userInfo: UserInfo = UserInfo()
+    val adapter = SelectItemAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailInfoBinding.inflate(layoutInflater)
@@ -30,14 +27,19 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
 
         Log.d("UID : ", UID.toString())
         Log.d("UID : ", UName.toString())
+
+        setList()
+        adapter.toggleList = toggleList
+        initView()
         setToggles()
-        setButtons()
+
 
         binding.userNameEt
         binding.endBt.setOnClickListener {
             //조건 수정 필요
             //이름 조건
             //모든 정보가 입력 되었는지 확인
+            userInfo = adapter.userInfo
 
             userInfo.user_name = binding.userNameEt.text.toString()
             if(binding.userAgeEt.text.toString()!="")
@@ -52,8 +54,24 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
             }
         }
     }
+    private fun initView(){
+        for(i in 0 until textArray.size){
+            adapter.count = i
+            adapter.textList = textArray[i].toMutableList()
 
-    private fun setToggles(){
+//            adapter.buttonList[0]
+            llList[i].adapter = adapter.newInstance()
+            llList[i].layoutManager = GridLayoutManager(this, 3)
+        }
+    }
+    private fun setList(){
+        textArray = ArrayList()
+        textArray.add(resources.getStringArray(R.array.level_array))
+        textArray.add(resources.getStringArray(R.array.purpose_array))
+        textArray.add(resources.getStringArray(R.array.type_array))
+        textArray.add(resources.getStringArray(R.array.time_array))
+        textArray.add(resources.getStringArray(R.array.number_array))
+
         toggleList = ArrayList()
         llList = ArrayList()
 
@@ -68,90 +86,25 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
         llList.add(binding.userTypeLl)
         llList.add(binding.userTimeLl)
         llList.add(binding.userNumberLl)
+    }
 
+
+    private fun setToggles(){
         for(i in 0 until toggleList.size){
             toggleList[i].setOnCheckedChangeListener { _, b ->
                 if(b){
                     llList[i].visibility = View.VISIBLE
+                    toggleList[i].background = AppCompatResources.getDrawable(this, R.drawable.bread)
                     binding.scroll.post { binding.scroll.scrollTo(0,126) }
                 }else{
+                    toggleList[i].background = AppCompatResources.getDrawable(this ,R.drawable.hamburger)
                     llList[i].visibility = View.GONE
                 }
             }
         }
     }
-    override fun onClick(v: View?) {
-        val button = v as Button
-        val id = v.id
-        if(id == binding.hellEmbryoBt.id || id == binding.hellChangBt.id || id==binding.hellBabyBt.id ||id==binding.hellTeenBt.id){
-            expand(0)
-            binding.levelSelectedTv.text = button.text.toString()
-            userInfo.user_level = button.text.toString()
-        }
-        else if(id == binding.purposeHealthBt.id || id ==binding.purposeBulkupBt.id || id==binding.purposeDietBt.id){
-            expand(1)
-            binding.purposeSelectedTv.text=button.text.toString()
-            userInfo.user_purpose = button.text.toString()
-        }
-        else if(id == binding.typeCardioBt.id || id==binding.typeWeightBt.id||id==binding.typeXxxBt.id){
-            expand(2)
-            binding.typeSelectedTv.text=button.text.toString()
-            userInfo.user_type = button.text.toString()
-        }
-        else if(id == binding.time1h30mBt.id||id==binding.time1hBt.id||id==binding.time30mBt.id){
-            expand(3)
-            binding.timeSelectedTv.text=button.text.toString()
-            userInfo.user_time = button.text.toString()
-        }
-        else{
-            expand(4)
-            binding.numberSelectedTv.text=button.text.toString()
-            userInfo.user_number = button.text.toString()
-        }
-    }
-    private fun expand(x: Int){
-        for (i in 0 until toggleList.size) {
-            val toggleButton = toggleList[i]
-            if(i==x && toggleButton.isChecked) {
-                toggleButton.toggle() }
-            else if(i==x+1 && x < toggleList.size ){
-                if(!toggleButton.isChecked) toggleButton.toggle()
-            }
-            else{
-                if(toggleButton.isChecked) {
-                    toggleButton.toggle()
-                }
-            }
-        }
-    }
 
-    private fun setButtons(){
-        binding.hellEmbryoBt.setOnClickListener(this)
-        binding.hellBabyBt.setOnClickListener(this)
-        binding.hellTeenBt.setOnClickListener(this)
-        binding.hellChangBt.setOnClickListener(this)
 
-        binding.purposeBulkupBt.setOnClickListener(this)
-        binding.purposeDietBt.setOnClickListener(this)
-        binding.purposeHealthBt.setOnClickListener(this)
-
-        binding.typeCardioBt.setOnClickListener(this)
-        binding.typeWeightBt.setOnClickListener(this)
-        binding.typeXxxBt.setOnClickListener(this)
-
-        binding.time1h30mBt.setOnClickListener(this)
-        binding.time1hBt.setOnClickListener(this)
-        binding.time30mBt.setOnClickListener(this)
-
-        binding.number1Bt.setOnClickListener(this)
-        binding.number2Bt.setOnClickListener(this)
-        binding.number3Bt.setOnClickListener(this)
-        binding.number4Bt.setOnClickListener(this)
-        binding.number5Bt.setOnClickListener(this)
-        binding.number6Bt.setOnClickListener(this)
-        binding.number7Bt.setOnClickListener(this)
-
-    }
     private fun check(): Boolean {
 
         return when {
@@ -160,7 +113,7 @@ class DetailInfoActivity : AppCompatActivity(),View.OnClickListener {
                 false
             }
             userInfo.user_age == "" -> {
-                println("userageg!!!!")
+                println("userage!!!!")
                 false
             }
             userInfo.user_level == "" -> false
