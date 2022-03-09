@@ -6,43 +6,37 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.example.sofront.databinding.FragmentSignInBottomSheetBinding
+import com.example.sofront.databinding.FragmentAuthBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class SignInBottomSheet : BottomSheetDialogFragment() {
-    //프래그먼트에서는 context를 상속받지 않기 때문에 임의로 만들어줌
-    lateinit var mainActivity: MainActivity
+class AuthBottomSheet : BottomSheetDialogFragment() {
+
+    lateinit var signUpAuth: SignUpAuth
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mainActivity = context as MainActivity
+        signUpAuth = context as SignUpAuth
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val binding = FragmentSignInBottomSheetBinding.inflate(inflater, container, false)
-        binding.signUp.setOnClickListener{
-            val intent = Intent(mainActivity, SignUpAuth::class.java)
+        val binding = FragmentAuthBottomSheetBinding.inflate(layoutInflater)
+        binding.numAuth.setOnClickListener{
+            val intent = Intent(signUpAuth, NumAuth::class.java)
             startActivity(intent)
-//            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//            mainActivity.finish()
         }
         return binding.root
     }
 
-    //여기 아래는 안봐도됨 _ sheet의 크기 설정하기 위한 부분
-
     companion object {
-        const val TAG = "SignInBottomSheet"
+        const val TAG = "AuthBottomSheet"
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -65,7 +59,7 @@ class SignInBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun getBottomSheetDialogDefaultHeight(): Int {
-        return getWindowHeight() * 70 / 100
+        return getWindowHeight() * 60 / 100
     }
 
     private fun getWindowHeight(): Int {
