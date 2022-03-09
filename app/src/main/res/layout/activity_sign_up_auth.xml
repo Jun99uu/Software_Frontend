@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpAuth">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="반가워요,\n짐꾼입니다."
+                    android:letterSpacing="-0.05"
+                    android:fontFamily="@font/nixgonb"
+                    android:textColor="@color/black"
+                    android:textSize="45sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingTop="30dp"
+                    android:paddingLeft="20dp"/>
+
+                <TextView
+                    android:id="@+id/subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="필수 정보를 조사할게요🐸"
+                    android:fontFamily="@font/nixgonb"
+                    android:letterSpacing="-0.05"
+                    android:textColor="@color/gray"
+                    android:textSize="25sp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/subtitle"
+                    app:layout_constraintBottom_toTopOf="@id/btnlay"
+                    android:paddingTop="40dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/loginlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="30dp">
+
+                        <TextView
+                            android:id="@+id/id_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="아이디*"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/nixgonm"
+                            android:textSize="20sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/id_et"
+                            android:paddingTop="10dp"/>
+
+                        <EditText
+                            android:id="@+id/id_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:ems="10"
+                            android:background="@drawable/signup_eidt"
+                            android:hint="아이디 입력"
+                            android:letterSpacing="-0.05"
+                            android:fontFamily="@font/nixgonm"
+                            android:gravity="center"
+                            app:layout_constraintStart_toStartOf="@id/pwd_et"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:maxLength="15"
+                            android:maxLines="1"/>
+
+                        <TextView
+                            android:id="@+id/id_ck_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nixgonm"
+                            app:layout_constraintTop_toBottomOf="@id/id_et"
+                            app:layout_constraintEnd_toEndOf="@id/id_et"
+                            android:paddingTop="2dp"
+                            android:textColor="@color/pastel_pink"/>
+
+                        <Button
+                            android:id="@+id/id_ck_btn"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:text="중복확인"
+                            android:textSize="15sp"
+                            android:letterSpacing="-0.05"
+                            android:fontFamily="@font/nixgonm"
+                            android:background="@drawable/radius"
+                            android:backgroundTint="@color/patel_yellow"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/pwd_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="비밀번호*"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/nixgonm"
+                            android:textSize="20sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/pwd_et"
+                            android:paddingTop="10dp"
+                            android:maxLength="15"
+                            android:maxLines="1"/>
+
+                        <EditText
+                            android:id="@+id/pwd_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:ems="12"
+                            android:hint="영어와 숫자 조합 8자 이상"
+                            android:background="@drawable/signup_eidt"
+                            android:inputType="textPassword"
+                            android:letterSpacing="-0.05"
+                            android:gravity="center"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/id_et"
+                            android:layout_marginTop="25dp"
+                            android:maxLength="15"
+                            android:maxLines="1"/>
+
+                        <EditText
+                            android:id="@+id/pwd_ck_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:ems="12"
+                            android:background="@drawable/signup_eidt"
+                            android:inputType="textPassword"
+                            android:letterSpacing="-0.05"
+                            android:hint="비밀번호 재입력"
+                            android:gravity="center"
+                            app:layout_constraintStart_toStartOf="@id/pwd_et"
+                            app:layout_constraintTop_toBottomOf="@id/pwd_et"
+                            android:layout_marginTop="5dp"/>
+
+                        <TextView
+                            android:id="@+id/pwd_ck_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nixgonm"
+                            app:layout_constraintTop_toBottomOf="@id/pwd_ck_et"
+                            app:layout_constraintEnd_toEndOf="@id/pwd_ck_et"
+                            android:paddingTop="2dp"
+                            android:textColor="@color/pastel_pink"/>
+
+                        <TextView
+                            android:id="@+id/email_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="이메일*"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/nixgonm"
+                            android:textSize="20sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/email_id_et"
+                            android:paddingTop="10dp"/>
+
+                        <EditText
+                            android:id="@+id/email_id_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:ems="7"
+                            android:hint="abc1234"
+                            android:background="@drawable/signup_eidt"
+                            android:letterSpacing="-0.05"
+                            android:fontFamily="@font/nixgonm"
+                            android:maxLength="3"
+                            android:maxLines="1"
+                            android:gravity="center"
+                            app:layout_constraintStart_toStartOf="@id/pwd_ck_et"
+                            app:layout_constraintTop_toBottomOf="@id/pwd_ck_et"
+                            android:layout_marginTop="25dp"/>
+
+                        <Button
+                            android:id="@+id/email_com_et"
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:hint="\u0040website.com"
+                            android:background="@drawable/signup_eidt"
+                            android:letterSpacing="-0.05"
+                            android:fontFamily="@font/nixgonm"
+                            android:gravity="center"
+                            android:maxLength="4"
+                            android:maxLines="1"
+                            app:layout_constraintEnd_toEndOf="@id/pwd_ck_et"
+                            app:layout_constraintTop_toBottomOf="@id/pwd_ck_et"
+                            android:layout_marginTop="25dp"/>
+
+                        <TextView
+                            android:id="@+id/email_ck_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nixgonm"
+                            app:layout_constraintTop_toBottomOf="@id/email_com_et"
+                            app:layout_constraintEnd_toEndOf="@id/email_com_et"
+                            android:paddingTop="2dp"
+                            android:textColor="@color/pastel_pink"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="200dp"
+                        android:layout_height="2dp"
+                        android:background="@drawable/radius"
+                        android:backgroundTint="#9E9E9E"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/loginlay"
+                        app:layout_constraintBottom_toTopOf="@id/agreelay"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/agreelay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="30dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="40dp"
+                        app:layout_constraintTop_toBottomOf="@id/loginlay"
+                        app:layout_constraintRight_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
+
+                        <Button
+                            android:id="@+id/age_agree"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="만 14세 이상입니다.*"
+                            android:fontFamily="@font/nixgonm"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:background="@drawable/agree_no_back"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <Button
+                            android:id="@+id/infor_agree"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="개인정보 처리방침에 동의합니다.*"
+                            android:fontFamily="@font/nixgonm"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:background="@drawable/agree_no_back"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/age_agree"
+                            android:layout_marginTop="10dp"/>
+
+                        <Button
+                            android:id="@+id/alarm_agree"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="이벤트성 알림 수신에 동의합니다.(선택)"
+                            android:fontFamily="@font/nixgonm"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:background="@drawable/agree_no_back"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/infor_agree"
+                            android:layout_marginTop="10dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:paddingBottom="30dp">
+
+                    <Button
+                        android:id="@+id/next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/radius"
+                        android:backgroundTint="@color/pastel_pink"
+                        android:text="다음"
+                        android:fontFamily="@font/nixgonb"
+                        android:textSize="18sp"
+                        android:letterSpacing="-0.05"
+                        app:layout_constraintLeft_toRightOf="@id/back"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginLeft="20dp"/>
+
+                    <Button
+                        android:id="@+id/back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/radius"
+                        android:backgroundTint="#757575"
+                        android:text="취소"
+                        android:fontFamily="@font/nixgonb"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:letterSpacing="-0.05"
+                        app:layout_constraintRight_toLeftOf="@id/next"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

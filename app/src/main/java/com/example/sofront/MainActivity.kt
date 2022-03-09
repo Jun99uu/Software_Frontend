@@ -1,6 +1,5 @@
 package com.example.sofront
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -8,8 +7,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.sofront.databinding.ActivityMainBinding
-import com.kakao.sdk.common.model.AuthErrorCause.*
-import com.kakao.sdk.user.UserApiClient
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,30 +39,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-//        키 해시값 구하기 위한 코드
-//        val keyHash = Utility.getKeyHash(this)
-//        Log.d("Hash", keyHash)
-
-        //앱 실행시 자동 로그인 정보 확인
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (tokenInfo != null) { //토큰이 있다면
-                val UID = tokenInfo.id //회원번호 이걸로 통신해서 있으면 true 없으면 false
-                val intent = Intent(this, TmpActivity::class.java)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                finish()
-            }
-        }
 
         binding.withBtn.setOnClickListener{
             val bottomSheet = SignInBottomSheet()
             bottomSheet.show(supportFragmentManager, SignInBottomSheet.TAG)
         }
 
-    }
-
-    private fun changeDP(value : Int) : Int{
-        var displayMetrics = resources.displayMetrics
-        var dp = Math.round(value * displayMetrics.density)
-        return dp
     }
 }

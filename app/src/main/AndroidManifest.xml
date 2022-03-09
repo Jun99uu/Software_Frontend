@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,26 +13,11 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.Sofront">
         <activity
-            android:name=".MainActivity2"
-            android:exported="false"/>
-        <activity
-            android:name=".TmpActivity"
+            android:name=".NumAuth"
             android:exported="false" />
         <activity
-            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
-                <data
-                    android:host="oauth"
-                    android:scheme="kakao5631e59a561b6e76e9d90caceb74d27e" />
-            </intent-filter>
-        </activity>
+            android:name=".SignUpAuth"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

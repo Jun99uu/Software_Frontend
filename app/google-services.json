@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "633321094923",
+    "project_id": "gymggun",
+    "storage_bucket": "gymggun.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633321094923:android:f7e8df078aa290c1326c0e",
+        "android_client_info": {
+          "package_name": "com.example.sofront"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633321094923-q9mrvq8ameausd3vin70d89eri05dmil.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSyAMX-FIgj94p5vprHOpJ1R1P-VZPDFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "633321094923-q9mrvq8ameausd3vin70d89eri05dmil.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
