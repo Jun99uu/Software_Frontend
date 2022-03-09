@@ -20,4 +20,6 @@
     <color name="pastel_pink">#FFB2A6</color>
     <color name="patel_blue">#00B4D8</color>
     <color name="gray">#3F3F3F</color>
+    <color name="item_selected">#FF000000</color>
+    <color name="item_nselected">#44000000</color>
 </resources>

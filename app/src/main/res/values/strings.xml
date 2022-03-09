@@ -7,11 +7,34 @@
     <string name="purpose">운동 목적</string>
     <string name="time">평균 운동 시간</string>
     <string name="number">주당 운동 횟수</string>
-    <array name="health_level">
+    <array name="level_array">
         <item>헬생아</item>
         <item>헬린이</item>
-        <item>xxx</item>
+        <item>헬소년</item>
         <item>헬창</item>
+    </array>
+    <array name="purpose_array">
+        <item>다이어트</item>
+        <item>벌크업</item>
+        <item>유지?</item>
+    </array>
+    <array name="type_array">
+        <item>유산소</item>
+        <item>무산소</item>
+    </array>
+    <array name="time_array">
+        <item>30분</item>
+        <item>1시간</item>
+        <item>1시간 반</item>
+    </array>
+    <array name="number_array">
+        <item>1회</item>
+        <item>2회</item>
+        <item>3회</item>
+        <item>4회</item>
+        <item>5회</item>
+        <item>6회</item>
+        <item>7회</item>
     </array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
