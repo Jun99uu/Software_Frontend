@@ -19,9 +19,6 @@ class SignUpAuth : AppCompatActivity() {
         val binding = ActivitySignUpAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var ID:String
-        var PWD:String
-        var Num:String
         var idCheck:Boolean = false
         var pwdCheck:Boolean = false
 
@@ -145,9 +142,22 @@ class SignUpAuth : AppCompatActivity() {
             }else if(!firstAgree || !secondAgree){
                 Toast.makeText(this, "필수 동의사항에 동의하지 않으셨습니다.", Toast.LENGTH_SHORT).show()
             }else{
+                val ID = binding.idEt.text.toString()
+                val PWD = binding.pwdEt.text.toString()
+                val Email = binding.emailIdEt.text.toString() + binding.emailComEt.text.toString()
+
                 val bottomSheet = AuthBottomSheet()
+                var bundle = Bundle()
+                bundle.putString("ID", ID)
+                bundle.putString("PWD", PWD)
+                bundle.putString("Email", Email)
+                bottomSheet.arguments = bundle
                 bottomSheet.show(supportFragmentManager, AuthBottomSheet.TAG)
             }
+        }
+
+        binding.back.setOnClickListener{
+            onBackPressed()
         }
     }
 }

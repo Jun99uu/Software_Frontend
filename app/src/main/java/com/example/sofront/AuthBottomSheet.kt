@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,8 +29,14 @@ class AuthBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentAuthBottomSheetBinding.inflate(layoutInflater)
+        val ID = arguments?.getString("ID")
+        val PWD = arguments?.getString("PWD")
+        val Email = arguments?.getString("Email")
         binding.numAuth.setOnClickListener{
             val intent = Intent(signUpAuth, NumAuth::class.java)
+            intent.putExtra("ID", ID)
+            intent.putExtra("PWD", PWD)
+            intent.putExtra("Email", Email)
             startActivity(intent)
         }
         return binding.root
@@ -59,7 +66,7 @@ class AuthBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun getBottomSheetDialogDefaultHeight(): Int {
-        return getWindowHeight() * 60 / 100
+        return getWindowHeight() * 50 / 100
     }
 
     private fun getWindowHeight(): Int {
