@@ -3,11 +3,10 @@ package com.example.sofront
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.sofront.databinding.ActivityNumAuthBinding
-import com.example.sofront.databinding.ActivitySignUpAuthBinding
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
@@ -19,9 +18,9 @@ class NumAuth : AppCompatActivity() {
     val auth = Firebase.auth
     var verificationId = ""
 
-    val ID = intent.getStringExtra("ID")
-    val PWD = intent.getStringExtra("PWD")
-    val Email = intent.getStringExtra("Email")
+    var ID:String = ""
+    var PWD:String = ""
+    var Email:String = ""
 
     private fun signInWithPhoneAuthCredential(credential : PhoneAuthCredential){
         auth.signInWithCredential(credential).addOnCompleteListener(this){ task ->
@@ -43,6 +42,11 @@ class NumAuth : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityNumAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ID = intent.getStringExtra("ID").toString()
+        PWD = intent.getStringExtra("PWD").toString()
+        Email = intent.getStringExtra("Email").toString()
+        Log.d("해위", ID+PWD+Email)
 
         var authCompleted:Boolean = false
 

@@ -1,10 +1,13 @@
 package com.example.sofront
 
+import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -76,6 +79,28 @@ class SignUpAuth : AppCompatActivity() {
             }
         }
 
+        binding.idEt.setOnEditorActionListener{ textView, action, event ->
+            var handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                // 키보드 내리기
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.idEt.windowToken, 0)
+                handled = true
+            }
+            handled
+        }
+
+        binding.emailIdEt.setOnEditorActionListener{ textView, action, event ->
+            var handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                // 키보드 내리기
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.emailIdEt.windowToken, 0)
+                handled = true
+            }
+            handled
+        }
+
         binding.emailIdEt.addTextChangedListener{
             binding.emailCkTxt.text = "정확한 이메일을 입력하시길 권유드립니다."
         }
@@ -90,6 +115,7 @@ class SignUpAuth : AppCompatActivity() {
                         // 여기서 인자 'which'는 배열의 position을 나타냅니다.
                         binding.emailComEt.text = mailArray[which]
                         mailcom = mailArray[which]
+                        binding.emailCkTxt.text = "멋진 이메일이네요👊"
                     })
             // 다이얼로그를 띄워주기
             builder.show()

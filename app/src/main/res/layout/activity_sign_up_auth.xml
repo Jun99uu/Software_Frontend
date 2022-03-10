@@ -96,7 +96,9 @@
                             app:layout_constraintStart_toStartOf="@id/pwd_et"
                             app:layout_constraintTop_toTopOf="parent"
                             android:maxLength="15"
-                            android:maxLines="1"/>
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"/>
 
                         <TextView
                             android:id="@+id/id_ck_txt"
@@ -200,7 +202,9 @@
                             android:gravity="center"
                             app:layout_constraintStart_toStartOf="@id/pwd_ck_et"
                             app:layout_constraintTop_toBottomOf="@id/pwd_ck_et"
-                            android:layout_marginTop="25dp"/>
+                            android:layout_marginTop="25dp"
+                            android:singleLine="true"
+                            android:imeOptions="actionDone"/>
 
                         <Button
                             android:id="@+id/email_com_et"
