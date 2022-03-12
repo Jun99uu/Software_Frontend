@@ -1,6 +1,7 @@
 package com.example.sofront
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         // intent는 마지막에 다 하고 연결하면 되니까 따로 작성할 필요는 없구
         // 코드 테스트 할 때 intent 사용하면, 깃에 업로드할 때는 그 부분 지우고 push 해주세영
         // 화이팅 (●'◡'●)
+//        intent = Intent(this, DetailInfoActivity::class.java)
+//        startActivity(intent)
 
         val fragmentList = listOf(IntroFragment1(), IntroFragment2(), IntroFragment3(), IntroFragment4(), IntroFragment5())
         val adapter = IntroViewPagerAdapter(this)
@@ -46,10 +49,10 @@ class MainActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if(position == 4){
-                    var btShape : GradientDrawable = binding.withBtn.background as GradientDrawable
+                    val btShape : GradientDrawable = binding.withBtn.background as GradientDrawable
                     btShape.setColor(Color.parseColor("#FFB2A6"))
                 }else if(position == 3){
-                    var btShape : GradientDrawable = binding.withBtn.background as GradientDrawable
+                    val btShape : GradientDrawable = binding.withBtn.background as GradientDrawable
                     Log.d("$position :", btShape.toString())
                     btShape.setColor(Color.parseColor("#F9F9F9"))
                 }
