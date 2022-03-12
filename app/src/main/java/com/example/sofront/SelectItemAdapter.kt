@@ -11,13 +11,13 @@ import com.example.sofront.databinding.SelectItemRecyclerBinding
 
 class SelectItemAdapter() : RecyclerView.Adapter<SelectItemAdapter.MyViewHolder>() {
 
-    public fun newInstance() : SelectItemAdapter{
+    fun newInstance() : SelectItemAdapter{
         val j = SelectItemAdapter()
         j.count = count
         j.userInfo = userInfo
         j.textList = textList
         j.toggleList = toggleList
-        j.buttonList = buttonList
+
         return j
     }
     var count : Int = 0
