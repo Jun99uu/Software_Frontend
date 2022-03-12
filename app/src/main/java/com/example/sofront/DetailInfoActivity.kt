@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -22,11 +24,10 @@ class DetailInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val UID = intent.getStringExtra("UID")
-        val UName = intent.getStringExtra("UName")
 
         Log.d("UID : ", UID.toString())
-        Log.d("UID : ", UName.toString())
 
         setList()
         adapter.toggleList = toggleList
@@ -123,5 +124,19 @@ class DetailInfoActivity : AppCompatActivity() {
             userInfo.user_number=="" -> false
             else -> true
         }
+    }
+
+    private var backPressedTime : Long = 0
+    override fun onBackPressed() {
+        // 2초내 다시 클릭하면 앱 종료
+        if (System.currentTimeMillis() - backPressedTime < 1500) {
+            ActivityCompat.finishAffinity(this); // 액티비티를 종료하고
+            System.exit(0); // 프로세스를 종료
+            return
+        }
+
+        // 처음 클릭 메시지
+        Toast.makeText(this, "'뒤로' 버튼을 한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
+        backPressedTime = System.currentTimeMillis()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.sofront
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,7 +19,7 @@ class NumAuth : AppCompatActivity() {
     val auth = Firebase.auth
     var verificationId = ""
 
-    var ID:String = ""
+    var UID:String = ""
     var PWD:String = ""
     var Email:String = ""
 
@@ -27,11 +28,22 @@ class NumAuth : AppCompatActivity() {
             if(task.isSuccessful){
                 Toast.makeText(this, "인증에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, DetailInfoActivity::class.java)
-                intent.putExtra("ID", ID)
+                intent.putExtra("UID", UID)
                 intent.putExtra("PWD", PWD)
                 intent.putExtra("Email", Email)
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                this.finish()
+
+                //<통신> 해당 uid를 기본 키로 갖는 문서를 생성해줌
+
+                //전화번호 인증 삭제
+                val user = Firebase.auth.currentUser!!
+                user.delete()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.d(TAG, "User account deleted.")
+                            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                            this.finish()
+                        }
+                    }
             }else {
                 Toast.makeText(this, "인증에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -43,16 +55,14 @@ class NumAuth : AppCompatActivity() {
         val binding = ActivityNumAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ID = intent.getStringExtra("ID").toString()
-        PWD = intent.getStringExtra("PWD").toString()
-        Email = intent.getStringExtra("Email").toString()
-        Log.d("해위", ID+PWD+Email)
+        UID = intent.getStringExtra("UID").toString()
 
         var authCompleted:Boolean = false
 
         binding.geAuth.setOnClickListener{
             if(binding.numSecondEt.text.toString() != "" && binding.numThirdEt.text.toString() != ""){
                 val phoneNum:String = "+8210"+ binding.numSecondEt.text.toString() + binding.numThirdEt.text.toString()
+                Toast.makeText(this, "인증번호가 전송되었습니다.\n잠시만 기다려주세요!", Toast.LENGTH_SHORT).show()
                 authCompleted = true
 
                 val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
