@@ -15,6 +15,8 @@ import com.example.sofront.databinding.FragmentAuthBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class AuthBottomSheet : BottomSheetDialogFragment() {
 
@@ -29,15 +31,26 @@ class AuthBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentAuthBottomSheetBinding.inflate(layoutInflater)
-        val ID = arguments?.getString("ID")
+        val UID = arguments?.getString("UID")
         val PWD = arguments?.getString("PWD")
         val Email = arguments?.getString("Email")
         binding.numAuth.setOnClickListener{
             val intent = Intent(signUpAuth, NumAuth::class.java)
-            intent.putExtra("ID", ID)
-            intent.putExtra("PWD", PWD)
-            intent.putExtra("Email", Email)
+            intent.putExtra("UID", UID.toString())
+            intent.putExtra("PWD", PWD.toString())
+            intent.putExtra("Email", Email.toString())
             startActivity(intent)
+        }
+
+        binding.emailAuth.setOnClickListener{
+            val user = Firebase.auth.currentUser
+
+            user!!.sendEmailVerification()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Email sent.")
+                    }
+                }
         }
         return binding.root
     }
@@ -66,7 +79,7 @@ class AuthBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun getBottomSheetDialogDefaultHeight(): Int {
-        return getWindowHeight() * 50 / 100
+        return getWindowHeight() * 40 / 100
     }
 
     private fun getWindowHeight(): Int {

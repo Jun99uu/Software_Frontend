@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NumAuth"
-    android:padding="25dp">
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/title"
@@ -18,7 +18,8 @@
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:paddingTop="40dp"/>
+        android:paddingTop="40dp"
+        android:paddingLeft="10dp"/>
 
     <TextView
         android:id="@+id/sub"
@@ -28,7 +29,8 @@
         android:fontFamily="@font/nixgonm"
         app:layout_constraintTop_toBottomOf="@id/title"
         android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingLeft="10dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lay"

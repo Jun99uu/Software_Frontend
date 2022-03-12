@@ -1,11 +1,14 @@
 package com.example.sofront
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -14,15 +17,21 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.example.sofront.databinding.ActivityMainBinding
 import com.example.sofront.databinding.ActivitySignUpAuthBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.regex.Pattern
 
 class SignUpAuth : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySignUpAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var idCheck:Boolean = false
+        auth = Firebase.auth
+
         var pwdCheck:Boolean = false
 
         var firstAgree:Boolean = false
@@ -31,21 +40,6 @@ class SignUpAuth : AppCompatActivity() {
 
         val idPattern = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{3,15}\$"
         val pwdPattern = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{8,15}\$"
-
-        binding.idCkBtn.setOnClickListener{
-            val pattern = Pattern.compile(idPattern)
-            val matcher = pattern.matcher(binding.idEt.text.toString())
-            if(matcher.find()){
-                val id = binding.idEt.text.toString()
-                //통신해서 idCheck true로 만듦
-                //일단 임의로 그냥 true로 바꾸어주었음
-                idCheck = true
-                binding.idCkTxt.text = "멋진 아이디네요👍"
-                binding.idEt.isEnabled = false
-            }else{
-                binding.idCkTxt.text = "유효하지 않은 아이디입니다."
-            }
-        }
 
         binding.pwdEt.addTextChangedListener{
             val pattern = Pattern.compile(pwdPattern)
@@ -71,23 +65,12 @@ class SignUpAuth : AppCompatActivity() {
                     binding.pwdCkTxt.text = "완벽한 비밀번호에요✨"
                     pwdCheck = true
                 }else{
-                    binding.pwdCkTxt.text = "비밀버호가 일치하지 않습니다."
+                    binding.pwdCkTxt.text = "비밀번호가 일치하지 않습니다."
                     pwdCheck = false
                 }
             }else{
                 binding.pwdCkTxt.text = "유효하지 않은 비밀번호입니다."
             }
-        }
-
-        binding.idEt.setOnEditorActionListener{ textView, action, event ->
-            var handled = false
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                // 키보드 내리기
-                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(binding.idEt.windowToken, 0)
-                handled = true
-            }
-            handled
         }
 
         binding.emailIdEt.setOnEditorActionListener{ textView, action, event ->
@@ -156,10 +139,7 @@ class SignUpAuth : AppCompatActivity() {
 
 
         binding.next.setOnClickListener{
-            if(idCheck == false){
-                //아이디 체크가 안됐거나 중복. 아이디 입력칸 한 번 진동
-                Toast.makeText(this, "아이디를 확인해주세요.", Toast.LENGTH_SHORT).show()
-            }else if(!pwdCheck || binding.pwdEt.text.toString() == "" || binding.pwdCkEt.text.toString() == ""){
+            if(!pwdCheck || binding.pwdEt.text.toString() == "" || binding.pwdCkEt.text.toString() == ""){
                 //비밀번호 확인이 잘못됨
                 Toast.makeText(this, "비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
             }else if(binding.emailIdEt.text.toString() == "" || binding.emailComEt.text.toString() == ""){
@@ -168,17 +148,32 @@ class SignUpAuth : AppCompatActivity() {
             }else if(!firstAgree || !secondAgree){
                 Toast.makeText(this, "필수 동의사항에 동의하지 않으셨습니다.", Toast.LENGTH_SHORT).show()
             }else{
-                val ID = binding.idEt.text.toString()
                 val PWD = binding.pwdEt.text.toString()
                 val Email = binding.emailIdEt.text.toString() + binding.emailComEt.text.toString()
 
-                val bottomSheet = AuthBottomSheet()
-                var bundle = Bundle()
-                bundle.putString("ID", ID)
-                bundle.putString("PWD", PWD)
-                bundle.putString("Email", Email)
-                bottomSheet.arguments = bundle
-                bottomSheet.show(supportFragmentManager, AuthBottomSheet.TAG)
+                auth.createUserWithEmailAndPassword(Email, PWD)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success")
+                            val user = auth.currentUser
+                            user!!.updateEmail(Email)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Log.d(TAG, "User email address updated.")
+                                        val UID = user.uid
+                                        val intent = Intent(this, NumAuth::class.java)
+                                        intent.putExtra("UID", UID)
+                                        startActivity(intent)
+                                    }
+                                }
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                            binding.emailCkTxt.text = "이미 가입된 이메일입니다."
+                            Toast.makeText(this, "가입에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
             }
         }
 

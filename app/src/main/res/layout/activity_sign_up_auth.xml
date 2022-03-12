@@ -72,65 +72,65 @@
                         android:paddingBottom="30dp">
 
                         <TextView
-                            android:id="@+id/id_tv"
+                            android:id="@+id/email_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="아이디*"
+                            android:text="이메일"
                             android:textColor="@color/black"
                             android:fontFamily="@font/nixgonm"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/id_et"
+                            app:layout_constraintTop_toTopOf="@id/email_id_et"
                             android:paddingTop="10dp"/>
 
                         <EditText
-                            android:id="@+id/id_et"
+                            android:id="@+id/email_id_et"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:ems="10"
+                            android:ems="7"
+                            android:hint="abc1234"
                             android:background="@drawable/signup_eidt"
-                            android:hint="아이디 입력"
                             android:letterSpacing="-0.05"
                             android:fontFamily="@font/nixgonm"
-                            android:gravity="center"
-                            app:layout_constraintStart_toStartOf="@id/pwd_et"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:maxLength="15"
                             android:maxLines="1"
+                            android:gravity="center"
+                            app:layout_constraintStart_toStartOf="@id/pwd_ck_et"
+                            app:layout_constraintTop_toTopOf="parent"
                             android:singleLine="true"
                             android:imeOptions="actionDone"/>
 
+                        <Button
+                            android:id="@+id/email_com_et"
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:hint="\u0040website.com"
+                            android:background="@drawable/signup_eidt"
+                            android:letterSpacing="-0.05"
+                            android:fontFamily="@font/nixgonm"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            app:layout_constraintEnd_toEndOf="@id/pwd_ck_et"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
                         <TextView
-                            android:id="@+id/id_ck_txt"
+                            android:id="@+id/email_ck_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nixgonm"
-                            app:layout_constraintTop_toBottomOf="@id/id_et"
-                            app:layout_constraintEnd_toEndOf="@id/id_et"
+                            app:layout_constraintTop_toBottomOf="@id/email_com_et"
+                            app:layout_constraintEnd_toEndOf="@id/email_com_et"
                             android:paddingTop="2dp"
                             android:textColor="@color/pastel_pink"/>
 
-                        <Button
-                            android:id="@+id/id_ck_btn"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:text="중복확인"
-                            android:textSize="15sp"
-                            android:letterSpacing="-0.05"
-                            android:fontFamily="@font/nixgonm"
-                            android:background="@drawable/radius"
-                            android:backgroundTint="@color/patel_yellow"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
 
                         <TextView
                             android:id="@+id/pwd_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="비밀번호*"
+                            android:text="비밀번호"
                             android:textColor="@color/black"
                             android:fontFamily="@font/nixgonm"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="@id/pwd_et"
                             android:paddingTop="10dp"
@@ -148,7 +148,7 @@
                             android:letterSpacing="-0.05"
                             android:gravity="center"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/id_et"
+                            app:layout_constraintTop_toBottomOf="@id/email_id_et"
                             android:layout_marginTop="25dp"
                             android:maxLength="15"
                             android:maxLines="1"/>
@@ -174,59 +174,6 @@
                             android:fontFamily="@font/nixgonm"
                             app:layout_constraintTop_toBottomOf="@id/pwd_ck_et"
                             app:layout_constraintEnd_toEndOf="@id/pwd_ck_et"
-                            android:paddingTop="2dp"
-                            android:textColor="@color/pastel_pink"/>
-
-                        <TextView
-                            android:id="@+id/email_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="이메일*"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/nixgonm"
-                            android:textSize="20sp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/email_id_et"
-                            android:paddingTop="10dp"/>
-
-                        <EditText
-                            android:id="@+id/email_id_et"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:ems="7"
-                            android:hint="abc1234"
-                            android:background="@drawable/signup_eidt"
-                            android:letterSpacing="-0.05"
-                            android:fontFamily="@font/nixgonm"
-                            android:maxLines="1"
-                            android:gravity="center"
-                            app:layout_constraintStart_toStartOf="@id/pwd_ck_et"
-                            app:layout_constraintTop_toBottomOf="@id/pwd_ck_et"
-                            android:layout_marginTop="25dp"
-                            android:singleLine="true"
-                            android:imeOptions="actionDone"/>
-
-                        <Button
-                            android:id="@+id/email_com_et"
-                            android:layout_width="120dp"
-                            android:layout_height="40dp"
-                            android:hint="\u0040website.com"
-                            android:background="@drawable/signup_eidt"
-                            android:letterSpacing="-0.05"
-                            android:fontFamily="@font/nixgonm"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            app:layout_constraintEnd_toEndOf="@id/pwd_ck_et"
-                            app:layout_constraintTop_toBottomOf="@id/pwd_ck_et"
-                            android:layout_marginTop="25dp"/>
-
-                        <TextView
-                            android:id="@+id/email_ck_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/nixgonm"
-                            app:layout_constraintTop_toBottomOf="@id/email_com_et"
-                            app:layout_constraintEnd_toEndOf="@id/email_com_et"
                             android:paddingTop="2dp"
                             android:textColor="@color/pastel_pink"/>
 
