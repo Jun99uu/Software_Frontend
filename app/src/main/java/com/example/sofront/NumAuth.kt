@@ -57,7 +57,7 @@ class NumAuth : AppCompatActivity() {
 
         UID = intent.getStringExtra("UID").toString()
 
-        var authCompleted:Boolean = false
+        var authCompleted = false
 
         binding.geAuth.setOnClickListener{
             if(binding.numSecondEt.text.toString() != "" && binding.numThirdEt.text.toString() != ""){
@@ -89,8 +89,16 @@ class NumAuth : AppCompatActivity() {
 
         binding.complete.setOnClickListener{
             if(authCompleted){
-                val credential = PhoneAuthProvider.getCredential(verificationId, binding.authEt.text.toString())
-                signInWithPhoneAuthCredential(credential)
+                if(binding.authEt.text.toString() == ""){
+                    Toast.makeText(this,"인증번호를 입력해주세요", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    val credential = PhoneAuthProvider.getCredential(
+                        verificationId,
+                        binding.authEt.text.toString()
+                    )
+                    signInWithPhoneAuthCredential(credential)
+                }
             }else{
                 Toast.makeText(this, "인증이 안료되지 않았습니다.", Toast.LENGTH_SHORT).show()
             }
