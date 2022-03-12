@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.sofront.databinding.ActivityDetailInfoBinding
+import java.util.regex.Pattern
 
 class DetailInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailInfoBinding
@@ -34,25 +35,38 @@ class DetailInfoActivity : AppCompatActivity() {
         initView()
         setToggles()
 
-
-        binding.userNameEt
         binding.endBt.setOnClickListener {
             //조건 수정 필요
             //이름 조건
             //모든 정보가 입력 되었는지 확인
             userInfo = adapter.userInfo
 
-            userInfo.user_name = binding.userNameEt.text.toString()
-            if(binding.userAgeEt.text.toString()!="")
-            userInfo.user_age = binding.userAgeEt.text.toString()
+            val idPattern = "^[ㄱ-ㅎ가-힣a-zA-Z0-9]{3,15}\$"
+            val pattern = Pattern.compile(idPattern)
 
+
+            if(binding.userNameEt.text.toString()!="") {
+                val matcher = pattern.matcher(binding.userNameEt.text.toString())
+                if(matcher.find())
+                userInfo.user_name = binding.userNameEt.text.toString()
+                else{
+                    userInfo.user_name = ""
+                }
+            }
+
+            if(binding.userAgeEt.text.toString()!="") {
+                userInfo.user_age = binding.userAgeEt.text.toString()
+            }
+            else{
+                userInfo.user_age = ""
+            }
             if(check()) {
-                println(userInfo)
                 RetrofitService._postUserInfo(userInfo)
             }
             else{
-                println("입력정보확인")
+                println("hi")
             }
+            println(userInfo.toString())
         }
     }
     private fun initView(){
@@ -108,21 +122,38 @@ class DetailInfoActivity : AppCompatActivity() {
 
     private fun check(): Boolean {
 
-        return when {
+        when {
             userInfo.user_name == "" -> {
-                println("username!!!")
-                false
+                Toast.makeText(this,"이름을 입력해 주세요",Toast.LENGTH_SHORT)
+                return false
             }
             userInfo.user_age == "" -> {
-                println("userage!!!!")
-                false
+                Toast.makeText(this,"나이를 입력해 주세요",Toast.LENGTH_SHORT)
+                return false
             }
-            userInfo.user_level == "" -> false
-            userInfo.user_purpose == "" -> false
-            userInfo.user_type == "" -> false
-            userInfo.user_time == "" -> false
-            userInfo.user_number=="" -> false
-            else -> true
+            userInfo.user_level == "" ->{
+                Toast.makeText(this,"운동수준을 체크해 주세요",Toast.LENGTH_SHORT)
+                return false}
+            userInfo.user_purpose == "" -> {
+                Toast.makeText(this,"운동 목적을 체크해 주세요",Toast.LENGTH_SHORT)
+                return false
+            }
+            userInfo.user_type == "" -> {
+                Toast.makeText(this,"선호하는 운동 형태를 체크해 주세요",Toast.LENGTH_SHORT)
+                return false
+            }
+            userInfo.user_time == "" -> {
+                Toast.makeText(this,"선호하는 운동 시간을 체크해 주세요",Toast.LENGTH_SHORT)
+                return false
+            }
+            userInfo.user_number=="" -> {
+                Toast.makeText(this,"선호하는 운동 횟수를 선택해 주세요",Toast.LENGTH_SHORT)
+                return false
+            }
+            else -> {
+                println("입력성공")
+                return true
+            }
         }
     }
 

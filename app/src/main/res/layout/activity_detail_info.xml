@@ -19,13 +19,23 @@
         android:id="@+id/user_name_tv"
         android:fontFamily="@font/nixgonb"
         android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
         android:text="@string/name"
         android:textSize="@dimen/small_font_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+            <TextView
+                android:layout_marginTop="@dimen/default_margin"
+                android:fontFamily="@font/nixgonb"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="최소 3글자, 최대 15글자"
+                android:textSize="@dimen/small_font_size"/>
     <EditText
         android:id="@+id/user_name_et"
         android:fontFamily="@font/nixgonm"
@@ -36,7 +46,7 @@
         android:layout_marginEnd="@dimen/default_margin"
         android:autofillHints="박성규"
         android:inputType="text"
-        android:hint="이름을 입력하세요"
+        android:hint="이름을 입력하세요 (영어, 한글, 숫자 조합)"
         android:singleLine = "true"
         android:lines = "1"
         android:textSize="@dimen/medium_font_size"
@@ -305,9 +315,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/user_number_ll"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/end_bt"
-                android:textSize="16sp"
+                android:backgroundTint="@color/pastel_pink"
+                                android:textSize="16sp"
                 android:text="입력완료"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
