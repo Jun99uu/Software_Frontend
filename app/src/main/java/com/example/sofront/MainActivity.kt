@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         // intent는 마지막에 다 하고 연결하면 되니까 따로 작성할 필요는 없구
         // 코드 테스트 할 때 intent 사용하면, 깃에 업로드할 때는 그 부분 지우고 push 해주세영
         // 화이팅 (●'◡'●)
-//        intent = Intent(this, DetailInfoActivity::class.java)
+//        intent = Intent(this, HomeActivity::class.java)
 //        startActivity(intent)
 
         val fragmentList = listOf(IntroFragment1(), IntroFragment2(), IntroFragment3(), IntroFragment4(), IntroFragment5())
