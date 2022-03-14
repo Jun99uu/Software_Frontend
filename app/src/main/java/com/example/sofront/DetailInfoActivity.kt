@@ -48,20 +48,20 @@ class DetailInfoActivity : AppCompatActivity() {
             if(binding.userNameEt.text.toString()!="") {
                 val matcher = pattern.matcher(binding.userNameEt.text.toString())
                 if(matcher.find())
-                userInfo.user_name = binding.userNameEt.text.toString()
+                userInfo.name = binding.userNameEt.text.toString()
                 else{
-                    userInfo.user_name = ""
+                    userInfo.name = ""
                 }
             }
 
             if(binding.userAgeEt.text.toString()!="") {
-                userInfo.user_age = binding.userAgeEt.text.toString()
+                userInfo.age = binding.userAgeEt.text.toString()
             }
             else{
-                userInfo.user_age = ""
+                userInfo.age = ""
             }
             if(check()) {
-                userInfo.user_UID="testID"
+                userInfo.UID="testID"
                 RetrofitService._postUserInfo(userInfo)
             }
             else{
@@ -124,30 +124,30 @@ class DetailInfoActivity : AppCompatActivity() {
     private fun check(): Boolean {
 
         when {
-            userInfo.user_name == "" -> {
+            userInfo.name == "" -> {
                 Toast.makeText(this,"이름을 입력해 주세요",Toast.LENGTH_SHORT)
                 return false
             }
-            userInfo.user_age == "" -> {
+            userInfo.age == "" -> {
                 Toast.makeText(this,"나이를 입력해 주세요",Toast.LENGTH_SHORT)
                 return false
             }
-            userInfo.user_level == "" ->{
+            userInfo.level == "" ->{
                 Toast.makeText(this,"운동수준을 체크해 주세요",Toast.LENGTH_SHORT)
                 return false}
-            userInfo.user_purpose == "" -> {
+            userInfo.purpose == "" -> {
                 Toast.makeText(this,"운동 목적을 체크해 주세요",Toast.LENGTH_SHORT)
                 return false
             }
-            userInfo.user_type == "" -> {
+            userInfo.type == "" -> {
                 Toast.makeText(this,"선호하는 운동 형태를 체크해 주세요",Toast.LENGTH_SHORT)
                 return false
             }
-            userInfo.user_time == "" -> {
+            userInfo.time == "" -> {
                 Toast.makeText(this,"선호하는 운동 시간을 체크해 주세요",Toast.LENGTH_SHORT)
                 return false
             }
-            userInfo.user_number=="" -> {
+            userInfo.number=="" -> {
                 Toast.makeText(this,"선호하는 운동 횟수를 선택해 주세요",Toast.LENGTH_SHORT)
                 return false
             }
