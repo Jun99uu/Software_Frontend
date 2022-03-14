@@ -61,6 +61,7 @@ class DetailInfoActivity : AppCompatActivity() {
                 userInfo.user_age = ""
             }
             if(check()) {
+                userInfo.user_UID="testID"
                 RetrofitService._postUserInfo(userInfo)
             }
             else{
