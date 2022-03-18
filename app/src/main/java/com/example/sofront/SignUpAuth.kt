@@ -84,8 +84,19 @@ class SignUpAuth : AppCompatActivity() {
             handled
         }
 
+        binding.pwdCkEt.setOnEditorActionListener{ textView, action, event ->
+            var handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                // 키보드 내리기
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.pwdCkEt.windowToken, 0)
+                handled = true
+            }
+            handled
+        }
+
         binding.emailIdEt.addTextChangedListener{
-            binding.emailCkTxt.text = "정확한 이메일을 입력하시길 권유드립니다."
+            binding.emailCkTxt.text = "정확한 이메일을 입력하세요."
         }
 
         var mailArray: Array<String> = arrayOf("@naver.com", "@gmail.com", "@hanmail.net", "@nate.com")

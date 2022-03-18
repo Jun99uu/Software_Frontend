@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         // intent는 마지막에 다 하고 연결하면 되니까 따로 작성할 필요는 없구
         // 코드 테스트 할 때 intent 사용하면, 깃에 업로드할 때는 그 부분 지우고 push 해주세영
         // 화이팅 (●'◡'●)
-//        intent = Intent(this, HomeActivity::class.java)
+//        intent = Intent(this, DetailInfoActivity::class.java)
 //        startActivity(intent)
 
         val fragmentList = listOf(IntroFragment1(), IntroFragment2(), IntroFragment3(), IntroFragment4(), IntroFragment5())
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "인증된 사용자입니다.", Toast.LENGTH_SHORT).show()
             Log.d("user : ", user.toString())
             val uid = user.uid
-//            Firebase.auth.signOut()
+            Firebase.auth.signOut() //임시 로그아웃
             // <통신> 여기서 우리 서버에 해당 uid를 가진 db가 있는지 확인. 있으면 바로 메인화면으로 넘어가고, 없으면 인증페이지(NumAuth)로 넘어감
 
         }else{

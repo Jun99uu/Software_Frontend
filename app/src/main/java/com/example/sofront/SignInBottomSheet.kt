@@ -36,6 +36,10 @@ class SignInBottomSheet : BottomSheetDialogFragment() {
 //            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
 //            mainActivity.finish()
         }
+        binding.signIn.setOnClickListener{
+            var intent = Intent(mainActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
         return binding.root
     }
 

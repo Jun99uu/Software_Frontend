@@ -14,312 +14,405 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/user_name_tv"
-        android:fontFamily="@font/nixgonb"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:text="@string/name"
-        android:textSize="@dimen/small_font_size"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="40dp">
+
             <TextView
-                android:layout_marginTop="@dimen/default_margin"
-                android:fontFamily="@font/nixgonb"
-                android:layout_marginEnd="@dimen/default_margin"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintRight_toRightOf="parent"
+                android:text="반가워요,\n짐꾼입니다."
+                android:letterSpacing="-0.05"
+                android:fontFamily="@font/nixgonb"
+                android:textColor="@color/black"
+                android:textSize="45sp"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="최소 3글자, 최대 15글자"
-                android:textSize="@dimen/small_font_size"/>
-    <EditText
-        android:id="@+id/user_name_et"
-        android:fontFamily="@font/nixgonm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:autofillHints="박성규"
-        android:inputType="text"
-        android:hint="이름을 입력하세요 (영어, 한글, 숫자 조합)"
-        android:singleLine = "true"
-        android:lines = "1"
-        android:textSize="@dimen/medium_font_size"
-        app:layout_constraintLeft_toLeftOf="@id/user_name_tv"
-        app:layout_constraintTop_toBottomOf="@id/user_name_tv" />
+                android:paddingTop="30dp"
+                android:paddingLeft="10dp"/>
 
-    <TextView
-        android:id="@+id/user_age_tv"
-        android:fontFamily="@font/nixgonb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/age"
-        android:textSize="@dimen/small_font_size"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name_et" />
-
-    <EditText
-        android:id="@+id/user_age_et"
-        android:fontFamily="@font/nixgonm"
-        android:inputType="numberSigned"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:singleLine = "true"
-        android:lines = "1"
-        android:autofillHints="24"
-        android:hint="나이를 입력하세요"
-        android:textSize="@dimen/medium_font_size"
-        android:imeOptions="actionDone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_age_tv" />
-
-    <TextView
-        android:id="@+id/user_level_tv"
-        android:fontFamily="@font/nixgonb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/level"
-        android:textSize="@dimen/small_font_size"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_age_et" />
             <TextView
-                android:fontFamily="@font/nixgonb"
+                android:id="@+id/subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@+id/user_level_tv"
-                app:layout_constraintTop_toBottomOf="@+id/user_age_et"
-                android:textSize="@dimen/small_font_size"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:textColor="@color/teal_200"
-                android:id="@+id/level_selected_tv"/>
-
-    <ToggleButton
-        android:id="@+id/user_level_toggle"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/bread"
-        android:textOn=""
-        android:textOff=""
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:checked="true"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_age_et" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/user_level_ll"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:visibility="visible"
-        android:layout_marginEnd="@dimen/default_margin"
-        tools:listitem="@layout/select_item_recycler"
-        app:layout_constraintTop_toBottomOf="@+id/user_level_toggle"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <TextView
-        android:id="@+id/user_purpose_tv"
-        android:fontFamily="@font/nixgonb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/purpose"
-        android:textSize="@dimen/small_font_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_level_ll" />
-            <TextView
+                android:text="추가 정보를 조사할게요🐸"
                 android:fontFamily="@font/nixgonb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/teal_200"
-                app:layout_constraintLeft_toRightOf="@+id/user_purpose_tv"
-                app:layout_constraintTop_toBottomOf="@+id/user_level_ll"
-                android:textSize="@dimen/small_font_size"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:id="@+id/purpose_selected_tv"/>
-    <ToggleButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/hamburger"
-        android:textOn=""
-        android:textOff=""
-        android:id="@+id/user_purpose_toggle"
-        app:layout_constraintTop_toBottomOf="@+id/user_level_ll"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"/>
-            <androidx.recyclerview.widget.RecyclerView
+                android:letterSpacing="-0.05"
+                android:textColor="@color/gray"
+                android:textSize="25sp"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fisrt_layer"
                 android:layout_width="match_parent"
-                android:id="@+id/user_purpose_ll"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                tools:listitem="@layout/select_item_recycler"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/user_purpose_toggle"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/subtitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:paddingTop="40dp"
+                android:paddingBottom="30dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/user_name_tv"
+                    android:fontFamily="@font/nixgonm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/small_font_size"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/user_name_et"
+                    android:fontFamily="@font/nixgonm"
+                    android:background="@drawable/signup_eidt"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:autofillHints="박성규"
+                    android:inputType="text"
+                    android:hint="영어, 한글, 숫자 조합"
+                    android:gravity="center"
+                    android:singleLine = "true"
+                    android:lines = "1"
+                    app:layout_constraintLeft_toRightOf="@id/user_name_tv"
+                    android:layout_marginLeft="30dp"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/user_name_txt"
+                    android:fontFamily="@font/nixgonm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/user_name_et"
+                    android:paddingTop="5dp"
+                    app:layout_constraintEnd_toEndOf="@id/user_name_et"
+                    android:text="최소 3글자, 최대 15글자"
+                    android:textColor="@color/pastel_pink"/>
+
+                <TextView
+                    android:id="@+id/user_age_tv"
+                    android:fontFamily="@font/nixgonm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/age"
+                    android:textSize="@dimen/small_font_size"
+                    android:textColor="@color/black"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/user_age_et"
+                    android:paddingTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/user_age_et"
+                    android:fontFamily="@font/nixgonm"
+                    android:inputType="numberSigned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/signup_eidt"
+                    android:ems="10"
+                    android:singleLine = "true"
+                    android:lines = "1"
+                    android:autofillHints="24"
+                    android:hint="나이를 입력하세요"
+                    android:gravity="center"
+                    android:imeOptions="actionDone"
+                    android:layout_marginTop="25dp"
+                    app:layout_constraintStart_toStartOf="@id/user_name_et"
+                    app:layout_constraintTop_toBottomOf="@id/user_name_et"/>
+
+                <TextView
+                    android:id="@+id/user_age_txt"
+                    android:fontFamily="@font/nixgonm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/user_age_et"
+                    android:paddingTop="5dp"
+                    app:layout_constraintEnd_toEndOf="@id/user_age_et"
+                    android:text="숫자만 입력"
+                    android:textColor="@color/pastel_pink"/>
 
 
-            <TextView
-        android:id="@+id/user_type_tv"
-        android:fontFamily="@font/nixgonb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/type"
-        android:textSize="@dimen/small_font_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_purpose_ll" />
-            <TextView
-                android:fontFamily="@font/nixgonb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/teal_200"
-                app:layout_constraintLeft_toRightOf="@+id/user_type_tv"
-                app:layout_constraintTop_toBottomOf="@+id/user_purpose_ll"
-                android:textSize="@dimen/small_font_size"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:id="@+id/type_selected_tv"/>
-    <ToggleButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/hamburger"
-        android:textOn=""
-        android:textOff=""
-        android:id="@+id/user_type_toggle"
-        app:layout_constraintTop_toBottomOf="@+id/user_purpose_ll"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"/>
-            <androidx.recyclerview.widget.RecyclerView
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/plus_layer"
                 android:layout_width="match_parent"
-                android:id="@+id/user_type_ll"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                tools:listitem="@layout/select_item_recycler"
-                app:layout_constraintTop_toBottomOf="@+id/user_type_toggle"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:background="@drawable/new_radius"
+                android:backgroundTint="#CBEDEDED"
+                app:layout_constraintTop_toBottomOf="@id/fisrt_layer"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/end_bt"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp">
 
-            <TextView
-        android:id="@+id/user_time_tv"
-        android:fontFamily="@font/nixgonb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/time"
-        android:textSize="@dimen/small_font_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_type_ll" />
-            <TextView
-                android:fontFamily="@font/nixgonb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/teal_200"
-                app:layout_constraintLeft_toRightOf="@+id/user_time_tv"
-                app:layout_constraintTop_toBottomOf="@+id/user_type_ll"
-                android:textSize="@dimen/small_font_size"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:id="@+id/time_selected_tv"/>
-    <ToggleButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/hamburger"
-        android:textOn=""
-        android:textOff=""
-        android:id="@+id/user_time_toggle"
-        app:layout_constraintTop_toBottomOf="@+id/user_type_ll"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                android:id="@+id/user_time_ll"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                tools:listitem="@layout/select_item_recycler"
-                app:layout_constraintTop_toBottomOf="@+id/user_time_toggle"
-                app:layout_constraintStart_toStartOf="parent"/>
+                <TextView
+                    android:id="@+id/user_level_tv"
+                    android:fontFamily="@font/nixgonm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/level"
+                    android:textSize="@dimen/small_font_size"
+                    android:textColor="@color/black"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/user_level_toggle"
+                    android:paddingTop="6dp"/>
 
-            <TextView
-        android:id="@+id/user_number_tv"
-        android:fontFamily="@font/nixgonb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/number"
-        android:textSize="@dimen/small_font_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_time_ll" />
-            <TextView
-                android:fontFamily="@font/nixgonb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/teal_200"
-                app:layout_constraintLeft_toRightOf="@+id/user_number_tv"
-                app:layout_constraintTop_toBottomOf="@+id/user_time_ll"
-                android:textSize="@dimen/small_font_size"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:id="@+id/number_selected_tv"/>
-    <ToggleButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/hamburger"
-        android:textOn=""
-        android:textOff=""
-        android:id="@+id/user_number_toggle"
-        app:layout_constraintTop_toBottomOf="@+id/user_time_ll"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/user_number_ll"
-                android:visibility="gone"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                tools:listitem="@layout/select_item_recycler"
-                app:layout_constraintTop_toBottomOf="@+id/user_number_toggle"
-                app:layout_constraintStart_toStartOf="parent"/>
+                <TextView
+                    android:id="@+id/level_selected_tv"
+                    android:fontFamily="@font/nixgonb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/small_font_size"
+                    app:layout_constraintTop_toTopOf="@id/user_level_tv"
+                    app:layout_constraintLeft_toRightOf="@id/user_level_tv"
+                    android:textColor="@color/teal_200"
+                    android:paddingTop="6dp"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <ToggleButton
+                    android:id="@+id/user_level_toggle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bread"
+                    android:textOn=""
+                    android:textOff=""
+                    android:checked="true"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/user_level_ll"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:visibility="visible"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    tools:listitem="@layout/select_item_recycler"
+                    app:layout_constraintTop_toBottomOf="@+id/user_level_toggle"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/user_purpose_tv"
+                    android:fontFamily="@font/nixgonm"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/purpose"
+                    android:textSize="@dimen/small_font_size"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/user_purpose_toggle"
+                    android:paddingTop="6dp"/>
+
+                <TextView
+                    android:id="@+id/purpose_selected_tv"
+                    android:fontFamily="@font/nixgonb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/teal_200"
+                    app:layout_constraintLeft_toRightOf="@+id/user_purpose_tv"
+                    app:layout_constraintTop_toTopOf="@id/user_purpose_tv"
+                    android:paddingTop="6dp"
+                    android:layout_marginStart="10dp"
+                    android:textSize="@dimen/small_font_size"
+                    />
+
+                <ToggleButton
+                    android:id="@+id/user_purpose_toggle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/hamburger"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/user_level_ll"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/user_purpose_ll"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    tools:listitem="@layout/select_item_recycler"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/user_purpose_toggle"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+
+                <TextView
+                    android:id="@+id/user_type_tv"
+                    android:fontFamily="@font/nixgonm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/type"
+                    android:textSize="@dimen/small_font_size"
+                    android:textColor="@color/black"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/user_type_toggle"
+                    android:paddingTop="6dp"/>
+
+                <TextView
+                    android:id="@+id/type_selected_tv"
+                    android:fontFamily="@font/nixgonb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/teal_200"
+                    app:layout_constraintLeft_toRightOf="@+id/user_type_tv"
+                    app:layout_constraintTop_toTopOf="@+id/user_type_tv"
+                    android:textSize="@dimen/small_font_size"
+                    android:paddingTop="6dp"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <ToggleButton
+                    android:id="@+id/user_type_toggle"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/hamburger"
+                    android:textOn=""
+                    android:textOff=""
+                    app:layout_constraintTop_toBottomOf="@+id/user_purpose_ll"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="20dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/user_type_ll"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    tools:listitem="@layout/select_item_recycler"
+                    app:layout_constraintTop_toBottomOf="@+id/user_type_toggle"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/user_time_tv"
+                    android:fontFamily="@font/nixgonm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/small_font_size"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/user_time_toggle"
+                    android:paddingTop="6dp"/>
+
+                <TextView
+                    android:id="@+id/time_selected_tv"
+                    android:fontFamily="@font/nixgonb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/teal_200"
+                    app:layout_constraintLeft_toRightOf="@+id/user_time_tv"
+                    app:layout_constraintTop_toTopOf="@+id/user_time_tv"
+                    android:textSize="@dimen/small_font_size"
+                    android:paddingTop="6dp"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <ToggleButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/hamburger"
+                    android:textOn=""
+                    android:textOff=""
+                    android:id="@+id/user_time_toggle"
+                    app:layout_constraintTop_toBottomOf="@+id/user_type_ll"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="20dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:id="@+id/user_time_ll"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    tools:listitem="@layout/select_item_recycler"
+                    app:layout_constraintTop_toBottomOf="@+id/user_time_toggle"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/user_number_tv"
+                    android:fontFamily="@font/nixgonm"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number"
+                    android:textSize="@dimen/small_font_size"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/user_number_toggle"
+                    android:paddingTop="6dp"/>
+
+                <TextView
+                    android:id="@+id/number_selected_tv"
+                    android:fontFamily="@font/nixgonb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/teal_200"
+                    app:layout_constraintLeft_toRightOf="@+id/user_number_tv"
+                    app:layout_constraintTop_toTopOf="@+id/user_number_tv"
+                    android:textSize="@dimen/small_font_size"
+                    android:paddingTop="6dp"
+                    android:layout_marginStart="10dp"
+                    />
+
+                <ToggleButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/hamburger"
+                    android:textOn=""
+                    android:textOff=""
+                    android:id="@+id/user_number_toggle"
+                    app:layout_constraintTop_toBottomOf="@+id/user_time_ll"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="20dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/user_number_ll"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    tools:listitem="@layout/select_item_recycler"
+                    app:layout_constraintTop_toBottomOf="@+id/user_number_toggle"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <Button
-                android:fontFamily="@font/nixgonm"
-                android:layout_width="wrap_content"
+                android:fontFamily="@font/nixgonb"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/user_number_ll"
+                app:layout_constraintTop_toBottomOf="@+id/plus_layer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/end_bt"
-                android:backgroundTint="@color/pastel_pink"
-                                android:textSize="16sp"
+                android:background="@drawable/radius"
+                android:backgroundTint="@color/patel_yellow"
+                android:layout_marginTop="30dp"
+                android:textSize="18sp"
                 android:text="입력완료"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
