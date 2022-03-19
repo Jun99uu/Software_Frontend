@@ -22,5 +22,5 @@
     <color name="pastel_purple">#E1B4D3</color>
     <color name="gray">#3F3F3F</color>
     <color name="item_selected">#FFB2A6</color>
-    <color name="item_nselected">#00000000</color>
+    <color name="item_nselected">#D8D8D8</color>
 </resources>
