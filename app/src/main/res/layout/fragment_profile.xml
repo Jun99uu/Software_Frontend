@@ -3,11 +3,346 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfileFragment">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="프로필" />
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="80dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/upper_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/profile_border"
+                android:backgroundTint="@color/patel_yellow"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingTop="30dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/defaultprofile"
+                    android:scaleType="centerCrop"
+                    android:backgroundTint="#00000000"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="홍길동님, 반갑습니다!"
+                    android:fontFamily="@font/nixgonb"
+                    android:textColor="@color/black"
+                    android:letterSpacing="-0.05"
+                    android:textSize="30sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profile_image"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radius"
+                    android:backgroundTint="@color/pastel_white"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/user_name"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:shadowColor="#DF434343"
+                    android:shadowRadius="5.0"
+                    android:shadowDx="5.0"
+                    android:shadowDy="5.0">
+
+                    <ImageView
+                        android:id="@+id/tier"
+                        android:layout_width="115dp"
+                        android:layout_height="115dp"
+                        android:src="@drawable/tier_gold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:paddingTop="5dp"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/tier"
+                        android:paddingLeft="15dp">
+
+                        <TextView
+                            android:id="@+id/tier_explain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="'세간이 인정한 헬창'"
+                            android:letterSpacing="-0.05"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            android:fontFamily="@font/nixgonb"
+                            android:textSize="25sp"/>
+
+                        <TextView
+                            android:id="@+id/dday_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="짐꾼된지 +"
+                            android:fontFamily="@font/nixgonm"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            app:layout_constraintTop_toBottomOf="@id/tier_explain"
+                            app:layout_constraintStart_toStartOf="@id/tier_explain"/>
+
+                        <TextView
+                            android:id="@+id/dday_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="165일"
+                            android:fontFamily="@font/nixgonm"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            app:layout_constraintTop_toBottomOf="@id/tier_explain"
+                            app:layout_constraintStart_toEndOf="@id/dday_tv"/>
+
+                        <TextView
+                            android:id="@+id/checkday_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="운동한 날 "
+                            android:fontFamily="@font/nixgonm"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            app:layout_constraintTop_toBottomOf="@id/dday_tv"
+                            app:layout_constraintStart_toStartOf="@id/tier_explain"/>
+
+                        <TextView
+                            android:id="@+id/checkday_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="83일"
+                            android:fontFamily="@font/nixgonm"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            app:layout_constraintTop_toBottomOf="@id/dday_tv"
+                            app:layout_constraintStart_toEndOf="@id/checkday_tv"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/community_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/googlebtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/upper_lay"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="커뮤니티"
+                    android:fontFamily="@font/nixgonb"
+                    android:textColor="@color/black"
+                    android:letterSpacing="-0.05"
+                    android:textSize="25sp"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingBottom="5dp"/>
+
+                <FrameLayout
+                    android:id="@+id/change_nick_case"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/signout"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="20dp"/>
+
+                    <Button
+                        android:id="@+id/change_nick_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:backgroundTint="@color/pastel_white"
+                        android:fontFamily="@font/nixgonm"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="-0.05"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="닉네임 변경"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/change_detail_case"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/change_detail_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:backgroundTint="@color/pastel_white"
+                        android:fontFamily="@font/nixgonm"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="-0.05"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="추가정보 변경"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/signout"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="20dp"/>
+
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/account_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/googlebtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/community_box"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="계정"
+                    android:fontFamily="@font/nixgonb"
+                    android:textColor="@color/black"
+                    android:letterSpacing="-0.05"
+                    android:textSize="25sp"
+                    android:paddingTop="20dp"
+                    android:paddingLeft="15dp"
+                    android:paddingBottom="5dp"/>
+
+                <FrameLayout
+                    android:id="@+id/sign_out_case"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/signout"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="20dp"/>
+
+                    <Button
+                        android:id="@+id/sign_out_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:backgroundTint="@color/pastel_white"
+                        android:fontFamily="@font/nixgonm"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="-0.05"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="로그아웃"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/change_pwd_case"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/signout"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="20dp"/>
+
+                    <Button
+                        android:id="@+id/change_pwd_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:backgroundTint="@color/pastel_white"
+                        android:fontFamily="@font/nixgonm"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="-0.05"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="비밀번호 변경"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/resign_case"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/signout"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="20dp"/>
+
+                    <Button
+                        android:id="@+id/resign_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:backgroundTint="@color/pastel_white"
+                        android:fontFamily="@font/nixgonm"
+                        android:gravity="center_vertical"
+                        android:letterSpacing="-0.05"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="회원 탈퇴"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"/>
+
+                </FrameLayout>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </FrameLayout>
