@@ -3,24 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cnb_unselectedColor="#666666">
 
-    <item android:id="@+id/home"
-        android:icon="@drawable/ic_home"
-        android:title="Home"
-        app:cnb_iconColor="@color/patel_yellow"/>
+    <item android:id="@+id/daily"
+        android:icon="@drawable/ic_gym"
+        android:title="데일리"
+        app:cnb_iconColor="@color/gray"/>
 
-    <item android:id="@+id/list"
-        android:icon="@drawable/ic_listcheck"
-        android:title="Check"
+    <item android:id="@+id/calendar"
+        android:icon="@drawable/ic_calendar"
+        android:title="캘린더"
         app:cnb_iconColor="@color/pastel_blue"/>
 
-    <item android:id="@+id/heart"
+    <item android:id="@+id/plan"
+        android:icon="@drawable/ic_listcheck"
+        android:title="플랜"
+        app:cnb_iconColor="@color/patel_yellow"/>
+
+    <item android:id="@+id/subscribe"
         android:icon="@drawable/ic_heart"
-        android:title="Heart"
+        android:title="구독"
         app:cnb_iconColor="@color/pastel_pink"/>
 
     <item android:id="@+id/profile"
         android:icon="@drawable/ic_user"
-        android:title="Profile"
+        android:title="프로필"
         app:cnb_iconColor="@color/pastel_purple"/>
 
 </menu>

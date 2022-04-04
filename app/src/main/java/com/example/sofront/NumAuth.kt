@@ -20,8 +20,6 @@ class NumAuth : AppCompatActivity() {
     var verificationId = ""
 
     var UID:String = ""
-    var PWD:String = ""
-    var Email:String = ""
 
     private fun signInWithPhoneAuthCredential(credential : PhoneAuthCredential){
         auth.signInWithCredential(credential).addOnCompleteListener(this){ task ->
@@ -29,10 +27,9 @@ class NumAuth : AppCompatActivity() {
                 Toast.makeText(this, "인증에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, DetailInfoActivity::class.java)
                 intent.putExtra("UID", UID)
-                intent.putExtra("PWD", PWD)
-                intent.putExtra("Email", Email)
 
-                //<통신> 해당 uid를 기본 키로 갖는 문서를 생성해줌
+                val UIDjson = UID(UID)
+                RetrofitService._postAuth(UIDjson)
 
                 //전화번호 인증 삭제
                 val user = Firebase.auth.currentUser!!
