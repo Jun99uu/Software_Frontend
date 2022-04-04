@@ -35,11 +35,11 @@ class SelectItemAdapter() : RecyclerView.Adapter<SelectItemAdapter.MyViewHolder>
             binding.rvBt.setOnClickListener {
                 expand(count)
                 when(count) {
-                    0 -> userInfo.user_level = binding.rvBt.text.toString()
-                    1 -> userInfo.user_purpose = binding.rvBt.text.toString()
-                    2 -> userInfo.user_type = binding.rvBt.text.toString()
-                    3 -> userInfo.user_time = binding.rvBt.text.toString()
-                    4 -> userInfo.user_number = binding.rvBt.text.toString()
+                    0 -> userInfo.level = binding.rvBt.text.toString()
+                    1 -> userInfo.purpose = binding.rvBt.text.toString()
+                    2 -> userInfo.type = binding.rvBt.text.toString()
+                    3 -> userInfo.time = binding.rvBt.text.toString()
+                    4 -> userInfo.number = binding.rvBt.text.toString()
                 }
                 for(i in 0 until buttonList.size){
                     if(i == position){

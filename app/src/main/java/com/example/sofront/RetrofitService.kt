@@ -10,8 +10,8 @@ import retrofit2.http.*
 
 interface RetrofitService {
     //1. 인터페이스 설계
-    @POST("users/{id}/info")
-    fun postUserInfo(@Path("id")id:String, @Body userInfo: UserInfo) : Call<UserInfo>
+    @POST("userInfo/")
+    fun postUserInfo(@Body userInfo: UserInfo) : Call<UserInfo>
 
     @POST("welcome/")
     fun postUID(@Body UID: UID): Call<UID>
@@ -37,7 +37,7 @@ interface RetrofitService {
         //3. 인터페이스 사용
         fun _postUserInfo(userInfo: UserInfo){
             /////////////////id 가져오기
-            retrofitService.postUserInfo("123",userInfo).enqueue(object: Callback<UserInfo> {
+            retrofitService.postUserInfo(userInfo).enqueue(object: Callback<UserInfo> {
                 override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
                     if(response.isSuccessful){
                         Log.d("Post","success $response")
