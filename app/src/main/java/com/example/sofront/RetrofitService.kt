@@ -10,13 +10,15 @@ import retrofit2.http.*
 
 interface RetrofitService {
     //1. 인터페이스 설계
-    @POST("userInfo/")
+    @POST("user_info/")
     fun postUserInfo(@Body userInfo: UserInfo) : Call<UserInfo>
 
+    @GET("plan/{uid}")
+    fun getPlan(@Path("uid") uid : String) : Call<Plan>
 
 
     companion object{
-        private const val BASE_URL = "http://5bb3-219-255-158-172.ngrok.io/"
+        private const val BASE_URL = "http://2070-219-255-158-172.ngrok.io/database/"
 
         val retrofitService = create()
 
@@ -39,7 +41,7 @@ interface RetrofitService {
                         Log.d("Post","success $response")
                     }
                     else {
-                        Log.d("Post", "success,but ${response.errorBody()}")
+                        Log.d("Post", "success,but ${response.errorBody()} ${response.message()}")
                     }
                 }
 
@@ -48,6 +50,28 @@ interface RetrofitService {
                 }
             })
         }
+
+//        fun _getPlan(uid: String) : Plan{
+//            var myPlan: Plan
+//
+//            retrofitService.getPlan(uid).enqueue(object : Callback<Plan>{
+//                override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
+//                    if(response.isSuccessful){
+//                        if(response.body()!=null){
+//                            myPlan = (response.body()) as Plan
+//                        }
+//                    }
+//                    else{
+//
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<Plan>, t: Throwable) {
+//
+//                }
+//            })
+//            return myPlan
+//        }
 
 
     }
