@@ -12,19 +12,23 @@ class HomeActivity : AppCompatActivity() {
         val binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomBar.setItemSelected(R.id.home)
+        binding.bottomBar.setItemSelected(R.id.daily)
         openHomeFragment()
 
         binding.bottomBar.setOnItemSelectedListener {
             when(it){
-                R.id.home -> {
+                R.id.daily -> {
                     openHomeFragment()
                 }
-                R.id.list -> {
+                R.id.calendar -> {
                     val listFragment = ListFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.frame_layout, listFragment).commit()
                 }
-                R.id.heart -> {
+                R.id.plan -> {
+                    val planFragment = PlanCollectionFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.frame_layout, planFragment).commit()
+                }
+                R.id.subscribe -> {
                     val heartFragment = HeartFragment()
                     supportFragmentManager.beginTransaction().replace(R.id.frame_layout, heartFragment).commit()
                 }

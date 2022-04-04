@@ -13,10 +13,14 @@ interface RetrofitService {
     @POST("userInfo/")
     fun postUserInfo(@Body userInfo: UserInfo) : Call<UserInfo>
 
+    @POST("welcome/")
+    fun postUID(@Body UID: UID): Call<UID>
 
+    @POST("auth_check/")
+    fun postAuth(@Body UID: UID): Call<UID>
 
     companion object{
-        private const val BASE_URL = "http://5bb3-219-255-158-172.ngrok.io/"
+        private const val BASE_URL = "http://a041-219-255-158-173.ngrok.io/database/"
 
         val retrofitService = create()
 
@@ -49,6 +53,43 @@ interface RetrofitService {
             })
         }
 
+        ///////UID 전송
+        fun _postUID(UID: UID):Boolean{
+            var successful:Boolean = false
+            retrofitService.postUID(UID).enqueue(object: Callback<UID>{
+                override fun onResponse(call: Call<UID>, response: Response<UID>) {
+                    if(response.isSuccessful){
+                        Log.d("Post","success $response")
+                        successful = true
+                    }else {
+                        Log.d("Post", "success,but ${response.errorBody()}")
+                    }
+                }
+                override fun onFailure(call: Call<UID>, t: Throwable) {
+                    Log.d("Post","fail $t")
+                }
+            })
+            return successful
+        }
+
+        ///////인증 성공 후 전송
+        fun _postAuth(UID: UID):Boolean{
+            var successful:Boolean = false
+            retrofitService.postAuth(UID).enqueue(object: Callback<UID>{
+                override fun onResponse(call: Call<UID>, response: Response<UID>) {
+                    if(response.isSuccessful){
+                        Log.d("Post","success $response")
+                        successful = true
+                    }else {
+                        Log.d("Post", "success,but ${response.errorBody()}")
+                    }
+                }
+                override fun onFailure(call: Call<UID>, t: Throwable) {
+                    Log.d("Post","fail $t")
+                }
+            })
+            return successful
+        }
 
     }
 }
