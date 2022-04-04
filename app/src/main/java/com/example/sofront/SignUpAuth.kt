@@ -167,14 +167,16 @@ class SignUpAuth : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
-                            val user = auth.currentUser
+                            val user = auth.currentUser //이메일 - 비밀번호로 구성된 계정 firebase에 저장(아직 인증x)
                             user!!.updateEmail(Email)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         Log.d(TAG, "User email address updated.")
-                                        val UID = user.uid
+                                        val UID = UID(user.uid)
+                                        //TODO 버튼 한 번 누르고 더 못누르게 해야됨.
+                                        RetrofitService._postUID(UID)
                                         val intent = Intent(this, NumAuth::class.java)
-                                        intent.putExtra("UID", UID)
+                                        intent.putExtra("UID", user.uid)
                                         startActivity(intent)
                                     }
                                 }
