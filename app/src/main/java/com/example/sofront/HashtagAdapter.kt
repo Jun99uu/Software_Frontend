@@ -1,18 +1,23 @@
 package com.example.sofront
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class HashtagAdapter(val itemList: ArrayList<HashTagData>): RecyclerView.Adapter<HashtagAdapter.ViewHolder>() {
+    lateinit var context: Context
+
     // (1) 아이템 레이아웃과 결합
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HashtagAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.hashtag_item, parent, false)
+        context = parent.context
         return ViewHolder(view)
     }
     // (2) 리스트 내 아이템 개수
