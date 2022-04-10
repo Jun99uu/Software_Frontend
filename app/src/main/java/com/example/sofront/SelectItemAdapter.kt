@@ -38,8 +38,8 @@ class SelectItemAdapter() : RecyclerView.Adapter<SelectItemAdapter.MyViewHolder>
                     0 -> userInfo.level = binding.rvBt.text.toString()
                     1 -> userInfo.purpose = binding.rvBt.text.toString()
                     2 -> userInfo.type = binding.rvBt.text.toString()
-                    3 -> userInfo.time = binding.rvBt.text.toString()
-                    4 -> userInfo.number = binding.rvBt.text.toString()
+                    3 -> userInfo.time = Integer.parseInt(binding.rvBt.text.substring(0,binding.rvBt.text.length-1))
+                    4 -> userInfo.number = Integer.parseInt(binding.rvBt.text.substring(0,binding.rvBt.text.length-1))
                 }
                 for(i in 0 until buttonList.size){
                     if(i == position){

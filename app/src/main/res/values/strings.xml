@@ -24,8 +24,8 @@
     </array>
     <array name="time_array">
         <item>30분</item>
-        <item>1시간</item>
-        <item>1시간 반</item>
+        <item>60분</item>
+        <item>90분</item>
     </array>
     <array name="number_array">
         <item>1회</item>
