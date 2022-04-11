@@ -3,6 +3,8 @@ package com.example.sofront
 import com.google.gson.annotations.SerializedName
 
 data class UserInfo(
+    @SerializedName("UID")
+    var UID: String ="",
     @SerializedName("user_name")
     var name: String = "",
     @SerializedName("user_age")
