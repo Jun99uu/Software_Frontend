@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
             handled
         }
 
-        var mailArray: Array<String> = arrayOf("@naver.com", "@gmail.com", "@hanmail.net", "@nate.com")
+        val mailArray: Array<String> = arrayOf("@naver.com", "@gmail.com", "@hanmail.net", "@nate.com")
         var mailcom:String
         binding.emailComEt.setOnClickListener{
             val builder = AlertDialog.Builder(this)
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
                     DialogInterface.OnClickListener { dialog, which ->
                         // 여기서 인자 'which'는 배열의 position을 나타냅니다.
                         binding.emailComEt.text = mailArray[which]
-                        mailcom = mailArray[which]
+//                        mailcom = mailArray[which]
                     })
             // 다이얼로그를 띄워주기
             builder.show()
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         binding.regiBtn.setOnClickListener{
-            var intent = Intent(this, SignUpAuth::class.java)
+            val intent = Intent(this, SignUpAuth::class.java)
             startActivity(intent)
         }
 
@@ -70,9 +70,10 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            RetrofitService._login(auth.uid.toString())
                             Log.d(TAG, "signInWithEmail:success")
                             val user = auth.currentUser
-                            updateUI(user)
+//                            updateUI(user)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.exception)

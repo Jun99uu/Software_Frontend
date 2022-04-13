@@ -10,17 +10,21 @@ import retrofit2.http.*
 
 interface RetrofitService {
     //1. 인터페이스 설계
-    @POST("userInfo/")
+    @POST("user_info/")
     fun postUserInfo(@Body userInfo: UserInfo) : Call<UserInfo>
 
     @POST("welcome/")
     fun postUID(@Body UID: UID): Call<UID>
+    @GET("plan/{uid}/")
+    fun getPlan(@Path("uid") uid : String) : Call<Plan>
 
     @POST("auth_check/")
     fun postAuth(@Body UID: UID): Call<UID>
 
+    @POST("login/")
+    fun login(@Body UID: UID): Call<UID>
     companion object{
-        private const val BASE_URL = "http://a041-219-255-158-173.ngrok.io/database/"
+        private const val BASE_URL = "http://3be3-219-255-158-172.ngrok.io/database/"
 
         val retrofitService = create()
 
@@ -40,6 +44,7 @@ interface RetrofitService {
             retrofitService.postUserInfo(userInfo).enqueue(object: Callback<UserInfo> {
                 override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
                     if(response.isSuccessful){
+                        response.message()
                         Log.d("Post","success $response")
                     }
                     else {
@@ -59,10 +64,20 @@ interface RetrofitService {
             retrofitService.postUID(UID).enqueue(object: Callback<UID>{
                 override fun onResponse(call: Call<UID>, response: Response<UID>) {
                     if(response.isSuccessful){
-                        Log.d("Post","success $response")
+                        Log.d("PostUID","success $response")
+                        Log.d("PostUID", "${response.message()}")
+                        Log.d("PostUID",response.toString())
+                        Log.d("PostUID : code",response.code().toString())
+                        Log.d("PostUID : body",response.body().toString())
                         successful = true
                     }else {
-                        Log.d("Post", "success,but ${response.errorBody()}")
+                        Log.d("Post", "success,but errorbody : ${response.errorBody()}")
+                        Log.d("Post", "${response.message()}")
+                        Log.d("PostUID",response.raw().toString())
+                        Log.d("response.tostring",response.toString())
+                        Log.d("body", response.body().toString())
+                        Log.d("PostUID : code",response.code().toString())
+
                     }
                 }
                 override fun onFailure(call: Call<UID>, t: Throwable) {
@@ -89,6 +104,48 @@ interface RetrofitService {
                 }
             })
             return successful
+        }
+//        fun _getPlan(uid: String) : Plan{
+//            var myPlan: Plan
+//
+//            retrofitService.getPlan(uid).enqueue(object : Callback<Plan>{
+//                override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
+//                    if(response.isSuccessful){
+//                        if(response.body()!=null){
+//                            myPlan = (response.body()) as Plan
+//                        }
+//                    }
+//                    else{
+//
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<Plan>, t: Throwable) {
+//
+//                }
+//            })
+//            return myPlan
+//        }
+        fun _login(uid:String)  {
+            retrofitService.login(UID(uid)).enqueue(object : Callback<UID>{
+                override fun onResponse(call: Call<UID>, response: Response<UID>) {
+                    if(response.isSuccessful){
+                        Log.d("login","success")
+                        Log.d("login code ",response.code().toString())
+                        Log.d("login body", response.body().toString())
+
+
+                    }
+                    else{
+                        Log.d("login","success but something error")
+                    }
+                }
+
+                override fun onFailure(call: Call<UID>, t: Throwable) {
+                    Log.d("login","fail")
+                }
+
+            })
         }
 
     }
