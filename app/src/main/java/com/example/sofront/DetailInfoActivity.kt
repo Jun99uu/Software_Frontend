@@ -54,13 +54,13 @@ class DetailInfoActivity : AppCompatActivity() {
             }
 
             if(binding.userAgeEt.text.toString()!="") {
-                userInfo.age = binding.userAgeEt.text.toString()
+                userInfo.age = Integer.parseInt(binding.userAgeEt.text.toString())
             }
             else{
-                userInfo.age = ""
+                userInfo.age = 0
             }
             if(check()) {
-                userInfo.UID="testID"
+                userInfo.UID=UID.toString()
                 RetrofitService._postUserInfo(userInfo)
             }
             else{
@@ -124,30 +124,30 @@ class DetailInfoActivity : AppCompatActivity() {
 
         when {
             userInfo.name == "" -> {
-                Toast.makeText(this,"이름을 입력해 주세요",Toast.LENGTH_SHORT)
+                Toast.makeText(this,"이름을 입력해 주세요",Toast.LENGTH_SHORT).show()
                 return false
             }
-            userInfo.age == "" -> {
-                Toast.makeText(this,"나이를 입력해 주세요",Toast.LENGTH_SHORT)
+            userInfo.age == 0 -> {
+                Toast.makeText(this,"나이를 입력해 주세요",Toast.LENGTH_SHORT).show()
                 return false
             }
             userInfo.level == "" ->{
-                Toast.makeText(this,"운동수준을 체크해 주세요",Toast.LENGTH_SHORT)
+                Toast.makeText(this,"운동수준을 체크해 주세요",Toast.LENGTH_SHORT).show()
                 return false}
             userInfo.purpose == "" -> {
-                Toast.makeText(this,"운동 목적을 체크해 주세요",Toast.LENGTH_SHORT)
+                Toast.makeText(this,"운동 목적을 체크해 주세요",Toast.LENGTH_SHORT).show()
                 return false
             }
             userInfo.type == "" -> {
-                Toast.makeText(this,"선호하는 운동 형태를 체크해 주세요",Toast.LENGTH_SHORT)
+                Toast.makeText(this,"선호하는 운동 형태를 체크해 주세요",Toast.LENGTH_SHORT).show()
                 return false
             }
-            userInfo.time == "" -> {
-                Toast.makeText(this,"선호하는 운동 시간을 체크해 주세요",Toast.LENGTH_SHORT)
+            userInfo.time == 0 -> {
+                Toast.makeText(this,"선호하는 운동 시간을 체크해 주세요",Toast.LENGTH_SHORT).show()
                 return false
             }
-            userInfo.number=="" -> {
-                Toast.makeText(this,"선호하는 운동 횟수를 선택해 주세요",Toast.LENGTH_SHORT)
+            userInfo.number== 0 -> {
+                Toast.makeText(this,"선호하는 운동 횟수를 선택해 주세요",Toast.LENGTH_SHORT).show()
                 return false
             }
             else -> {
@@ -161,8 +161,8 @@ class DetailInfoActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // 2초내 다시 클릭하면 앱 종료
         if (System.currentTimeMillis() - backPressedTime < 1500) {
-            ActivityCompat.finishAffinity(this); // 액티비티를 종료하고
-            System.exit(0); // 프로세스를 종료
+            ActivityCompat.finishAffinity(this) // 액티비티를 종료하고
+            System.exit(0) // 프로세스를 종료
             return
         }
 
