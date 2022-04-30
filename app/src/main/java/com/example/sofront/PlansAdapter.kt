@@ -1,38 +1,30 @@
 package com.example.sofront
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class PlansAdapter(
-    private val planList: List<PlanData>
+    private var planList: ArrayList<PlanData>
 ) : RecyclerView.Adapter<PlansAdapter.MyViewHolder>() {
 
     lateinit var context: Context
+    var position = 0
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val planDay : TextView = itemView.findViewById<TextView>(R.id.plan_day_tv)
+        val deleteBtn : Button = itemView.findViewById(R.id.plan_delete_btn)
         fun bind(plan: PlanData) {
-            //데이터저장
-//            val txtName = itemView.findViewById<TextView>(R.id.txt_name)
-//            val imgPhoto = itemView.findViewById<CircleImageView>(R.id.img_photo)
-//            val imgMore = itemView.findViewById<ImageButton>(R.id.img_more)
-//            val layoutExpand = itemView.findViewById<LinearLayout>(R.id.layout_expand)
-//
-//            txtName.text = person.name
-//            imgPhoto.setImageResource(person.image)
-
-//            bind().setOnClickListener {
-//                // 1
-//                val show = toggleLayout(!person.isExpanded, it, layoutExpand)
-//                person.isExpanded = show
-//            }
-
             val planSetting = itemView.findViewById<ConstraintLayout>(R.id.plan_setting)
             val toggleBtn: Button = itemView.findViewById(R.id.plan_toggle)
+            toggleLayout(plan.isExpanded, toggleBtn, planSetting)
             toggleBtn.setOnClickListener{
                 val show = toggleLayout(!plan.isExpanded, it, planSetting)
                 plan.isExpanded = show
@@ -60,10 +52,20 @@ class PlansAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(planList[position])
+        holder.planDay.text = "Day ${position+1}"
+        holder.deleteBtn.setOnClickListener{
+            removeItem(position)
+        }
     }
 
     override fun getItemCount(): Int {
         return planList.size
     }
 
+    fun removeItem(position: Int){
+        if(position > 0){
+            planList.removeAt(position)
+            notifyDataSetChanged()
+        }
+    }
 }

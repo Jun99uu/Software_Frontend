@@ -60,8 +60,15 @@ class MakePlanActivity : AppCompatActivity() {
 
         binding.planList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.planList.adapter = plansAdapter
-        planList.add(PlanData())
+        planList.add(PlanData(true))
         plansAdapter.notifyDataSetChanged()
+
+        binding.planAddBtn.setOnClickListener{
+            planList.add(PlanData(true))
+            plansAdapter.notifyDataSetChanged()
+        }
+
+
     }
 
 }
