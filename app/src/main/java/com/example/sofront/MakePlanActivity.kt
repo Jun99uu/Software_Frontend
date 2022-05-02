@@ -12,7 +12,7 @@ class MakePlanActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMakePlanBinding
     val itemList = arrayListOf<HashTagData>()      // 아이템 배열
     val hashtagAdapter = HashtagAdapter(itemList)     // 어댑터
-    val planList = arrayListOf<PlanData>() //플랜 배열
+    val planList = arrayListOf<PlanData>() //플랜 배열 _ 이게 Plan.kt의 Plan
     val plansAdapter = PlansAdapter(planList) //플랜 어댑터
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,16 +58,20 @@ class MakePlanActivity : AppCompatActivity() {
 
         hashtagAdapter.notifyDataSetChanged()
 
+        val tmpWorkout = ArrayList<PlanSet>()
+        tmpWorkout.add(PlanSet(0,0))
+        val tmpList = ArrayList<PlanWorkout>()
+        tmpList.add(PlanWorkout("", tmpWorkout))
+
         binding.planList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.planList.adapter = plansAdapter
-        planList.add(PlanData(true))
+        planList.add(PlanData(true, tmpList))
         plansAdapter.notifyDataSetChanged()
 
         binding.planAddBtn.setOnClickListener{
-            planList.add(PlanData(true))
+            planList.add(PlanData(true, tmpList))
             plansAdapter.notifyDataSetChanged()
         }
-
 
     }
 

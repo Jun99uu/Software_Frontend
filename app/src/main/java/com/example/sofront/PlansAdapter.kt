@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 
 class PlansAdapter(
     private var planList: ArrayList<PlanData>
@@ -21,9 +22,11 @@ class PlansAdapter(
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val planDay : TextView = itemView.findViewById<TextView>(R.id.plan_day_tv)
         val deleteBtn : Button = itemView.findViewById(R.id.plan_delete_btn)
+        val planInnerList : ViewPager2 = itemView.findViewById(R.id.inner_plan_list)
         fun bind(plan: PlanData) {
             val planSetting = itemView.findViewById<ConstraintLayout>(R.id.plan_setting)
             val toggleBtn: Button = itemView.findViewById(R.id.plan_toggle)
+            planInnerList.adapter = PlansInnerVPAdapter(plan.planInfoList)
             toggleLayout(plan.isExpanded, toggleBtn, planSetting)
             toggleBtn.setOnClickListener{
                 val show = toggleLayout(!plan.isExpanded, it, planSetting)
