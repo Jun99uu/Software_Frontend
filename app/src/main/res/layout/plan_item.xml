@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/makeplan_radius"
+    android:backgroundTint="@color/pastel_pink"
     android:padding="7dp"
     android:layout_marginTop="25dp">
 
@@ -24,15 +25,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/palns_radius"
-        android:backgroundTint="@color/pastel_pink"
+        android:backgroundTint="@color/pastel_white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/plan_day_tv"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingBottom="20dp">
+        android:paddingBottom="10dp"
+        android:shadowColor="#95434343"
+        android:shadowRadius="5.0"
+        android:shadowDx="5.0"
+        android:shadowDy="5.0">
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/plan_viewpager"
+            android:id="@+id/preview_viewpager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -57,24 +62,47 @@
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/plan_viewpager"
+            app:layout_constraintTop_toBottomOf="@id/preview_viewpager"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/exercise_list"
+                android:id="@+id/inner_plan_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/inner_plan_list"
+                app:layout_constraintBottom_toTopOf="@id/plan_delete_btn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
+
+                <ImageButton
+                    android:id="@+id/leftangle"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_angle_left"
+                    android:layout_marginRight="20dp"/>
+
+                <ImageButton
+                    android:id="@+id/rightangle"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_angle_right"/>
+            </LinearLayout>
+
             <Button
                 android:id="@+id/plan_delete_btn"
-                android:layout_width="90dp"
-                android:layout_height="45dp"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/new_radius"
@@ -84,12 +112,12 @@
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@id/plan_save_btn"
-                app:layout_constraintTop_toBottomOf="@id/exercise_list" />
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <Button
                 android:id="@+id/plan_save_btn"
-                android:layout_width="90dp"
-                android:layout_height="45dp"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/new_radius"
                 android:backgroundTint="#E83A14"
@@ -98,7 +126,7 @@
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/exercise_list" />
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
