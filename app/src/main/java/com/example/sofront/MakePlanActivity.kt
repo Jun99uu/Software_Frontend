@@ -69,6 +69,10 @@ class MakePlanActivity : AppCompatActivity() {
         plansAdapter.notifyDataSetChanged()
 
         binding.planAddBtn.setOnClickListener{
+            val tmpWorkout = ArrayList<PlanSet>()
+            tmpWorkout.add(PlanSet(0,0))
+            val tmpList = ArrayList<PlanWorkout>()
+            tmpList.add(PlanWorkout("", tmpWorkout))
             planList.add(PlanData(true, tmpList))
             plansAdapter.notifyDataSetChanged()
         }
