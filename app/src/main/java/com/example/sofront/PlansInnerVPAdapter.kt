@@ -61,7 +61,7 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): Re
 
     fun removeItem(position: Int){
         val builder = AlertDialog.Builder(context)
-        if(position > 0){
+        if(itemCount > 1){
             builder.setTitle("정말로 삭제하시겠습니까?")
                 .setMessage("삭제된 운동정보는 복구하실 수 없습니다.\n정말로 삭제하시겠습니까?")
                 .setPositiveButton("확인",
