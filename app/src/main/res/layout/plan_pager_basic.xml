@@ -2,32 +2,51 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/makeplan_radius"
+    android:backgroundTint="@color/pastel_pink"
+    android:elevation="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/pastel_white"
+        android:paddingTop="8dp"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp">
+
+        <Button
+            android:id="@+id/exercise_delete_btn"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:background="@drawable/profile_img_radius"
+            android:backgroundTint="@color/gray"
+            android:fontFamily="@font/nixgonb"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/select_exercise_btn"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:background="@drawable/signup_eidt"
+            android:backgroundTint="@color/white"
             android:fontFamily="@font/nixgonm"
             android:hint="운동을 선택해주세요!"
             android:textSize="17sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/exercise_delete_btn"
+            android:layout_marginTop="8dp"/>
 
         <LinearLayout
             android:id="@+id/second_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:weightSum="2"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -36,9 +55,10 @@
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/signup_eidt"
+                android:backgroundTint="@color/white"
                 android:fontFamily="@font/nixgonm"
                 android:hint="몇 세트인가요?"
                 android:textSize="17sp" />
