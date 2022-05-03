@@ -2,16 +2,16 @@ package com.example.sofront
 
 import android.content.Context
 import android.content.DialogInterface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sofront.databinding.PlanPagerBasicBinding
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): RecyclerView.Adapter<PlansInnerVPAdapter.MyViewHolder>() {
     lateinit var context: Context
@@ -20,8 +20,16 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): Re
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val selectExerciseBtn : Button = itemView.findViewById(R.id.select_exercise_btn)
         val deleteExerciseBtn : Button = itemView.findViewById(R.id.exercise_delete_btn)
+        val selectSetBtn : Button = itemView.findViewById(R.id.select_set_num)
+        val setList : ViewPager2 = itemView.findViewById(R.id.set_list)
+        val setIndicator : WormDotsIndicator = itemView.findViewById(R.id.set_indicator)
         fun bind(item: PlanWorkout) {
-
+            setList.adapter = PlansInnerSetAdapter(item.set)
+            selectExerciseBtn.text = item.name
+            if(item.setNum != 0){
+                selectSetBtn.text = item.setNum.toString()
+            }
+            setIndicator.setViewPager2(setList)
         }
     }
 
@@ -37,7 +45,7 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): Re
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(planinnerList[position])
         var exerciseArray: Array<String> = arrayOf("예시1", "예시2", "예시3", "예시4")
-        var selectExercise:String
+        var setArray: Array<String> = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         holder.selectExerciseBtn.setOnClickListener{
             val builder = AlertDialog.Builder(context)
             builder.setTitle("운동 선택")
@@ -45,7 +53,23 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): Re
                     DialogInterface.OnClickListener { dialog, which ->
                         // 여기서 인자 'which'는 배열의 position을 나타냅니다.
                         holder.selectExerciseBtn.text = exerciseArray[which]
-                        selectExercise = exerciseArray[which]
+                        planinnerList[position].name = exerciseArray[which]
+                    })
+            // 다이얼로그를 띄워주기
+            builder.show()
+        }
+        holder.selectSetBtn.setOnClickListener{
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("운동 선택")
+                .setItems(setArray,
+                    DialogInterface.OnClickListener { dialog, which ->
+                        // 여기서 인자 'which'는 배열의 position을 나타냅니다.
+                        holder.selectSetBtn.text = setArray[which]
+                        planinnerList[position].setNum = setArray[which].toInt()
+                        for(i in 1 until setArray[which].toInt()){
+                            planinnerList[position].set.add(PlanSet(0,0))
+                        }
+                        notifyDataSetChanged()
                     })
             // 다이얼로그를 띄워주기
             builder.show()
