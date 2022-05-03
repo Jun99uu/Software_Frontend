@@ -1,15 +1,18 @@
 package com.example.sofront
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.ActivityMakePlanBinding
 
+
 class MakePlanActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMakePlanBinding
+    private lateinit var recyclerViewState: Parcelable
     val itemList = arrayListOf<HashTagData>()      // 아이템 배열
     val hashtagAdapter = HashtagAdapter(itemList)     // 어댑터
     val planList = arrayListOf<PlanData>() //플랜 배열 _ 이게 Plan.kt의 Plan
@@ -61,7 +64,7 @@ class MakePlanActivity : AppCompatActivity() {
         val tmpWorkout = ArrayList<PlanSet>()
         tmpWorkout.add(PlanSet(0,0))
         val tmpList = ArrayList<PlanWorkout>()
-        tmpList.add(PlanWorkout("", tmpWorkout))
+        tmpList.add(PlanWorkout("", 0, tmpWorkout))
 
         binding.planList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.planList.adapter = plansAdapter
@@ -72,7 +75,7 @@ class MakePlanActivity : AppCompatActivity() {
             val tmpWorkout = ArrayList<PlanSet>()
             tmpWorkout.add(PlanSet(0,0))
             val tmpList = ArrayList<PlanWorkout>()
-            tmpList.add(PlanWorkout("", tmpWorkout))
+            tmpList.add(PlanWorkout("", 0, tmpWorkout))
             planList.add(PlanData(true, tmpList))
             plansAdapter.notifyDataSetChanged()
         }

@@ -68,8 +68,9 @@ class PlansAdapter(
         holder.exerciseAddBtn.setOnClickListener{
             val tmpWorkout = ArrayList<PlanSet>()
             tmpWorkout.add(PlanSet(0,0))
-            val tmpExercise = PlanWorkout("", tmpWorkout)
+            val tmpExercise = PlanWorkout("", 0, tmpWorkout)
             planList[position].planInfoList.add(tmpExercise)
+            Log.d("데이터", planList.toString())
             notifyDataSetChanged()
         }
     }
