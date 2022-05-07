@@ -28,30 +28,24 @@ class PlansAdapter(
         val planInnerList : ViewPager2 = itemView.findViewById(R.id.inner_plan_list)
         val planIndicator : WormDotsIndicator = itemView.findViewById(R.id.plan_indicator)
         val exerciseAddBtn : Button = itemView.findViewById(R.id.exercise_add_btn)
+        val toggleBtn: Button = itemView.findViewById(R.id.plan_toggle)
+        val planSetting = itemView.findViewById<ConstraintLayout>(R.id.plan_setting)
         fun bind(plan: PlanData) {
-            val planSetting = itemView.findViewById<ConstraintLayout>(R.id.plan_setting)
-            val toggleBtn: Button = itemView.findViewById(R.id.plan_toggle)
             planInnerList.adapter = PlansInnerVPAdapter(plan.planInfoList)
             planIndicator.setViewPager2(planInnerList)
-            toggleLayout(plan.isExpanded, toggleBtn, planSetting)
-            toggleBtn.setOnClickListener{
-                val show = toggleLayout(!plan.isExpanded, it, planSetting)
-                plan.isExpanded = show
-            }
-        }
-
-        private fun toggleLayout(isExpanded: Boolean, view: View, layoutExpand: ConstraintLayout): Boolean {
-            // 2
-            ToggleAnimation.toggleArrow(view, isExpanded)
-            if (isExpanded) {
-                ToggleAnimation.expand(layoutExpand)
-            } else {
-                ToggleAnimation.collapse(layoutExpand)
-            }
-            return isExpanded
         }
     }
 
+    private fun toggleLayout(isExpanded: Boolean, view: View, layoutExpand: ConstraintLayout): Boolean {
+        // 2
+        ToggleAnimation.toggleArrow(view, isExpanded)
+        if (isExpanded) {
+            ToggleAnimation.expand(layoutExpand)
+        } else {
+            ToggleAnimation.collapse(layoutExpand)
+        }
+        return isExpanded
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.plan_item, parent, false)
@@ -73,6 +67,15 @@ class PlansAdapter(
             Log.d("데이터", planList.toString())
             notifyDataSetChanged()
         }
+        toggleLayout(planList[position].isExpanded, holder.toggleBtn, holder.planSetting)
+        holder.toggleBtn.setOnClickListener{
+            val show = toggleLayout(!planList[position].isExpanded, it, holder.planSetting)
+            planList[position].isExpanded = show
+            if(show){
+                notifyDataSetChanged()
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {

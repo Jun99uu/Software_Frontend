@@ -36,13 +36,15 @@
             android:weightSum="4"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/select_weight"
+            <EditText
+                android:id="@+id/et_weight"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
                 android:background="@drawable/signup_eidt"
                 android:hint="중량"
+                android:inputType="number"
+                android:gravity="center"
                 android:fontFamily="@font/nixgonm"/>
 
             <TextView
@@ -56,11 +58,13 @@
                 android:textColor="@color/black"
                 android:gravity="center"/>
 
-            <Button
-                android:id="@+id/select_hoisu"
+            <EditText
+                android:id="@+id/et_times"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
+                android:gravity="center"
+                android:inputType="number"
                 android:background="@drawable/signup_eidt"
                 android:hint="횟수"
                 android:fontFamily="@font/nixgonm"/>

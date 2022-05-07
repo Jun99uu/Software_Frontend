@@ -2,6 +2,7 @@ package com.example.sofront
 
 import android.content.Context
 import android.content.DialogInterface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,10 +65,29 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): Re
                 .setItems(setArray,
                     DialogInterface.OnClickListener { dialog, which ->
                         // 여기서 인자 'which'는 배열의 position을 나타냅니다.
-                        holder.selectSetBtn.text = setArray[which]
-                        planinnerList[position].setNum = setArray[which].toInt()
-                        for(i in 1 until setArray[which].toInt()){
-                            planinnerList[position].set.add(PlanSet(0,0))
+                        val prevNum:Int = planinnerList[position].setNum
+                        val inputNum:Int = setArray[which].toInt()
+                        if(prevNum > inputNum){
+                            //이미 지정한 수보다 작은 세트 수를 다시 선택했을 때
+                            holder.selectSetBtn.text = setArray[which]
+                            planinnerList[position].setNum = inputNum
+                            for(i in 0 until prevNum - inputNum){
+                                planinnerList[position].set.removeAt(planinnerList[position].set.size-1)
+                            }
+                        }else if(prevNum < inputNum){
+                            //이미 지정한 수보다 큰 세트 수를 다시 선택했을 때
+                            holder.selectSetBtn.text = setArray[which]
+                            planinnerList[position].setNum = inputNum
+                            if(prevNum == 0){
+                                for(i in 1 until inputNum - prevNum){
+                                    planinnerList[position].set.add(PlanSet(0,0))
+                                }
+                            }else{
+                                for(i in 0 until inputNum - prevNum){
+                                    planinnerList[position].set.add(PlanSet(0,0))
+                                }
+                            }
+                            Log.d("데이터", planinnerList[position].toString())
                         }
                         notifyDataSetChanged()
                     })
