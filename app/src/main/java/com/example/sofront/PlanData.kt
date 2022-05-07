@@ -12,6 +12,6 @@ data class PlanWorkout(
     )
 
 data class PlanSet(
-    val count:Int,
-    val weight:Int
+    var count:Int,
+    var weight:Int
 )
