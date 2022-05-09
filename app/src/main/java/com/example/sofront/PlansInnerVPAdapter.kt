@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
-class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): RecyclerView.Adapter<PlansInnerVPAdapter.MyViewHolder>() {
+class PlansInnerVPAdapter(private var planinnerList: ArrayList<Workout>): RecyclerView.Adapter<PlansInnerVPAdapter.MyViewHolder>() {
     lateinit var context: Context
     var position = 0
 
@@ -24,9 +24,9 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): Re
         val selectSetBtn : Button = itemView.findViewById(R.id.select_set_num)
         val setList : ViewPager2 = itemView.findViewById(R.id.set_list)
         val setIndicator : WormDotsIndicator = itemView.findViewById(R.id.set_indicator)
-        fun bind(item: PlanWorkout) {
-            setList.adapter = PlansInnerSetAdapter(item.set)
-            selectExerciseBtn.text = item.name
+        fun bind(item: Workout) {
+            setList.adapter = PlansInnerSetAdapter(item.setList)
+            selectExerciseBtn.text = item.workoutName
             if(item.setNum != 0){
                 selectSetBtn.text = item.setNum.toString()
             }
@@ -54,7 +54,7 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): Re
                     DialogInterface.OnClickListener { dialog, which ->
                         // 여기서 인자 'which'는 배열의 position을 나타냅니다.
                         holder.selectExerciseBtn.text = exerciseArray[which]
-                        planinnerList[position].name = exerciseArray[which]
+                        planinnerList[position].workoutName = exerciseArray[which]
                     })
             // 다이얼로그를 띄워주기
             builder.show()
@@ -72,7 +72,7 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): Re
                             holder.selectSetBtn.text = setArray[which]
                             planinnerList[position].setNum = inputNum
                             for(i in 0 until prevNum - inputNum){
-                                planinnerList[position].set.removeAt(planinnerList[position].set.size-1)
+                                planinnerList[position].setList.removeAt(planinnerList[position].setList.size-1)
                             }
                         }else if(prevNum < inputNum){
                             //이미 지정한 수보다 큰 세트 수를 다시 선택했을 때
@@ -80,11 +80,11 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<PlanWorkout>): Re
                             planinnerList[position].setNum = inputNum
                             if(prevNum == 0){
                                 for(i in 1 until inputNum - prevNum){
-                                    planinnerList[position].set.add(PlanSet(0,0))
+                                    planinnerList[position].setList.add(Set(0,0))
                                 }
                             }else{
                                 for(i in 0 until inputNum - prevNum){
-                                    planinnerList[position].set.add(PlanSet(0,0))
+                                    planinnerList[position].setList.add(Set(0,0))
                                 }
                             }
                             Log.d("데이터", planinnerList[position].toString())
