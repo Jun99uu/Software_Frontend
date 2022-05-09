@@ -15,7 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import org.w3c.dom.Text
 
-class PlansInnerSetAdapter(private var setList: ArrayList<PlanSet>): RecyclerView.Adapter<PlansInnerSetAdapter.MyViewHolder>() {
+class PlansInnerSetAdapter(private var setList: ArrayList<Set>): RecyclerView.Adapter<PlansInnerSetAdapter.MyViewHolder>() {
     lateinit var context: Context
     var position = 0
 
@@ -23,7 +23,7 @@ class PlansInnerSetAdapter(private var setList: ArrayList<PlanSet>): RecyclerVie
         val setTitle : TextView = itemView.findViewById(R.id.set_title)
         val editWeight : EditText = itemView.findViewById(R.id.et_weight)
         val editTimes : EditText = itemView.findViewById(R.id.et_times)
-        fun bind(item: PlanSet){
+        fun bind(item: Set){
             editWeight.setText(item.weight.toString())
             editTimes.setText(item.count.toString())
             editWeight.addTextChangedListener(object : TextWatcher {

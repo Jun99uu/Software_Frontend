@@ -1,16 +1,22 @@
 package com.example.sofront
 
 data class Plan(
-    val plan:List<Routine>
+    var planName:String,
+    var hashTagList:ArrayList<String>,
+    val routineList:ArrayList<Routine> //이게 뷰의 근원
 )
+
 data class Routine(
-    val routine:List<Workout>
+    var isExpanded: Boolean,
+    var workoutList:ArrayList<Workout>
 )
+
 data class Workout(
-    val name:String,
-    val set:List<Set>
+    var workoutName:String,
+    var setNum:Int,
+    var setList:ArrayList<Set>
 )
 data class Set(
-    val count:Int,
-    val weight:Int
+    var count:Int,
+    var weight:Int
 )

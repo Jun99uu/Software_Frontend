@@ -12,11 +12,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class PlansAdapter(
-    private var planList: ArrayList<PlanData>
+    private var routineList: ArrayList<Routine>
 ) : RecyclerView.Adapter<PlansAdapter.MyViewHolder>() {
 
     lateinit var context: Context
@@ -26,13 +27,17 @@ class PlansAdapter(
         val planDay : TextView = itemView.findViewById<TextView>(R.id.plan_day_tv)
         val deleteBtn : Button = itemView.findViewById(R.id.plan_delete_btn)
         val planInnerList : ViewPager2 = itemView.findViewById(R.id.inner_plan_list)
+        val prevList : ViewPager2 = itemView.findViewById(R.id.preview_viewpager)
+        val prevIndicator : WormDotsIndicator = itemView.findViewById(R.id.preview_indicator)
         val planIndicator : WormDotsIndicator = itemView.findViewById(R.id.plan_indicator)
         val exerciseAddBtn : Button = itemView.findViewById(R.id.exercise_add_btn)
         val toggleBtn: Button = itemView.findViewById(R.id.plan_toggle)
         val planSetting = itemView.findViewById<ConstraintLayout>(R.id.plan_setting)
-        fun bind(plan: PlanData) {
-            planInnerList.adapter = PlansInnerVPAdapter(plan.planInfoList)
+        fun bind(item: Routine) {
+            planInnerList.adapter = PlansInnerVPAdapter(item.workoutList)
             planIndicator.setViewPager2(planInnerList)
+            prevList.adapter = PlanSummaryAdapter(item.workoutList)
+            prevIndicator.setViewPager2(prevList)
         }
     }
 
@@ -54,24 +59,25 @@ class PlansAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(planList[position])
+        holder.bind(routineList[position])
         holder.planDay.text = "Day ${position+1}"
         holder.deleteBtn.setOnClickListener{
             removeItem(position)
         }
         holder.exerciseAddBtn.setOnClickListener{
-            val tmpWorkout = ArrayList<PlanSet>()
-            tmpWorkout.add(PlanSet(0,0))
-            val tmpExercise = PlanWorkout("", 0, tmpWorkout)
-            planList[position].planInfoList.add(tmpExercise)
-            Log.d("데이터", planList.toString())
+            val tmpSetList = ArrayList<Set>()
+            tmpSetList.add(Set(0,0))
+            val tmpWorkout = Workout("", 0, tmpSetList)
+            routineList[position].workoutList.add(tmpWorkout)
             notifyDataSetChanged()
         }
-        toggleLayout(planList[position].isExpanded, holder.toggleBtn, holder.planSetting)
+        toggleLayout(routineList[position].isExpanded, holder.toggleBtn, holder.planSetting)
         holder.toggleBtn.setOnClickListener{
-            val show = toggleLayout(!planList[position].isExpanded, it, holder.planSetting)
-            planList[position].isExpanded = show
+            val show = toggleLayout(!routineList[position].isExpanded, it, holder.planSetting)
+            routineList[position].isExpanded = show
             if(show){
+                notifyDataSetChanged()
+            }else{
                 notifyDataSetChanged()
             }
         }
@@ -79,7 +85,7 @@ class PlansAdapter(
     }
 
     override fun getItemCount(): Int {
-        return planList.size
+        return routineList.size
     }
 
     fun removeItem(position: Int){
@@ -90,7 +96,7 @@ class PlansAdapter(
                 .setPositiveButton("확인",
                     DialogInterface.OnClickListener { dialog, id ->
                         //확인클릭
-                        planList.removeAt(position)
+                        routineList.removeAt(position)
                         notifyDataSetChanged()
                         Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
                     })

@@ -1,5 +1,6 @@
 package com.example.sofront
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Parcelable
@@ -7,6 +8,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,8 +23,8 @@ class MakePlanActivity : AppCompatActivity() {
     private lateinit var recyclerViewState: Parcelable
     val itemList = arrayListOf<HashTagData>()      // 아이템 배열
     val hashtagAdapter = HashtagAdapter(itemList)     // 어댑터
-    val planList = arrayListOf<PlanData>() //플랜 배열 _ 이게 Plan.kt의 Plan
-    val plansAdapter = PlansAdapter(planList) //플랜 어댑터
+    val routineList = ArrayList<Routine>() //플랜 배열 _ 이게 Plan.kt의 Plan
+    val plansAdapter = PlansAdapter(routineList) //플랜 어댑터
     lateinit var planName:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +48,18 @@ class MakePlanActivity : AppCompatActivity() {
 
         })
 
-        var hashtags = mutableListOf<String>() //클릭한 해쉬태그
+        binding.title.setOnEditorActionListener{ textView, action, event ->
+            var handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                // 키보드 내리기
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.title.windowToken, 0)
+                handled = true
+            }
+            handled
+        }
+
+        var hashtags = ArrayList<String>() //클릭한 해쉬태그
 
         binding.hashtagList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.hashtagList.adapter = hashtagAdapter
@@ -82,28 +96,29 @@ class MakePlanActivity : AppCompatActivity() {
 
         hashtagAdapter.notifyDataSetChanged()
 
-        val tmpWorkout = ArrayList<PlanSet>()
-        tmpWorkout.add(PlanSet(0,0))
-        val tmpList = ArrayList<PlanWorkout>()
-        tmpList.add(PlanWorkout("", 0, tmpWorkout))
+        val initSet = ArrayList<Set>()
+        initSet.add(Set(0,0))
+        val initWorkout = ArrayList<Workout>()
+        initWorkout.add(Workout("", 0, initSet))
 
         binding.planList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         plansAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         binding.planList.adapter = plansAdapter
-        planList.add(PlanData(true, tmpList))
+        routineList.add(Routine(true, initWorkout))
         plansAdapter.notifyDataSetChanged()
 
         binding.planAddBtn.setOnClickListener{
-            val tmpWorkout = ArrayList<PlanSet>()
-            tmpWorkout.add(PlanSet(0,0))
-            val tmpList = ArrayList<PlanWorkout>()
-            tmpList.add(PlanWorkout("", 0, tmpWorkout))
-            planList.add(PlanData(true, tmpList))
+            val plusSet = ArrayList<Set>()
+            plusSet.add(Set(0,0))
+            val plusWorkout = ArrayList<Workout>()
+            plusWorkout.add(Workout("", 0, plusSet))
+            routineList.add(Routine(true, plusWorkout))
             plansAdapter.notifyDataSetChanged()
         }
 
         binding.planSaveBtn.setOnClickListener{
-            Log.d("최종 데이터", "플랜명 : ${planName}\n${planList.toString()}")
+            val plan = Plan(planName, hashtags, routineList)
+            Log.d("최종 데이터", "${plan}")
         }
 
         binding.planCancleBtn.setOnClickListener{
