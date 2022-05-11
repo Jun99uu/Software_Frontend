@@ -210,13 +210,13 @@ class ListFragment : Fragment() {
         a.add(Routine(true,ArrayList()))
         a.add(Routine(true,ArrayList()))
         a.add(Routine(true,ArrayList()))
-        adapter.addItem(Plan("3일짜리",ArrayList(),a))
+        adapter.addItem(Plan("3일짜리",ArrayList(),a,"test",true))
         val b = ArrayList<Routine>()
         b.add(Routine(true,ArrayList()))
         b.add(Routine(true,ArrayList()))
         b.add(Routine(true,ArrayList()))
         b.add(Routine(true,ArrayList()))
-        adapter.addItem(Plan("4일짜리",ArrayList(),b))
+        adapter.addItem(Plan("4일짜리",ArrayList(),b,"test",true))
     }
     fun setRecyclerViewAdapter(adapter: PlanRecyclerViewAdapter){
         recyclerview.adapter = adapter
