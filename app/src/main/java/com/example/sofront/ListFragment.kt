@@ -22,8 +22,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.spans.DotSpan
-import java.util.*
+import kotlin.collections.HashSet
 import kotlin.collections.Set
 
 class ListFragment : Fragment() {
@@ -31,6 +30,7 @@ class ListFragment : Fragment() {
     private val binding get() = _binding!!
     lateinit var recyclerview:RecyclerView
     lateinit var calendarView: MaterialCalendarView
+    var planLength = 3
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +48,9 @@ class ListFragment : Fragment() {
         addPlanBtn.setOnClickListener {
             callSetPlanActivity()
         }
+        calendarView.setOnDateChangedListener { widget, date, selected ->
+            decorateDay(date, planLength)
+        }
 
         return view
     }
@@ -57,6 +60,39 @@ class ListFragment : Fragment() {
         _binding=null
     }
 
+    fun decorateDay(date:CalendarDay,planLength:Int){
+        val set:HashSet<CalendarDay> = HashSet()
+        var d = date
+        for(i in 1..planLength){
+            set.add(d)
+            Log.d("for",d.toString())
+            d = addOnetoCalendarDay(d)
+        }
+        Log.d("Set",set.toString())
+        calendarView.addDecorator(EventDecorator(set))
+    }
+
+    fun addOnetoCalendarDay(date: CalendarDay):CalendarDay{
+        val days = arrayListOf<Int>(0,31,28,31,30,31,30,31,31,30,31,30,31)
+
+
+        var day = date.day+1
+        var month = date.month
+        var year = date.year
+        if( year % 4 == 0 && ( year % 100 !=0 || year % 400 == 0)){
+            days[2] = 29
+        }
+        if(date.day >= days[date.month]){
+            day = 1
+            month = month+1
+            if(month > 12){
+                month = 1
+                year = year+1
+            }
+
+        }
+        return CalendarDay.from(year,month,day)
+    }
     fun setRecyclerView(){
         //TODO: 서버에서 플랜을 가져와서 리사이클러뷰로 띄워줌
         val adapter = PlanRecyclerViewAdapter()
@@ -118,9 +154,10 @@ class ListFragment : Fragment() {
                     // Displays a message containing the dragged data.
                     Toast.makeText(requireContext(), "Dragged data is $dragData", Toast.LENGTH_SHORT)
                         .show()
+
                     val set:HashSet<CalendarDay> = HashSet()
                     set.add(CalendarDay.today())
-                    set.add(CalendarDay.from(2022,5,12))
+                    set.add(CalendarDay.from(2022,5,31))
 
                     Log.d("set",set.size.toString())
                     calendarView.addDecorator(EventDecorator(set))
@@ -187,6 +224,7 @@ class ListFragment : Fragment() {
 //        addPlanList()
     }
 }
+
 class EventDecorator(dates: Collection<CalendarDay>): DayViewDecorator {
 
     var dates: HashSet<CalendarDay> = HashSet(dates)
@@ -196,7 +234,6 @@ class EventDecorator(dates: Collection<CalendarDay>): DayViewDecorator {
     }
 
     override fun decorate(view: DayViewFacade?) {
-//        view?.addSpan(DotSpan(5F, Color.parseColor("#1D872A")))
         view?.addSpan(LineSpan())
     }
 }
@@ -209,11 +246,11 @@ class LineSpan : LineBackgroundSpan{
         charSequence: CharSequence,
         start:Int,end:Int,lineNum:Int)
         {
-        val rect = Rect()
-        paint.color = Color.parseColor("#1D872A")
-        rect.set(left, top-(top-bottom), right, bottom-(top-bottom))
-        canvas.drawRect(rect,paint)
-//        p0.drawBitmap(Bitmap.createBitmap(50,50,Bitmap.Config.ARGB_8888),Matrix,p1)
+            val rect = Rect()
+            rect.set(left, top-(top-bottom), right, bottom-(top-bottom))
+
+            paint.color = Color.parseColor("#1D872A")
+            canvas.drawRect(rect,paint)
     }
 
 }
