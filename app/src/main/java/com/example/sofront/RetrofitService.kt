@@ -10,21 +10,25 @@ import retrofit2.http.*
 
 interface RetrofitService {
     //1. 인터페이스 설계
-    @POST("user_info/")
+    @POST("info")
     fun postUserInfo(@Body userInfo: UserInfo) : Call<UserInfo>
 
-    @POST("welcome/")
+    @POST("account/signup")
     fun postUID(@Body UID: UID): Call<UID>
-    @GET("plan/{uid}/")
+    @GET("account/plan/{uid}")
     fun getPlan(@Path("uid") uid : String) : Call<Plan>
 
-    @POST("auth_check/")
+    @PUT("account/phone")
     fun postAuth(@Body UID: UID): Call<UID>
 
-    @POST("login/")
+    @POST("account/login")
     fun login(@Body UID: UID): Call<UID>
+
+    @POST("account/jsonprint")
+    fun testPlan(@Body Plan: Plan): Call<Plan>
+
     companion object{
-        private const val BASE_URL = "http://3be3-219-255-158-172.ngrok.io/database/"
+        private const val BASE_URL = "http://1344-219-255-158-173.ngrok.io/"
 
         val retrofitService = create()
 
@@ -145,6 +149,22 @@ interface RetrofitService {
                     Log.d("login","fail")
                 }
 
+            })
+        }
+        fun _testPlan(plan: Plan){
+            retrofitService.testPlan(plan).enqueue(object : Callback<Plan>{
+                override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
+                    if(response.isSuccessful){
+                        Log.d("Plan test","success")
+                    }
+                    else{
+                        Log.d("Plan test","success but something error")
+                    }
+                }
+
+                override fun onFailure(call: Call<Plan>, t: Throwable) {
+                    Log.d("Plan test","fail")
+                }
             })
         }
 
