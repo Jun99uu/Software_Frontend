@@ -61,30 +61,32 @@ class MakePlanActivity : AppCompatActivity() {
         }
 
         binding.planNameCheckBtn.setOnClickListener{
-            val planName = binding.title.text.toString()
-            //여기서 플랜명 중복검사
-            if(true && planName != ""){
-                //만약 겹치는 플랜명이 없다면??
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("플랜명을 사용하시겠습니까?")
-                    .setMessage("해당 플랜명 사용에 동의하면,\n플랜 작성 중 변경할 수 없습니다.\n해당 플랜명을 사용하시겠습니까?")
-                    .setPositiveButton("확인",
-                        DialogInterface.OnClickListener { dialog, id ->
-                            //확인클릭
-                            binding.title.isEnabled = false
-                            planNameCheck = true
-                            binding.planNameWarning.visibility = View.GONE //경고문구 gone
-                        })
-                    .setNegativeButton("취소",
-                        DialogInterface.OnClickListener { dialog, id ->
-                            //취소클릭
-                        })
-                // 다이얼로그를 띄워주기
-                builder.show()
-            }else if(planName == ""){
-                Toast.makeText(this, "플랜명을 입력해주세요.", Toast.LENGTH_LONG).show()
-            }else{
-                binding.planNameWarning.visibility = View.VISIBLE //경고문구 visible
+            if(!planNameCheck){
+                val planName = binding.title.text.toString()
+                //여기서 플랜명 중복검사
+                if(true && planName != ""){
+                    //만약 겹치는 플랜명이 없다면??
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("플랜명을 사용하시겠습니까?")
+                        .setMessage("해당 플랜명 사용에 동의하면,\n플랜 작성 중 변경할 수 없습니다.\n해당 플랜명을 사용하시겠습니까?")
+                        .setPositiveButton("확인",
+                            DialogInterface.OnClickListener { dialog, id ->
+                                //확인클릭
+                                binding.title.isEnabled = false
+                                planNameCheck = true
+                                binding.planNameWarning.visibility = View.GONE //경고문구 gone
+                            })
+                        .setNegativeButton("취소",
+                            DialogInterface.OnClickListener { dialog, id ->
+                                //취소클릭
+                            })
+                    // 다이얼로그를 띄워주기
+                    builder.show()
+                }else if(planName == ""){
+                    Toast.makeText(this, "플랜명을 입력해주세요.", Toast.LENGTH_LONG).show()
+                }else{
+                    binding.planNameWarning.visibility = View.VISIBLE //경고문구 visible
+                }
             }
         }
 
