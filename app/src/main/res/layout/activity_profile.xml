@@ -29,6 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    android:id="@+id/background_image"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:src="@drawable/womanrun"
@@ -55,9 +56,11 @@
                         android:textSize="45sp"
                         android:fontFamily="@font/nixgonb"
                         android:textColor="@color/white"
+                        android:background="#803F3F3F"
                         android:letterSpacing="-0.05"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"/>
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:padding="3dp"/>
 
                     <TextView
                         android:id="@+id/subscribe_num"
@@ -65,16 +68,18 @@
                         android:layout_height="wrap_content"
                         android:text="Sub. 0명"
                         android:textColor="@color/white"
+                        android:background="#803F3F3F"
                         android:fontFamily="@font/nixgonb"
                         android:textSize="20sp"
                         android:letterSpacing="-0.05"
                         app:layout_constraintLeft_toRightOf="@id/user_name"
                         app:layout_constraintBottom_toBottomOf="@id/user_name"
-                        android:paddingLeft="5dp"/>
+                        android:paddingLeft="5dp"
+                        android:padding="3dp"/>
 
                     <Button
                         android:layout_width="60dp"
-                        android:layout_height="32dp"
+                        android:layout_height="30dp"
                         android:text="구독"
                         android:background="@drawable/new_radius"
                         android:backgroundTint="@color/tomato"
@@ -84,7 +89,7 @@
                         android:textColor="@color/white"
                         app:layout_constraintLeft_toRightOf="@id/subscribe_num"
                         app:layout_constraintBottom_toBottomOf="@id/subscribe_num"
-                        android:layout_marginLeft="20dp"/>
+                        android:layout_marginLeft="5dp"/>
 
                     <TextView
                         android:id="@+id/profile_content"
@@ -93,8 +98,10 @@
                         android:text="안녕하세요, 짐꾼입니다.\n오늘도 신나게 운동해볼까요?"
                         android:textColor="@color/white"
                         android:fontFamily="@font/nixgonm"
+                        android:background="#803F3F3F"
                         android:textSize="23sp"
                         android:letterSpacing="-0.05"
+                        android:padding="3dp"
                         app:layout_constraintTop_toBottomOf="@id/user_name"
                         app:layout_constraintLeft_toLeftOf="parent"/>
 
