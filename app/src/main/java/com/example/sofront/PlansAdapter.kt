@@ -33,6 +33,7 @@ class PlansAdapter(
         val exerciseAddBtn : Button = itemView.findViewById(R.id.exercise_add_btn)
         val toggleBtn: Button = itemView.findViewById(R.id.plan_toggle)
         val planSetting = itemView.findViewById<ConstraintLayout>(R.id.plan_setting)
+        val preview = itemView.findViewById<ConstraintLayout>(R.id.plan_preview)
         fun bind(item: Routine) {
             planInnerList.adapter = PlansInnerVPAdapter(item.workoutList)
             planIndicator.setViewPager2(planInnerList)
@@ -41,13 +42,15 @@ class PlansAdapter(
         }
     }
 
-    private fun toggleLayout(isExpanded: Boolean, view: View, layoutExpand: ConstraintLayout): Boolean {
+    private fun toggleLayout(isExpanded: Boolean, view: View, layoutExpand: ConstraintLayout, layoutCollapse: ConstraintLayout): Boolean {
         // 2
         ToggleAnimation.toggleArrow(view, isExpanded)
         if (isExpanded) {
             ToggleAnimation.expand(layoutExpand)
+            ToggleAnimation.collapse(layoutCollapse)
         } else {
             ToggleAnimation.collapse(layoutExpand)
+            ToggleAnimation.expand(layoutCollapse)
         }
         return isExpanded
     }
@@ -71,12 +74,13 @@ class PlansAdapter(
             routineList[position].workoutList.add(tmpWorkout)
             notifyDataSetChanged()
         }
-        toggleLayout(routineList[position].isExpanded, holder.toggleBtn, holder.planSetting)
+        toggleLayout(routineList[position].isExpanded, holder.toggleBtn, holder.planSetting, holder.preview)
         holder.toggleBtn.setOnClickListener{
-            val show = toggleLayout(!routineList[position].isExpanded, it, holder.planSetting)
+            val show = toggleLayout(!routineList[position].isExpanded, it, holder.planSetting, holder.preview)
             routineList[position].isExpanded = show
             if(show){
                 notifyDataSetChanged()
+
             }else{
                 notifyDataSetChanged()
             }

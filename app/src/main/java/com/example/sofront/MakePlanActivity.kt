@@ -20,7 +20,7 @@ import com.example.sofront.databinding.ActivityMakePlanBinding
 
 class MakePlanActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMakePlanBinding
-    private lateinit var recyclerViewState: Parcelable
+    private var recyclerViewState: Parcelable? = null
     val itemList = arrayListOf<HashTagData>()      // 아이템 배열
     val hashtagAdapter = HashtagAdapter(itemList)     // 어댑터
     val routineList = ArrayList<Routine>() //플랜 배열 _ 이게 Plan.kt의 Plan
@@ -104,16 +104,18 @@ class MakePlanActivity : AppCompatActivity() {
         binding.planList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         plansAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         binding.planList.adapter = plansAdapter
-        routineList.add(Routine(true, initWorkout))
+        routineList.add(Routine(false, initWorkout))
         plansAdapter.notifyDataSetChanged()
 
         binding.planAddBtn.setOnClickListener{
+            saveRecyclerViewState()
             val plusSet = ArrayList<Set>()
             plusSet.add(Set(0,0))
             val plusWorkout = ArrayList<Workout>()
             plusWorkout.add(Workout("", 0, plusSet))
-            routineList.add(Routine(true, plusWorkout))
+            routineList.add(Routine(false, plusWorkout))
             plansAdapter.notifyDataSetChanged()
+            binding.planList.scrollToPosition(plansAdapter.itemCount-1)
         }
 
         binding.planSaveBtn.setOnClickListener{
@@ -138,6 +140,22 @@ class MakePlanActivity : AppCompatActivity() {
             // 다이얼로그를 띄워주기
             builder.show()
         }
+    }
+
+    //스크롤 새로고침 막는 부분이긴하나.. 작동안되는듯
+    override fun onResume() {
+        super.onResume()
+        if (recyclerViewState != null) {
+            setSavedRecyclerViewState()
+        }
+    }
+
+    private fun saveRecyclerViewState(){
+        recyclerViewState = binding.planList.layoutManager!!.onSaveInstanceState()
+    }
+
+    private fun setSavedRecyclerViewState(){
+        binding.planList.layoutManager!!.onRestoreInstanceState(recyclerViewState)
     }
 
 }
