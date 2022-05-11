@@ -47,21 +47,57 @@
                 app:layout_constraintTop_toBottomOf="@id/intro"
                 app:layout_constraintLeft_toLeftOf="parent"/>
 
-            <EditText
-                android:id="@+id/title"
+            <LinearLayout
+                android:id="@+id/plan_name_layout"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:hint="플랜명을 입력해주세요."
-                android:background="@drawable/signup_eidt"
-                android:inputType="text"
-                android:letterSpacing="-0.05"
-                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:weightSum="4"
+                app:layout_constraintTop_toBottomOf="@id/intro2"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/intro2"
-                android:layout_marginTop="20dp"
-                android:maxLength="30"
-                android:maxLines="1" />
+                android:layout_marginTop="15dp">
+
+                <EditText
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="3"
+                    android:hint="플랜명을 입력해주세요."
+                    android:background="@drawable/signup_eidt"
+                    android:inputType="text"
+                    android:letterSpacing="-0.05"
+                    android:padding="10dp"
+                    android:maxLength="30"
+                    android:maxLines="1"
+                    android:layout_marginRight="5dp"/>
+
+                <Button
+                    android:id="@+id/plan_name_check_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:text="검사"
+                    android:background="@drawable/radius"
+                    android:backgroundTint="@color/pastel_blue"
+                    android:fontFamily="@font/nixgonb"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/plan_name_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="동일한 플랜명이 존재합니다😥"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@id/plan_name_layout"
+                app:layout_constraintTop_toBottomOf="@id/plan_name_layout"
+                android:fontFamily="@font/nixgonm"
+                android:paddingTop="3dp"
+                android:paddingLeft="3dp"
+                android:textColor="@color/tomato"/>
 
             <TextView
                 android:id="@+id/subtitle_hashtag"
@@ -71,8 +107,8 @@
                 android:fontFamily="@font/nixgonm"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@id/title"
-                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintStart_toStartOf="@id/plan_name_layout"
+                app:layout_constraintTop_toBottomOf="@id/plan_name_warning"
                 android:layout_marginTop="15dp"/>
 
             <TextView
@@ -93,7 +129,7 @@
                 android:orientation="horizontal"
                 android:scrollbars="horizontal"
                 app:layout_constraintStart_toStartOf="@id/subtitle_hashtag"
-                app:layout_constraintStart_toEndOf="@id/title"
+                app:layout_constraintStart_toEndOf="@id/plan_name_layout"
                 app:layout_constraintTop_toBottomOf="@id/subtitle_hashtag"
                 android:layout_marginTop="10dp"/>
 

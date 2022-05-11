@@ -24,4 +24,5 @@
     <color name="item_selected">#FFB2A6</color>
     <color name="item_nselected">#D8D8D8</color>
     <color name="light_gray">#DCDCDC</color>
+    <color name="tomato">#E83A14</color>
 </resources>

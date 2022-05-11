@@ -25,6 +25,7 @@ class MakePlanActivity : AppCompatActivity() {
     val hashtagAdapter = HashtagAdapter(itemList)     // 어댑터
     val routineList = ArrayList<Routine>() //플랜 배열 _ 이게 Plan.kt의 Plan
     val plansAdapter = PlansAdapter(routineList) //플랜 어댑터
+    var planNameCheck = false //중복검사 했는지 확인하는 변수
     lateinit var planName:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +58,36 @@ class MakePlanActivity : AppCompatActivity() {
                 handled = true
             }
             handled
+        }
+
+        binding.planNameCheckBtn.setOnClickListener{
+            if(!planNameCheck){
+                val planName = binding.title.text.toString()
+                //여기서 플랜명 중복검사
+                if(true && planName != ""){
+                    //만약 겹치는 플랜명이 없다면??
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("플랜명을 사용하시겠습니까?")
+                        .setMessage("해당 플랜명 사용에 동의하면,\n플랜 작성 중 변경할 수 없습니다.\n해당 플랜명을 사용하시겠습니까?")
+                        .setPositiveButton("확인",
+                            DialogInterface.OnClickListener { dialog, id ->
+                                //확인클릭
+                                binding.title.isEnabled = false
+                                planNameCheck = true
+                                binding.planNameWarning.visibility = View.GONE //경고문구 gone
+                            })
+                        .setNegativeButton("취소",
+                            DialogInterface.OnClickListener { dialog, id ->
+                                //취소클릭
+                            })
+                    // 다이얼로그를 띄워주기
+                    builder.show()
+                }else if(planName == ""){
+                    Toast.makeText(this, "플랜명을 입력해주세요.", Toast.LENGTH_LONG).show()
+                }else{
+                    binding.planNameWarning.visibility = View.VISIBLE //경고문구 visible
+                }
+            }
         }
 
         var hashtags = ArrayList<String>() //클릭한 해쉬태그
@@ -119,10 +150,14 @@ class MakePlanActivity : AppCompatActivity() {
         }
 
         binding.planSaveBtn.setOnClickListener{
-            val plan = Plan(planName, hashtags, routineList)
-            Log.d("최종 데이터", "${plan}")
-            //TODO: 지워야함 아래꺼
-            RetrofitService._testPlan(plan)
+            if(!planNameCheck){
+                Toast.makeText(this, "플랜명 중복검사를 진행해주세요.", Toast.LENGTH_LONG).show()
+            }else{
+                val plan = Plan(planName, hashtags, routineList, "abcdefg1234567", false)
+                Log.d("최종 데이터", "${plan}")
+            }
+             RetrofitService._testPlan(plan)
+
         }
 
         binding.planCancleBtn.setOnClickListener{
