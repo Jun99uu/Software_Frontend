@@ -155,8 +155,9 @@ class MakePlanActivity : AppCompatActivity() {
             }else{
                 val plan = Plan(planName, hashtags, routineList, "abcdefg1234567", false)
                 Log.d("최종 데이터", "${plan}")
+                RetrofitService._testPlan(plan)
             }
-             RetrofitService._testPlan(plan)
+
 
         }
 
