@@ -121,6 +121,8 @@ class MakePlanActivity : AppCompatActivity() {
         binding.planSaveBtn.setOnClickListener{
             val plan = Plan(planName, hashtags, routineList)
             Log.d("최종 데이터", "${plan}")
+            //TODO: 지워야함 아래꺼
+            RetrofitService._testPlan(plan)
         }
 
         binding.planCancleBtn.setOnClickListener{
