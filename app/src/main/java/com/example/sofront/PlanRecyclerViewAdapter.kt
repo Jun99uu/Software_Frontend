@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.PlanRecyclerViewBinding
 
 class PlanRecyclerViewAdapter() : RecyclerView.Adapter<PlanRecyclerViewAdapter.ViewHolder>() {
-    var testList = mutableListOf<String>()
+    var testList = mutableListOf<Plan>()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -35,14 +35,14 @@ class PlanRecyclerViewAdapter() : RecyclerView.Adapter<PlanRecyclerViewAdapter.V
     }
     inner class ViewHolder(binding: PlanRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root){
         private val textView = binding.planListTv
-//        @RequiresApi(Build.VERSION_CODES.N)
-        fun bind(item: String) {
-            textView.text = item
+
+        fun bind(item: Plan) {
+            textView.text = item.planName
             textView.setOnLongClickListener { v ->
-                val clipItem = ClipData.Item(textView.text)
+                val clipItem = ClipData.Item(item.routineList.size.toString())
                 val dragData = ClipData(
 //                    v.tag as? CharSequence,
-                    textView.text,
+                    item.routineList.size.toString(),
                     arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN),
                     clipItem)
                 val myShadow = MyDragShadowBuilder(v)
@@ -54,8 +54,8 @@ class PlanRecyclerViewAdapter() : RecyclerView.Adapter<PlanRecyclerViewAdapter.V
             }
         }
     }
-    fun addItem(item:String){
-        testList.add(item);
+    fun addItem(item:Plan){
+        testList.add(item)
     }
 }
 private class MyDragShadowBuilder(v: View) : View.DragShadowBuilder(v) {

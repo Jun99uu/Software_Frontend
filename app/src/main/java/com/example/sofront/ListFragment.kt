@@ -30,7 +30,7 @@ class ListFragment : Fragment() {
     private val binding get() = _binding!!
     lateinit var recyclerview:RecyclerView
     lateinit var calendarView: MaterialCalendarView
-    var planLength = 3
+    var planLength =0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,13 +43,13 @@ class ListFragment : Fragment() {
         calendarView = binding.calendar
 
         setRecyclerView()
-        setOnDragAndDrop();
+        setOnDragAndDrop()
 
         addPlanBtn.setOnClickListener {
             callSetPlanActivity()
         }
         calendarView.setOnDateChangedListener { widget, date, selected ->
-            decorateDay(date, planLength)
+            decorateDay(date)
         }
 
         return view
@@ -60,7 +60,7 @@ class ListFragment : Fragment() {
         _binding=null
     }
 
-    fun decorateDay(date:CalendarDay,planLength:Int){
+    fun decorateDay(date:CalendarDay){
         val set:HashSet<CalendarDay> = HashSet()
         var d = date
         for(i in 1..planLength){
@@ -70,6 +70,7 @@ class ListFragment : Fragment() {
         }
         Log.d("Set",set.toString())
         calendarView.addDecorator(EventDecorator(set))
+        planLength=0
     }
 
     fun addOnetoCalendarDay(date: CalendarDay):CalendarDay{
@@ -154,13 +155,7 @@ class ListFragment : Fragment() {
                     // Displays a message containing the dragged data.
                     Toast.makeText(requireContext(), "Dragged data is $dragData", Toast.LENGTH_SHORT)
                         .show()
-
-                    val set:HashSet<CalendarDay> = HashSet()
-                    set.add(CalendarDay.today())
-                    set.add(CalendarDay.from(2022,5,31))
-
-                    Log.d("set",set.size.toString())
-                    calendarView.addDecorator(EventDecorator(set))
+                    planLength = item.text.toString().toInt()
                     // Turns off any color tints.
                     (v as? ImageView)?.clearColorFilter()
 
@@ -211,8 +206,17 @@ class ListFragment : Fragment() {
         }
     }
     fun initRecyclerViewList(adapter:PlanRecyclerViewAdapter){
-        adapter.addItem("test1")
-        adapter.addItem("test2")
+        val a = ArrayList<Routine>()
+        a.add(Routine(true,ArrayList()))
+        a.add(Routine(true,ArrayList()))
+        a.add(Routine(true,ArrayList()))
+        adapter.addItem(Plan("3일짜리",ArrayList(),a))
+        val b = ArrayList<Routine>()
+        b.add(Routine(true,ArrayList()))
+        b.add(Routine(true,ArrayList()))
+        b.add(Routine(true,ArrayList()))
+        b.add(Routine(true,ArrayList()))
+        adapter.addItem(Plan("4일짜리",ArrayList(),b))
     }
     fun setRecyclerViewAdapter(adapter: PlanRecyclerViewAdapter){
         recyclerview.adapter = adapter
