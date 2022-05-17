@@ -21,7 +21,7 @@ import com.example.sofront.databinding.ActivityMakePlanBinding
 class MakePlanActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMakePlanBinding
     private var recyclerViewState: Parcelable? = null
-    val itemList = arrayListOf<HashTagData>()      // 아이템 배열
+    val itemList = arrayListOf<String>()      // 아이템 배열
     val hashtagAdapter = HashtagAdapter(itemList)     // 어댑터
     val routineList = ArrayList<Routine>() //플랜 배열 _ 이게 Plan.kt의 Plan
     val plansAdapter = PlansAdapter(routineList) //플랜 어댑터
@@ -98,16 +98,16 @@ class MakePlanActivity : AppCompatActivity() {
         hashtagAdapter.setItemClickListener(object: HashtagAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int){
                 if(hashtags.size < 5){
-                    if(hashtags.contains(itemList[position].tag)){
-                        hashtags.remove(itemList[position].tag)
+                    if(hashtags.contains(itemList[position])){
+                        hashtags.remove(itemList[position])
                         v.setBackgroundResource(R.drawable.home_no_select_btn)
                     }else{
-                        hashtags.add(itemList[position].tag)
+                        hashtags.add(itemList[position])
                         v.setBackgroundResource(R.drawable.home_yes_select_btn)
                     }
                 }else{
-                    if(hashtags.contains(itemList[position].tag)){
-                        hashtags.remove(itemList[position].tag)
+                    if(hashtags.contains(itemList[position])){
+                        hashtags.remove(itemList[position])
                         v.setBackgroundResource(R.drawable.home_no_select_btn)
                     }else {
                         Toast.makeText(view.context, "태그는 5개까지만 선택할 수 있어요.", Toast.LENGTH_SHORT)
@@ -118,12 +118,12 @@ class MakePlanActivity : AppCompatActivity() {
             }
         })
 
-        itemList.add(HashTagData("유산소"))
-        itemList.add(HashTagData("가슴"))
-        itemList.add(HashTagData("등"))
-        itemList.add(HashTagData("어깨"))
-        itemList.add(HashTagData("하체"))
-        itemList.add(HashTagData("팔"))
+        itemList.add("유산소")
+        itemList.add("가슴")
+        itemList.add("등")
+        itemList.add("어깨")
+        itemList.add("하체")
+        itemList.add("팔")
 
         hashtagAdapter.notifyDataSetChanged()
 
@@ -153,7 +153,7 @@ class MakePlanActivity : AppCompatActivity() {
             if(!planNameCheck){
                 Toast.makeText(this, "플랜명 중복검사를 진행해주세요.", Toast.LENGTH_LONG).show()
             }else{
-                val plan = Plan(planName, hashtags, routineList, "abcdefg1234567", false)
+                val plan = Plan(planName, hashtags, routineList, "abcdefg1234567", false,0,0,0)
                 Log.d("최종 데이터", "${plan}")
             }
         }

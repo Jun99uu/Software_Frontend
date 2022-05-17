@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/pastel_white"
-    tools:context=".ProfilePlanFragment">
+    tools:context=".ProfilePlanFragment"
+    android:padding="20dp">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profile_plan_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="플랜" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
 
 </FrameLayout>

@@ -11,7 +11,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class HashtagAdapter(val itemList: ArrayList<HashTagData>): RecyclerView.Adapter<HashtagAdapter.ViewHolder>() {
+class HashtagAdapter(val itemList: ArrayList<String>): RecyclerView.Adapter<HashtagAdapter.ViewHolder>() {
     lateinit var context: Context
 
     // (1) 아이템 레이아웃과 결합
@@ -26,7 +26,7 @@ class HashtagAdapter(val itemList: ArrayList<HashTagData>): RecyclerView.Adapter
     }
     // (3) View에 내용 입력
     override fun onBindViewHolder(holder: HashtagAdapter.ViewHolder, position: Int) {
-        holder.tagBtn.text = itemList[position].tag
+        holder.tagBtn.text = itemList[position]
         holder.tagBtn.setOnClickListener{
             itemClickListener.onClick(it, position)
         }
