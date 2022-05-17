@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/palns_radius"
+    android:backgroundTint="@color/patel_yellow"
+    android:padding="13dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/plan_profile_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/gymdori"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/plan_profile_img"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="20dp">
+
+        <TextView
+            android:id="@+id/profile_plan_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="플랜의 이름입니다."
+            android:fontFamily="@font/nixgonb"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:letterSpacing="-0.05"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profile_plan_hashtag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_plan_name"
+            android:layout_marginTop="3dp"/>
+
+        <TextView
+            android:id="@+id/profile_plan_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7days"
+            android:fontFamily="@font/nixgonm"
+            android:textColor="@color/black"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_plan_hashtag"
+            android:layout_marginTop="3dp"/>
+
+        <ImageView
+            android:id="@+id/profile_plan_download_ic"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_plan_date"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/profile_plan_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="99"
+            app:layout_constraintLeft_toRightOf="@id/profile_plan_download_ic"
+            android:fontFamily="@font/nixgonm"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/profile_plan_download_ic"
+            app:layout_constraintBottom_toBottomOf="@id/profile_plan_download_ic"
+            android:paddingLeft="5dp"/>
+
+        <ImageView
+            android:id="@+id/profile_plan_comment_ic"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_comment"
+            app:layout_constraintLeft_toRightOf="@id/profile_plan_download"
+            app:layout_constraintTop_toBottomOf="@id/profile_plan_date"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/profile_plan_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="99"
+            app:layout_constraintLeft_toRightOf="@id/profile_plan_comment_ic"
+            android:fontFamily="@font/nixgonm"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/profile_plan_download_ic"
+            app:layout_constraintBottom_toBottomOf="@id/profile_plan_download_ic"
+            android:paddingLeft="5dp"/>
+
+        <ImageButton
+            android:id="@+id/profile_plan_like_ic"
+            android:layout_height="18dp"
+            android:layout_width="18dp"
+            android:background="@drawable/ic_heart"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toRightOf="@id/profile_plan_comment"
+            app:layout_constraintTop_toBottomOf="@id/profile_plan_date"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/profile_plan_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="99"
+            app:layout_constraintLeft_toRightOf="@id/profile_plan_like_ic"
+            android:fontFamily="@font/nixgonm"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@id/profile_plan_download_ic"
+            app:layout_constraintBottom_toBottomOf="@id/profile_plan_download_ic"
+            android:paddingLeft="5dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
