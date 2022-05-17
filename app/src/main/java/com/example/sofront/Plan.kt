@@ -5,7 +5,10 @@ data class Plan(
     var hashTagList:ArrayList<String>,
     var routineList:ArrayList<Routine>, //이게 뷰의 근원
     var makerUid:String,
-    var liked:Boolean
+    var liked:Boolean,
+    var likeNum:Int,
+    var commentNum: Int,
+    var downLoadNum: Int
 )
 
 data class Routine(
