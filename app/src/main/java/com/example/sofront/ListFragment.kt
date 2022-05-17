@@ -1,29 +1,31 @@
 package com.example.sofront
 
+import android.app.Instrumentation
 import android.content.ClipData
 import android.content.ClipDescription
 import android.graphics.*
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.style.LineBackgroundSpan
-import android.text.style.UnderlineSpan
 import android.util.Log
-import android.view.DragEvent
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.example.sofront.databinding.FragmentListBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
-import kotlin.collections.Set
+class view: ViewModel(){
+
+}
 
 class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
@@ -43,7 +45,6 @@ class ListFragment : Fragment() {
         calendarView = binding.calendar
 
         setRecyclerView()
-        setOnDragAndDrop()
 
         addPlanBtn.setOnClickListener {
             callSetPlanActivity()
@@ -94,116 +95,12 @@ class ListFragment : Fragment() {
         }
         return CalendarDay.from(year,month,day)
     }
+
     fun setRecyclerView(){
         //TODO: 서버에서 플랜을 가져와서 리사이클러뷰로 띄워줌
         val adapter = PlanRecyclerViewAdapter()
         initRecyclerViewList(adapter)
         setRecyclerViewAdapter(adapter)
-    }
-    fun setOnDragAndDrop(){
-        calendarView.setOnDragListener { v: View, e ->
-            when (e.action) {
-                DragEvent.ACTION_DRAG_STARTED -> {
-                    // Determines if this View can accept the dragged data.
-                    if (e.clipDescription.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                        // As an example of what your application might do, applies a blue color tint
-                        // to the View to indicate that it can accept data.
-                        (v as? ImageView)?.setColorFilter(Color.BLUE)
-
-                        // Invalidate the view to force a redraw in the new tint.
-                        v.invalidate()
-
-                        // Returns true to indicate that the View can accept the dragged data.
-                        true
-                    } else {
-                        // Returns false to indicate that, during the current drag and drop operation,
-                        // this View will not receive events again until ACTION_DRAG_ENDED is sent.
-                        false
-                    }
-                }
-                DragEvent.ACTION_DRAG_ENTERED -> {
-                    // Applies a green tint to the View.
-                    (v as? ImageView)?.setColorFilter(Color.GREEN)
-
-                    // Invalidates the view to force a redraw in the new tint.
-                    v.invalidate()
-
-                    // Returns true; the value is ignored.
-                    true
-                }
-
-                DragEvent.ACTION_DRAG_LOCATION ->
-                    // Ignore the event.
-                    true
-                DragEvent.ACTION_DRAG_EXITED -> {
-                    // Resets the color tint to blue.
-                    (v as? ImageView)?.setColorFilter(Color.BLUE)
-
-                    // Invalidates the view to force a redraw in the new tint.
-                    v.invalidate()
-
-                    // Returns true; the value is ignored.
-                    true
-                }
-                DragEvent.ACTION_DROP -> {
-                    // Gets the item containing the dragged data.
-                    val item: ClipData.Item = e.clipData.getItemAt(0)
-
-                    // Gets the text data from the item.
-                    val dragData = item.text
-
-                    // Displays a message containing the dragged data.
-                    Toast.makeText(requireContext(), "Dragged data is $dragData", Toast.LENGTH_SHORT)
-                        .show()
-                    planLength = item.text.toString().toInt()
-                    // Turns off any color tints.
-                    (v as? ImageView)?.clearColorFilter()
-
-                    // Invalidates the view to force a redraw.
-                    v.invalidate()
-
-                    // Returns true. DragEvent.getResult() will return true.
-                    true
-                }
-
-                DragEvent.ACTION_DRAG_ENDED -> {
-                    // Turns off any color tinting.
-                    (v as? ImageView)?.clearColorFilter()
-
-                    // Invalidates the view to force a redraw.
-                    v.invalidate()
-
-                    // Does a getResult(), and displays what happened.
-                    when (e.result) {
-                        true ->
-                            Toast.makeText(
-                                requireContext(),
-                                "The drop was handled.",
-                                Toast.LENGTH_SHORT
-                            )
-                        else ->
-                            Toast.makeText(
-                                requireContext(),
-                                "The drop didn't work.",
-                                Toast.LENGTH_SHORT
-                            )
-                    }.show()
-
-                    // Returns true; the value is ignored.
-                    true
-                }
-                else -> {
-                    // An unknown action type was received.
-                    Log.e(
-                        "DragDrop Example",
-                        "Unknown action type received by View.OnDragListener."
-                    )
-                    false
-                }
-            }
-
-            true
-        }
     }
     fun initRecyclerViewList(adapter:PlanRecyclerViewAdapter){
         val a = ArrayList<Routine>()

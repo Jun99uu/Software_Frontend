@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         // 코드 테스트 할 때 intent 사용하면, 깃에 업로드할 때는 그 부분 지우고 push 해주세영
         // 화이팅 (●'◡'●)
 
-        val tmpIntent = Intent(this, MakePlanActivity::class.java)
+        val tmpIntent = Intent(this, HomeActivity::class.java)
         startActivity(tmpIntent)
 
         Firebase.auth.signOut()
