@@ -23,4 +23,7 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
+    <style name="textTest" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/pastel_pink</item>
+    </style>
 </resources>

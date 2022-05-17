@@ -6,7 +6,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="50sp"
-        android:id="@+id/testTextView"
+        android:id="@+id/plan_list_tv"
         />
 
 </LinearLayout>
