@@ -153,9 +153,9 @@ class MakePlanActivity : AppCompatActivity() {
             if(!planNameCheck){
                 Toast.makeText(this, "플랜명 중복검사를 진행해주세요.", Toast.LENGTH_LONG).show()
             }else{
-                val plan = Plan(planName, hashtags, routineList, "abcdefg1234567", false)
+                val plan = Plan(planName, hashtags, routineList, "abcdefg1234567", false,0,0,0)
                 Log.d("최종 데이터", "${plan}")
-                RetrofitService._testPlan(plan)
+                RetrofitService._setPlan(plan)
             }
 
 
