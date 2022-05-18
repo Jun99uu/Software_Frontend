@@ -16,10 +16,8 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.FragmentListBinding
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.DayViewDecorator
-import com.prolificinteractive.materialcalendarview.DayViewFacade
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.google.firebase.auth.FirebaseAuth
+import com.prolificinteractive.materialcalendarview.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
@@ -43,14 +41,12 @@ class ListFragment : Fragment() {
         val addPlanBtn = binding.addPlanBtn
         recyclerview = binding.planRv
         calendarView = binding.calendar
+        MonthView.materialCalendarView = calendarView
 
         setRecyclerView()
 
         addPlanBtn.setOnClickListener {
             callSetPlanActivity()
-        }
-        calendarView.setOnDateChangedListener { widget, date, selected ->
-            decorateDay(date)
         }
 
         return view
@@ -104,16 +100,28 @@ class ListFragment : Fragment() {
     }
     fun initRecyclerViewList(adapter:PlanRecyclerViewAdapter){
         val a = ArrayList<Routine>()
-        a.add(Routine(true,ArrayList()))
-        a.add(Routine(true,ArrayList()))
-        a.add(Routine(true,ArrayList()))
-        adapter.addItem(Plan("3일짜리",ArrayList(),a,"test",true))
-        val b = ArrayList<Routine>()
-        b.add(Routine(true,ArrayList()))
-        b.add(Routine(true,ArrayList()))
-        b.add(Routine(true,ArrayList()))
-        b.add(Routine(true,ArrayList()))
-        adapter.addItem(Plan("4일짜리",ArrayList(),b,"test",true))
+        val auth = FirebaseAuth.getInstance()
+        if(auth.uid == null){
+            Log.d("Firebase uid","null")
+        }
+
+        val planArray = RetrofitService._getPlanByUid("auth.uid!!")
+//        for(routine in plan.routineList){
+//            a.add(routine)
+//        } ????
+//        a.add(Routine(true,ArrayList()))
+//        a.add(Routine(true,ArrayList()))
+//        a.add(Routine(true,ArrayList()))
+//        adapter.addItem(Plan("3일짜리",ArrayList(),a,"test",true,0,0,0))
+        for(plan in planArray) {
+            adapter.addItem(plan)
+        }
+//        val b = ArrayList<Routine>()
+//        b.add(Routine(true,ArrayList()))
+//        b.add(Routine(true,ArrayList()))
+//        b.add(Routine(true,ArrayList()))
+//        b.add(Routine(true,ArrayList()))
+//        adapter.addItem(Plan("4일짜리",ArrayList(),b,"test",true,0,0,0))
     }
     fun setRecyclerViewAdapter(adapter: PlanRecyclerViewAdapter){
         recyclerview.adapter = adapter
