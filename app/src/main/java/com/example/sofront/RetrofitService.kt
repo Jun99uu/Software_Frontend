@@ -10,28 +10,30 @@ import retrofit2.http.*
 
 interface RetrofitService {
     //1. 인터페이스 설계
-    @POST("info")
+    @POST("/info")
     fun postUserInfo(@Body userInfo: UserInfo) : Call<UserInfo>
 
-    @POST("account/signup")
+    @POST("/account/signup")
     fun postUID(@Body UID: UID): Call<UID>
 
-    @PUT("account/phone")
+    @PUT("/account/phone")
     fun postAuth(@Body UID: UID): Call<UID>
 
-    @POST("account/login")
+    @POST("/account/login")
     fun login(@Body UID: UID): Call<UID>
 
-    @POST("workout/planSet")
+    @POST("/workout/planSet")
     fun setPlan(@Body Plan: Plan): Call<Plan>
 
-    @GET("workout/planGet/{planName}")
+    @GET("/workout/planGet/{planName}")
     fun getPlanByPlanName(@Path("planName") planName : String) : Call<Plan>
-    @GET("workout/planGet/{uid}")
+    @GET("/workout/planGetUID/{uid}")
     fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
+    @GET("/workout/planGetHashTag/{hashtag}")
+    fun getPlanByHashTag(@Path("hashtag") hashTag:String) : Call<ArrayList<Plan>>
 
     companion object{
-        private const val BASE_URL = "http://1344-219-255-158-173.ngrok.io/"
+        private const val BASE_URL = "http://ef92-49-142-63-121.ngrok.io"
 
         val retrofitService = create()
 
@@ -112,7 +114,7 @@ interface RetrofitService {
             })
             return successful
         }
-        fun _getPlanByUid(uid: String) : ArrayList<Plan>{
+        suspend fun _getPlanByUid(uid: String) : ArrayList<Plan>{
             var myPlan = ArrayList<Plan>()
             retrofitService.getPlanByUid(uid).enqueue(object : Callback<ArrayList<Plan>> {
                 override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
@@ -159,7 +161,7 @@ interface RetrofitService {
                         Log.d("setPlan test","success")
                     }
                     else{
-                        Log.d("setPlan test","success but something error")
+                        Log.d("setPlan test","success but something error"+response.code())
                     }
                 }
 
@@ -182,6 +184,25 @@ interface RetrofitService {
                 }
 
                 override fun onFailure(call: Call<Plan>, t: Throwable) {
+                    Log.d("getPlan test", "fail")
+                }
+            })
+            return myPlan
+        }
+        fun _getPlanByHashTag(hashTag: String) : ArrayList<Plan>{
+            var myPlan = ArrayList<Plan>()
+            retrofitService.getPlanByUid(hashTag).enqueue(object : Callback<ArrayList<Plan>> {
+                override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
+                    if (response.isSuccessful) {
+                        Log.d("getPlan test", "success")
+                        Log.d("getPlan test success", response.body().toString())
+                        myPlan = response.body()!!
+                    } else {
+                        Log.d("getPlan test", "success but something error")
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
                     Log.d("getPlan test", "fail")
                 }
             })
