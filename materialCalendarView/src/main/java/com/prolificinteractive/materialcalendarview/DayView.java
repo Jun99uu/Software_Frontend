@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckedTextView;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.LineBackgroundSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -197,20 +196,18 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
       customBackground.setBounds(tempRect);
       customBackground.setState(getDrawableState());
       customBackground.draw(canvas);
-//      canvas.drawRect();
     }
-    if(tmp==0&&date.equals(CalendarDay.today())){
-      Paint paint = new Paint();
-      paint.setColor(Color.RED);
-      paint.setStrokeWidth(30f);
-      canvas.drawPoint(30,30,paint);
-    }
-    else{
-      Paint paint = new Paint();
-      paint.setColor(Color.BLUE);
-      paint.setStrokeWidth(30f);
-      canvas.drawPoint(30,30,paint);
-    }
+
+//    if(tmp==0&&date.equals(CalendarDay.today())){
+//      paint.setColor(Color.RED);
+//      paint.setStrokeWidth(30f);
+//      canvas.drawPoint(0,0,paint);
+//    }
+//    else{
+//      paint.setColor(Color.BLUE);
+//      paint.setStrokeWidth(30f);
+//      canvas.drawPoint(0,0,paint);
+//    }
 
     mCircleDrawable.setBounds(circleDrawableRect);
 
