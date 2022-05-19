@@ -105,7 +105,7 @@ class ListFragment : Fragment() {
             Log.d("Firebase uid","null")
         }
 
-        val planArray = RetrofitService._getPlanByUid("auth.uid!!")
+//        val planArray = RetrofitService._getPlanByUid("auth.uid!!")
 //        for(routine in plan.routineList){
 //            a.add(routine)
 //        } ????
@@ -113,9 +113,9 @@ class ListFragment : Fragment() {
 //        a.add(Routine(true,ArrayList()))
 //        a.add(Routine(true,ArrayList()))
 //        adapter.addItem(Plan("3일짜리",ArrayList(),a,"test",true,0,0,0))
-        for(plan in planArray) {
-            adapter.addItem(plan)
-        }
+//        for(plan in planArray) {
+//            adapter.addItem(plan)
+//        }
 //        val b = ArrayList<Routine>()
 //        b.add(Routine(true,ArrayList()))
 //        b.add(Routine(true,ArrayList()))

@@ -2,13 +2,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/pastel_white"
-    tools:context=".ProfilePlanFragment">
+    tools:context=".ProfilePlanFragment"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="60dp">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profile_plan_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="플랜" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:nestedScrollingEnabled="true"/>
 
 </FrameLayout>
