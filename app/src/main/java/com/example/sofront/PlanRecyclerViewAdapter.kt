@@ -12,13 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.PlanRecyclerViewBinding
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 
-class PlanRecyclerViewAdapter() : RecyclerView.Adapter<PlanRecyclerViewAdapter.ViewHolder>() {
-    val testList = mutableListOf<Plan>()
+class PlanRecyclerViewAdapter : RecyclerView.Adapter<PlanRecyclerViewAdapter.ViewHolder>() {
+    private val testList = mutableListOf<Plan>()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

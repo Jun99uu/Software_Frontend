@@ -1,9 +1,12 @@
 package com.example.sofront
 
+import com.google.gson.annotations.SerializedName
+
 data class Plan(
     var planName:String,
     var hashTagList:ArrayList<String>,
     var routineList:ArrayList<Routine>, //이게 뷰의 근원
+    @SerializedName("UID")
     var makerUid:String,
     var liked:Boolean,
     var likeNum:Int,
