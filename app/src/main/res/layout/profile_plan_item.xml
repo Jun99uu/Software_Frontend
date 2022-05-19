@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/palns_radius"
     android:backgroundTint="@color/patel_yellow"
-    android:padding="13dp">
+    android:padding="13dp"
+    android:elevation="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/plan_profile_img"

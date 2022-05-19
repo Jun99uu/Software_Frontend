@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.get
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.sofront.databinding.ActivityProfileBinding
 
@@ -34,14 +36,38 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+        if(true){
+            //현재 uid와 들어온 프로필의 uid가 같다면
+            binding.suboreditBtn.text = "편집"
+        }
+
         val fragmentList = listOf(ProfilePortfolioFragment(), ProfilePlanFragment())
         val adapter = ProfileVPAdapter(this)
         adapter.fragments = fragmentList
         binding.profileMainSheet.adapter = adapter
 
+        binding.portfolioBtn.setOnClickListener{
+            binding.profileMainSheet.setCurrentItem(0, true)
+        }
+        binding.madePlanBtn.setOnClickListener{
+            binding.profileMainSheet.setCurrentItem(1, true)
+        }
+
         binding.profileMainSheet.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                val view = (binding.profileMainSheet[0] as RecyclerView).layoutManager?.findViewByPosition(position)
+                view?.post {
+                    val wMeasureSpec =
+                        View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
+                    val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                    view.measure(wMeasureSpec, hMeasureSpec)
+                    if (binding.profileMainSheet.layoutParams.height != view.measuredHeight) {
+                        binding.profileMainSheet.layoutParams = (binding.profileMainSheet.layoutParams).also { lp ->
+                            lp.height = view.measuredHeight
+                        }
+                    }
+                }
                 if(position == 0){
                     val pfShape : GradientDrawable = binding.portfolioBtn.background as GradientDrawable
                     pfShape.setColor(Color.parseColor("#61A4BC"))
@@ -55,12 +81,6 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
         })
-
-        binding.portfolioBtn.setOnClickListener{
-            binding.profileMainSheet.setCurrentItem(0, true)
-        }
-        binding.madePlanBtn.setOnClickListener{
-            binding.profileMainSheet.setCurrentItem(1, true)
-        }
     }
+
 }

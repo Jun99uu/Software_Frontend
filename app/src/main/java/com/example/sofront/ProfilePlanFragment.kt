@@ -1,20 +1,20 @@
 package com.example.sofront
 
+import android.R
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.FragmentProfilePlanBinding
 
 
 class ProfilePlanFragment : Fragment() {
-    val planList = ArrayList<Plan>()
-    val tmpHash = ArrayList<String>()
-    val routineList = ArrayList<Routine>()
-    val profilePlanAdapter = ProfilePlanAdapter(planList)
+    private var planList = ArrayList<Plan>()
+    private val linearLayoutManager by lazy { LinearLayoutManager(activity) }
+    private lateinit var adapter: ProfilePlanAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,27 +22,48 @@ class ProfilePlanFragment : Fragment() {
     ): View? {
         val binding = FragmentProfilePlanBinding.inflate(layoutInflater)
 
-        //리사이클러뷰 테스트를 위한 임시 데이터
-        tmpHash.add("하이")
-        tmpHash.add("바이")
-        tmpHash.add("아오")
+
+        //임시데이터
+        //통신해서 planlist 채워야함
+        val tmpHash = ArrayList<String>()
+        tmpHash.add("안녕")
+        tmpHash.add("그래")
+        tmpHash.add("잘가")
+        tmpHash.add("하하")
+        tmpHash.add("깃허브")
+        val routineList = ArrayList<Routine>()
         val initSet = ArrayList<Set>()
         initSet.add(Set(0,0))
         val initWorkout = ArrayList<Workout>()
         initWorkout.add(Workout("", 0, initSet))
         routineList.add(Routine(false, initWorkout))
         val tmpPlan = Plan("하이", tmpHash, routineList, "사람uid", false, 0,0 ,0)
-        //임시데이터 끝
+        planList.add(tmpPlan)
+        planList.add(tmpPlan)
+        planList.add(tmpPlan)
+        planList.add(tmpPlan)
+        planList.add(tmpPlan)
+        planList.add(tmpPlan)
+        planList.add(tmpPlan)
+        planList.add(tmpPlan)
+        planList.add(tmpPlan)
+        planList.add(tmpPlan)
+        //임시데이터
 
-        binding.profilePlanRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
-        profilePlanAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        binding.profilePlanRecycler.adapter = profilePlanAdapter
-
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        profilePlanAdapter.notifyDataSetChanged()
+        binding.profilePlanRecycler.layoutManager = linearLayoutManager
+        adapter = ProfilePlanAdapter(planList)
+        binding.profilePlanRecycler.adapter = adapter
+        adapter.notifyDataSetChanged()
+        binding.profilePlanRecycler.addItemDecoration(VerticalItemDecorator(30))
 
         return binding.root
     }
+
+    fun listenPlan(listendPlans:ArrayList<Plan>){
+        //서버에서 받아온 플랜리스트 여기에 파라미터로 넣어주기
+        for(plan in listendPlans){
+//            planList.add(plan)
+        }
+    }
+
 }

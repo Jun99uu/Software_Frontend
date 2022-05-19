@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="planimg_array">
+        <item>@drawable/planimg1</item>
+        <item>@drawable/planimg2</item>
+        <item>@drawable/planimg3</item>
+        <item>@drawable/planimg4</item>
+        <item>@drawable/planimg5</item>
+        <item>@drawable/planimg6</item>
+        <item>@drawable/planimg7</item>
+        <item>@drawable/planimg8</item>
+        <item>@drawable/planimg9</item>
+        <item>@drawable/planimg10</item>
+        <item>@drawable/planimg11</item>
+    </array>
+</resources>
