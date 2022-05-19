@@ -90,7 +90,7 @@ class MakePlanActivity : AppCompatActivity() {
             }
         }
 
-        var hashtags = ArrayList<String>() //클릭한 해쉬태그
+        val hashtags = ArrayList<String>() //클릭한 해쉬태그
 
         binding.hashtagList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.hashtagList.adapter = hashtagAdapter
@@ -153,7 +153,7 @@ class MakePlanActivity : AppCompatActivity() {
             if(!planNameCheck){
                 Toast.makeText(this, "플랜명 중복검사를 진행해주세요.", Toast.LENGTH_LONG).show()
             }else{
-                val plan = Plan(planName, hashtags, routineList, "abcdefg1234567", false,0,0,0)
+                val plan = Plan(planName, hashtags, routineList, "류승민", false,0,0,0)
                 Log.d("최종 데이터", "${plan}")
                 RetrofitService._setPlan(plan)
             }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.FragmentListBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.prolificinteractive.materialcalendarview.*
+import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
@@ -99,29 +100,19 @@ class ListFragment : Fragment() {
         setRecyclerViewAdapter(adapter)
     }
     fun initRecyclerViewList(adapter:PlanRecyclerViewAdapter){
-        val a = ArrayList<Routine>()
         val auth = FirebaseAuth.getInstance()
         if(auth.uid == null){
             Log.d("Firebase uid","null")
         }
 
-        val planArray = RetrofitService._getPlanByUid("auth.uid!!")
-//        for(routine in plan.routineList){
-//            a.add(routine)
-//        } ????
-//        a.add(Routine(true,ArrayList()))
-//        a.add(Routine(true,ArrayList()))
-//        a.add(Routine(true,ArrayList()))
-//        adapter.addItem(Plan("3일짜리",ArrayList(),a,"test",true,0,0,0))
-        for(plan in planArray) {
-            adapter.addItem(plan)
+        CoroutineScope(Dispatchers.IO).launch{
+            val planArray = RetrofitService._getPlanByUid("류승민")
+            Log.d("plan Array size","${planArray.size}")
+            for(plan in planArray) {
+                Log.d("Plan Class", plan.toString())
+                adapter.addItem(plan)
+            }
         }
-//        val b = ArrayList<Routine>()
-//        b.add(Routine(true,ArrayList()))
-//        b.add(Routine(true,ArrayList()))
-//        b.add(Routine(true,ArrayList()))
-//        b.add(Routine(true,ArrayList()))
-//        adapter.addItem(Plan("4일짜리",ArrayList(),b,"test",true,0,0,0))
     }
     fun setRecyclerViewAdapter(adapter: PlanRecyclerViewAdapter){
         recyclerview.adapter = adapter
