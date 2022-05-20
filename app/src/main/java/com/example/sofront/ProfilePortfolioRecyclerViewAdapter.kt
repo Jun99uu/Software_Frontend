@@ -9,7 +9,7 @@ import com.example.sofront.databinding.ProfilePortfolioRecyclerViewBinding
 
 class ProfilePortfolioRecyclerViewAdapter :
     RecyclerView.Adapter<ProfilePortfolioRecyclerViewAdapter.ViewHolder>() {
-    val portfolioList = mutableListOf<Portfolio>()
+    private val portfolioList = mutableListOf<Portfolio>()
     inner class ViewHolder(binding: ProfilePortfolioRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
         private val title = binding.portfolioTitle
         private val content = binding.portfolioContent
@@ -30,7 +30,10 @@ class ProfilePortfolioRecyclerViewAdapter :
         holder.bind(portfolioList[position])
     }
 
+    fun addItem(portfolio : Portfolio){
+        portfolioList.add(portfolio)
+    }
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return portfolioList.size
     }
 }
