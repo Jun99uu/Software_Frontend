@@ -45,4 +45,5 @@
     <string name="default_number">99</string>
     <string name="date">2022–08–17</string>
     <string name="image">image</string>
+    <string name="writer">작성자</string>
 </resources>

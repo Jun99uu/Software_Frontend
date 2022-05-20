@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".HeartFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="좋아요" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:id="@+id/heart_portfolio_rv"/>
 
 </FrameLayout>

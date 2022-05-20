@@ -19,7 +19,13 @@ class ProfilePortfolioRecyclerViewAdapter :
         private val commentNum = binding.portfolioCommentNum
         fun bind(item : Portfolio){
             title.text= item.title
-            content.text = item.content
+            if(item.content.length>100){
+                val tmpStr = item.content.substring(0,100) + "..."
+                content.text = tmpStr
+            }
+            else {
+                content.text = item.content
+            }
             date.text = item.date
             commentNum.text = item.commentList.size.toString()
             binding.root.setOnClickListener{
