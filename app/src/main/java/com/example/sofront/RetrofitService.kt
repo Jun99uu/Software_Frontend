@@ -31,6 +31,8 @@ interface RetrofitService {
     fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
     @GET("/workout/planGetHashTag/{hashtag}")
     fun getPlanByHashTag(@Path("hashtag") hashTag:String) : Call<ArrayList<Plan>>
+    @GET("/portfolio/{uid}")
+    fun getPortfolio(@Path("uid") uid:String) : Call<ArrayList<Portfolio>>
 
     companion object{
         private const val BASE_URL = "http://ef92-49-142-63-121.ngrok.io"
@@ -208,6 +210,28 @@ interface RetrofitService {
             })
             return myPlan
         }
+        fun _getPortfolio(uid:String) : ArrayList<Portfolio>{
+            var myPortfolio = ArrayList<Portfolio>()
+            retrofitService.getPortfolio(uid).enqueue(object  :Callback<ArrayList<Portfolio>>{
+                override fun onResponse(
+                    call: Call<ArrayList<Portfolio>>,
+                    response: Response<ArrayList<Portfolio>>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("getPlan test", "success")
+                        Log.d("getPlan test success", response.body().toString())
+                        myPortfolio = response.body()!!
+                    } else {
+                        Log.d("getPlan test", "success but something error")
+                    }
+                }
 
+                override fun onFailure(call: Call<ArrayList<Portfolio>>, t: Throwable) {
+                    Log.d("getPlan test", "fail")
+                }
+
+            })
+            return myPortfolio
+        }
     }
 }
