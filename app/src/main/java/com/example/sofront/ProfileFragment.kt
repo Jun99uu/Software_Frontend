@@ -1,25 +1,35 @@
 package com.example.sofront
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.drawToBitmap
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.sofront.databinding.ActivityProfileBinding
 
 class ProfileFragment : Fragment() {
+    val converter = BitmapConverter()
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = ActivityProfileBinding.inflate(layoutInflater)
-
         binding.profileImg.translationZ = 1f
 
         val prevPadding:Int = Math.round(resources.displayMetrics.density * 30) //30dp 변환값
@@ -39,6 +49,13 @@ class ProfileFragment : Fragment() {
         }
 
         binding.suboreditBtn.text = "편집"
+        binding.suboreditBtn.setOnClickListener{
+            val intent = Intent(context, EditProfileActivity::class.java)
+            //프로필사진, 배경사진(비트맵) _ 보고있는 프로필의 uid, 이름, 소개글(String)으로 넘겨줘야함.
+            intent.putExtra("nickname", "임시용")
+            intent.putExtra("subtitle", "하이 방가방가데스요")
+            startActivity(intent)
+        }
 
         val fragmentList = listOf(ProfilePortfolioFragment(), ProfilePlanFragment())
         val adapter = ProfileVPAdapter(requireActivity())
