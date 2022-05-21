@@ -1,5 +1,6 @@
 package com.example.sofront
 
+import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,10 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.ActivityDetailInfoBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.regex.Pattern
 
 class DetailInfoActivity : AppCompatActivity() {
@@ -20,14 +25,34 @@ class DetailInfoActivity : AppCompatActivity() {
     private lateinit var textArray: ArrayList<Array<String>>
     private var userInfo: UserInfo = UserInfo()
     val adapter = SelectItemAdapter()
+    var prevEmail = ""
+    var prevPWD = ""
+    lateinit var auth:FirebaseAuth
+    lateinit var user:FirebaseUser
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val UID = intent.getStringExtra("UID")
+        prevEmail = intent.getStringExtra("prevEmail").toString()
+        prevPWD = intent.getStringExtra("prevPWD").toString()
 
-        Log.d("UID : ", UID.toString())
+        auth.signInWithEmailAndPassword(prevEmail, prevPWD)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    RetrofitService._login(auth.uid.toString())
+                    Log.d(ContentValues.TAG, "signInWithEmail:success")
+                    auth = Firebase.auth
+                    user = auth.currentUser!!
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(ContentValues.TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "로그인에 실패했습니다😢",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
 
         setList()
         adapter.toggleList = toggleList
@@ -62,6 +87,7 @@ class DetailInfoActivity : AppCompatActivity() {
             if(check()) {
                 userInfo.UID=UID.toString()
                 RetrofitService._postUserInfo(userInfo)
+                //여기서 비동기 처리
             }
             else{
                 println("hi")
