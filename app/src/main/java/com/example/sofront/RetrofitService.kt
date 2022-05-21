@@ -10,31 +10,48 @@ import retrofit2.http.*
 
 interface RetrofitService {
     //1. 인터페이스 설계
-    @POST("/info")
+    @POST("/info") //레거시
     fun postUserInfo(@Body userInfo: UserInfo) : Call<UserInfo>
 
-    @POST("/account/signup")
+    @POST("/account/signup") //회원가입 _ 파이어베이스 uid를 서버에 보내줌
     fun postUID(@Body UID: UID): Call<UID>
 
-    @PUT("/account/phone")
+    @PUT("/account/phone") //핸드폰 번호 인증 했는지 안했는지
     fun postAuth(@Body UID: UID): Call<UID>
 
-    @POST("/account/login")
+    @POST("/account/login") //로그인
     fun login(@Body UID: UID): Call<UID>
 
-    @POST("/workout/planSet")
+    @POST("/workout/planSet") //플랜 생성
     fun setPlan(@Body Plan: Plan): Call<Plan>
 
-    @GET("/workout/planGet/{planName}")
+    @GET("/workout/planGet/{planName}") //플랜이름으로 받아오기
     fun getPlanByPlanName(@Path("planName") planName : String) : Call<Plan>
-    @GET("/workout/planGetUID/{uid}")
+
+    @GET("/workout/planGetUID/{uid}") //uid로 플랜 가져오기
     fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
-    @GET("/workout/planGetHashTag/{hashtag}")
+
+    @GET("/workout/planGetHashTag/{hashtag}")//해시태그로 플랜 가져오기
     fun getPlanByHashTag(@Path("hashtag") hashTag:String) : Call<ArrayList<Plan>>
-    @GET("/portfolio/{uid}")
+
+    @GET("/portfolio/{uid}") //uid로 포트폴리오 가져오기
     fun getPortfolio(@Path("uid") uid:String) : Call<ArrayList<Portfolio>>
-    @GET("/portfolio/subscription/{uid}")
+
+    @GET("/portfolio/subscription/{uid}") //uid로 구독 목록 가져오기
     fun getSubscribingPortfolio(@Path("uid")uid: String) : Call<ArrayList<Portfolio>>
+
+    //플랜 이름으로 좋아요 보내기
+    @POST("/plan/like")
+    fun postLike(@Body planLike:planLike) : Call<planLike>
+
+    //플랜 이름으로 다운로드 회원 보내기
+    //플랜 이름으로 댓글 받아오기
+    //회원 uid로 프로필 정보 받아오기
+    //프로필 수정
+    
+    //구독하기
+    @POST("/subscribe")
+    fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
     companion object{
         private const val BASE_URL = "http://ef92-49-142-63-121.ngrok.io"
@@ -118,6 +135,7 @@ interface RetrofitService {
             })
             return successful
         }
+
         suspend fun _getPlanByUid(uid: String) : ArrayList<Plan>{
             var myPlan = ArrayList<Plan>()
             retrofitService.getPlanByUid(uid).enqueue(object : Callback<ArrayList<Plan>> {
@@ -137,6 +155,7 @@ interface RetrofitService {
             })
             return myPlan
         }
+
         fun _login(uid:String)  {
             retrofitService.login(UID(uid)).enqueue(object : Callback<UID>{
                 override fun onResponse(call: Call<UID>, response: Response<UID>) {
@@ -158,6 +177,7 @@ interface RetrofitService {
 
             })
         }
+
         fun _setPlan(plan: Plan){
             retrofitService.setPlan(plan).enqueue(object : Callback<Plan>{
                 override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
@@ -174,6 +194,7 @@ interface RetrofitService {
                 }
             })
         }
+
         fun _getPlanByPlanName(planName:String) : Plan {
             var myPlan = Plan("", ArrayList(), ArrayList(), "", true, 0, 0, 0)
             retrofitService.getPlanByPlanName(planName).enqueue(object : Callback<Plan> {
@@ -193,6 +214,7 @@ interface RetrofitService {
             })
             return myPlan
         }
+
         fun _getPlanByHashTag(hashTag: String) : ArrayList<Plan>{
             var myPlan = ArrayList<Plan>()
             retrofitService.getPlanByUid(hashTag).enqueue(object : Callback<ArrayList<Plan>> {
@@ -211,6 +233,7 @@ interface RetrofitService {
             })
             return myPlan
         }
+
         fun _getPortfolio(uid:String) : ArrayList<Portfolio>{
             var myPortfolio = ArrayList<Portfolio>()
             retrofitService.getPortfolio(uid).enqueue(object  :Callback<ArrayList<Portfolio>>{
@@ -233,6 +256,7 @@ interface RetrofitService {
             })
             return myPortfolio
         }
+
         fun _getSubscribingPortfolio(uid:String) : ArrayList<Portfolio>{
             var myPortfolio = ArrayList<Portfolio>()
             retrofitService.getSubscribingPortfolio(uid).enqueue(object  :Callback<ArrayList<Portfolio>>{

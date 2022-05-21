@@ -50,6 +50,9 @@
         <activity
             android:name=".DetailInfoActivity"
             android:exported="false" />
+        <activity
+            android:name=".PlanDetailViewActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

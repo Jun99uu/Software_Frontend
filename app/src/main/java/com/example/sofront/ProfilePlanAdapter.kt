@@ -1,6 +1,7 @@
 package com.example.sofront
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.hdodenhof.circleimageview.CircleImageView
@@ -15,6 +17,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Adapter<ProfilePlanAdapter.MyViewHolder>() {
     lateinit var context: Context
     var position = 0
+    val tmpComment = planComment("하이", "1234", "김종국", "2022-05-24 17:23", "프사", "안녕하세요 댓글입니다.\n힘들다...")
+    val tmpCommentList = ArrayList<planComment>()
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val planImage : CircleImageView = itemView.findViewById(R.id.plan_profile_img)
@@ -51,6 +55,17 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
         holder.planImage.setImageResource(drawable)
         holder.planHashTag.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         holder.planHashTag.adapter = ProfilePlanHashtagAdapter(planList[position].hashTagList)
+        holder.itemView.setOnClickListener{
+            tmpCommentList.add(tmpComment)
+            tmpCommentList.add(tmpComment)
+            tmpCommentList.add(tmpComment)
+            tmpCommentList.add(tmpComment)
+            tmpCommentList.add(tmpComment)
+            val intent = Intent(context, PlanDetailViewActivity::class.java)
+            intent.putExtra("plan", planList[position])
+            intent.putExtra("comments", tmpCommentList)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
