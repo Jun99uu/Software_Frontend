@@ -17,6 +17,7 @@ class ProfilePortfolioRecyclerViewAdapter :
         private val content = binding.portfolioContent
         private val date = binding.portfolioDate
         private val commentNum = binding.portfolioCommentNum
+        private val writer = binding.portfolioWriter
         fun bind(item : Portfolio){
             title.text= item.title
             if(item.content.length>100){
@@ -34,6 +35,7 @@ class ProfilePortfolioRecyclerViewAdapter :
                 intent.putExtra("portfolio",item)
                 binding.root.context.startActivity(intent)
             }
+            writer.text = item.portfolioWriter
         }
     }
 
