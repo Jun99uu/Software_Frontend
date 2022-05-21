@@ -36,6 +36,8 @@ import org.threeten.bp.LocalDate;
 @SuppressLint("ViewConstructor") public class MonthView extends CalendarPagerView {
 
   public static MaterialCalendarView materialCalendarView = null;
+  public static int colorIndex = 0;
+  public static int[] colors = {Color.BLUE,Color.YELLOW,Color.GREEN,Color.BLACK,Color.RED,Color.CYAN,Color.rgb(255,165,0)};
   public MonthView(
       @NonNull final MaterialCalendarView view,
       final CalendarDay month,
@@ -91,14 +93,14 @@ import org.threeten.bp.LocalDate;
 //              }catch(Exception exception){
 //                exception.getMessage();
 //              }
-            HashSet<CalendarDay> set = new HashSet<>();
+            ArrayList<CalendarDay> set = new ArrayList<>();
             CalendarDay tmp = dayView.getDate();
             for(int i=0; i<days; i++){
               set.add(tmp);
               tmp = addOnetoCalendarDay(tmp);
             }
-            materialCalendarView.addDecorator(new EventDecorator(set));
-            DayView.tmp = 1;
+            materialCalendarView.addDecorator(new EventDecorator(colors[colorIndex],set));
+            colorIndex = (colorIndex+1)%colors.length;
             Toast.makeText(getContext(), "Drag data is " + dragData, Toast.LENGTH_SHORT).show();
             v.invalidate();
             return true;
@@ -157,10 +159,13 @@ import org.threeten.bp.LocalDate;
     return showWeekDays ? DEFAULT_MAX_WEEKS + DAY_NAMES_ROW : DEFAULT_MAX_WEEKS;
   }
 }
+
 class EventDecorator implements DayViewDecorator{
-  private HashSet<CalendarDay> dates;
-  EventDecorator(Collection<CalendarDay> datesCollection){
-    dates = new HashSet(datesCollection);
+  private ArrayList<CalendarDay> dates;
+  private int color;
+  EventDecorator(int color, Collection<CalendarDay> datesCollection){
+    dates = new ArrayList<>(datesCollection);
+    this.color = color;
   }
 
   @Override
@@ -171,19 +176,22 @@ class EventDecorator implements DayViewDecorator{
   @Override
   public void decorate(DayViewFacade view) {
     if(view!=null){
-      view.addSpan(new LineSpan());
+      view.addSpan(new LineSpan(color));
     }
   }
 }
 
 class LineSpan implements LineBackgroundSpan{
 
+  private int color;
+  LineSpan(int color){
+    this.color = color;
+  }
   @Override
   public void drawBackground(@NonNull Canvas canvas, @NonNull Paint paint, int left, int right, int top, int baseline, int bottom, @NonNull CharSequence charSequence, int start, int end, int lineNum) {
     Rect rect = new Rect();
     rect.set(left,top-(top-bottom), right, bottom - (top-bottom));
-
-    paint.setColor(Color.parseColor("#1D872A"));
+    paint.setColor(color);
     canvas.drawRect(rect,paint);
   }
 }

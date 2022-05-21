@@ -36,7 +36,6 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
 
   private CalendarDay date;
   private int selectionColor = Color.GRAY;
-  public static int tmp = 0;
   private final int fadeTime;
   private Drawable customBackground = null;
   private Drawable selectionDrawable;
@@ -197,18 +196,6 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
       customBackground.setState(getDrawableState());
       customBackground.draw(canvas);
     }
-
-//    if(tmp==0&&date.equals(CalendarDay.today())){
-//      paint.setColor(Color.RED);
-//      paint.setStrokeWidth(30f);
-//      canvas.drawPoint(0,0,paint);
-//    }
-//    else{
-//      paint.setColor(Color.BLUE);
-//      paint.setStrokeWidth(30f);
-//      canvas.drawPoint(0,0,paint);
-//    }
-
     mCircleDrawable.setBounds(circleDrawableRect);
 
     super.onDraw(canvas);
