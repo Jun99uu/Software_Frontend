@@ -177,6 +177,8 @@ class SignUpAuth : AppCompatActivity() {
                                         RetrofitService._postUID(UID)
                                         val intent = Intent(this, NumAuth::class.java)
                                         intent.putExtra("UID", user.uid)
+                                        intent.putExtra("prevEmail", Email)
+                                        intent.putExtra("prevPWD", PWD)
                                         startActivity(intent)
                                     }
                                 }

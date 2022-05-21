@@ -20,6 +20,8 @@ class NumAuth : AppCompatActivity() {
     var verificationId = ""
 
     var UID:String = ""
+    var prevEmail:String = ""
+    var prevPWD:String = ""
 
     private fun signInWithPhoneAuthCredential(credential : PhoneAuthCredential){
         auth.signInWithCredential(credential).addOnCompleteListener(this){ task ->
@@ -27,6 +29,8 @@ class NumAuth : AppCompatActivity() {
                 Toast.makeText(this, "인증에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, DetailInfoActivity::class.java)
                 intent.putExtra("UID", UID)
+                intent.putExtra("prevEmail",prevEmail)
+                intent.putExtra("prevPWD", prevPWD)
 
                 val UIDjson = UID(UID)
                 RetrofitService._postAuth(UIDjson)
@@ -53,6 +57,8 @@ class NumAuth : AppCompatActivity() {
         setContentView(binding.root)
 
         UID = intent.getStringExtra("UID").toString()
+        prevEmail = intent.getStringExtra("prevEmail").toString()
+        prevPWD = intent.getStringExtra("prevPWD").toString()
 
         var authCompleted = false
 
