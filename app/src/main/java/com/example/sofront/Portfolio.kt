@@ -11,12 +11,13 @@ data class Portfolio(
 //    var contentImage:ArrayList<Blob>, //포폴 내용 안 사진(최대 5장)
     var date:String, //yyyy-mm-dd-hh-mm
     var hashTagList:ArrayList<String>, //해쉬태그리스트 (최대 5개)
-    var commentList:ArrayList<Comment> //댓글 리스트
+    var commentList:ArrayList<portfolioComment> //댓글 리스트
 ) : Serializable
 
-data class Comment(
+data class portfolioComment(
     var commentWriter:String, //댓글 작성자
-//    var commentWriterProfile:Blob, //댓글 작성자 프사
+    var commenterUid:String, //댓글 작성자 uid
+    var commentWriterProfile:String, //댓글 작성자 프사
     var commentDate:String, //yyyy-mm-dd-hh-mm
     var comContent:String, //댓글 내용
 ) : Serializable

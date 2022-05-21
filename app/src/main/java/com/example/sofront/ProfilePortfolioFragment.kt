@@ -37,9 +37,9 @@ class ProfilePortfolioFragment : Fragment() {
         if(auth.uid==null){
             val hashTagList = ArrayList<String>()
             hashTagList.add("hashTag1")
-            val commentList = ArrayList<Comment>()
-            commentList.add(Comment("코멘트 작성자","2022-08-23","commentContent"))
-            commentList.add(Comment("댓글작성자 박재현","2022-08-31","댓글내용 : 날이 꾸리꾸리"))
+            val commentList = ArrayList<portfolioComment>()
+            commentList.add(portfolioComment("코멘트 작성자","uid","프사","2022-08-23","commentContent"))
+            commentList.add(portfolioComment("댓글작성자 박재현","uid","프사","2022-08-31","댓글내용 : 날이 꾸리꾸리"))
             adapter.addItem(Portfolio("제목1","이준규","날이 좋아","2022-08-22", hashTagList, commentList))
             adapter.addItem(Portfolio("제목2","박성규","날이 안좋아","2022-08-17",hashTagList,commentList))
         }
