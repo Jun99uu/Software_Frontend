@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/radius"
+    android:backgroundTint="@color/light_gray"
+    android:padding="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/comment_profile"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/gymdori"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/comment_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="홍길동"
+        android:fontFamily="@font/nixgonb"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:letterSpacing="-0.05"
+        app:layout_constraintTop_toTopOf="@id/comment_profile"
+        app:layout_constraintBottom_toBottomOf="@id/comment_profile"
+        app:layout_constraintLeft_toRightOf="@id/comment_profile"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/comment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2022.05.20 22:40"
+        android:fontFamily="@font/nixgonm"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:letterSpacing="-0.05"
+        app:layout_constraintLeft_toRightOf="@id/comment_name"
+        app:layout_constraintBottom_toBottomOf="@id/comment_name"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/comment_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/radius"
+        android:padding="8dp"
+        android:text="댓글내용 공간입니다."
+        android:fontFamily="@font/nixgonm"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/comment_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="14dp"/>
+
+    <Button
+        android:id="@+id/comment_delete_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/profile_img_radius"
+        android:backgroundTint="@color/gray"
+        android:fontFamily="@font/nixgonb"
+        android:text="x"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/comment_profile"
+        app:layout_constraintBottom_toBottomOf="@id/comment_profile"
+        android:layout_marginRight="3dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

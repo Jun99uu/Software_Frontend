@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlanDetailViewActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="30dp">
+
+                <TextView
+                    android:id="@+id/plan_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="운동하자 빵야빵야"
+                    android:fontFamily="@font/nixgonb"
+                    android:textColor="@color/black"
+                    android:textSize="40sp"
+                    android:letterSpacing="-0.05"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/detail_profile_img"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/gymdori"
+                    app:layout_constraintTop_toBottomOf="@id/plan_detail_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
+                    android:id="@+id/plan_writer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="홍길동"
+                    android:fontFamily="@font/nixgonm"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:letterSpacing="-0.05"
+                    app:layout_constraintLeft_toRightOf="@id/detail_profile_img"
+                    app:layout_constraintTop_toTopOf="@id/detail_profile_img"
+                    app:layout_constraintBottom_toBottomOf="@id/detail_profile_img"
+                    android:padding="10dp"/>
+
+                <Button
+                    android:id="@+id/delete_btn"
+                    android:layout_width="55dp"
+                    android:layout_height="35dp"
+                    android:text="삭제"
+                    android:background="@drawable/radius"
+                    android:backgroundTint="@color/tomato"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/nixgonb"
+                    android:textSize="15sp"
+                    android:visibility="invisible"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/detail_profile_img"
+                    app:layout_constraintBottom_toBottomOf="@id/detail_profile_img"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/plan_detail_rc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/detail_profile_img" />
+
+                <Button
+                    android:id="@+id/download_plan_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="내 캘린더에 저장"
+                    android:fontFamily="@font/nixgonb"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:background="@drawable/agree_no_back"
+                    android:backgroundTint="@color/patel_yellow"
+                    app:layout_constraintTop_toBottomOf="@id/plan_detail_rc"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="20dp"/>
+
+                <ImageView
+                    android:id="@+id/comment_ic"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_comment"
+                    app:layout_constraintTop_toBottomOf="@id/download_plan_btn"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:id="@+id/comment_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="99"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/nixgonm"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toTopOf="@id/comment_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/comment_ic"
+                    app:layout_constraintLeft_toRightOf="@id/comment_ic"
+                    android:layout_marginLeft="6dp"/>
+
+                <ImageView
+                    android:id="@+id/down_ic"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintLeft_toRightOf="@id/comment_num"
+                    app:layout_constraintTop_toTopOf="@id/comment_ic"
+                    android:layout_marginLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/down_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="99"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/nixgonm"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toTopOf="@id/down_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/down_ic"
+                    app:layout_constraintLeft_toRightOf="@id/down_ic"
+                    android:layout_marginLeft="6dp"/>
+
+                <ImageView
+                    android:id="@+id/heart_ic"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_heart"
+                    app:layout_constraintLeft_toRightOf="@id/down_num"
+                    app:layout_constraintTop_toTopOf="@id/down_ic"
+                    android:layout_marginLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/heart_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="99"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/nixgonm"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toTopOf="@id/heart_ic"
+                    app:layout_constraintBottom_toBottomOf="@id/heart_ic"
+                    app:layout_constraintLeft_toRightOf="@id/heart_ic"
+                    android:layout_marginLeft="6dp"/>
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@drawable/radius"
+                    android:backgroundTint="#8F8F8F"
+                    app:layout_constraintTop_toBottomOf="@id/comment_num"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="20dp"/>
+
+                <LinearLayout
+                    android:id="@+id/comment_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radius"
+                    android:backgroundTint="#8F8F8F"
+                    android:weightSum="7"
+                    app:layout_constraintTop_toBottomOf="@id/line"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="20dp"
+                    android:padding="8dp">
+
+                    <EditText
+                        android:id="@+id/comment_input"
+                        android:layout_width="0dp"
+                        android:layout_weight="6"
+                        android:layout_height="60dp"
+                        android:gravity="top"
+                        android:background="@drawable/signup_eidt"
+                        android:backgroundTint="@color/white"
+                        android:hint="댓글을 작성해주세요"
+                        android:padding="8dp"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/nixgonm"
+                        android:textColor="@color/black"/>
+
+                    <Button
+                        android:id="@+id/comment_save_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius"
+                        android:layout_marginLeft="10dp"
+                        android:text="등록"
+                        android:fontFamily="@font/nixgonb"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/pastel_blue"/>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/comment_rc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/comment_input_layout"
+                    android:layout_marginTop="10dp"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

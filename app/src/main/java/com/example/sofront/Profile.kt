@@ -24,3 +24,8 @@ data class editProfile (
     val name: String,
     val subtitle: String,
 )
+
+data class subscribeProfile(
+    var hostUid:String,
+    var myUid:String
+)
