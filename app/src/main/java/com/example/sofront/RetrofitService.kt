@@ -40,17 +40,19 @@ interface RetrofitService {
     @GET("/portfolio/subscription/{uid}") //uid로 구독 목록 가져오기
     fun getSubscribingPortfolio(@Path("uid")uid: String) : Call<ArrayList<Portfolio>>
 
-    //플랜 이름으로 좋아요 보내기
-    @POST("/plan/like")
+    @POST("/plan/like") //플랜 이름으로 좋아요 보내기
     fun postLike(@Body planLike:planLike) : Call<planLike>
 
     //플랜 이름으로 다운로드 회원 보내기
     //플랜 이름으로 댓글 받아오기
-    //회원 uid로 프로필 정보 받아오기
-    //프로필 수정
-    
-    //구독하기
-    @POST("/subscribe")
+
+    @GET("/profile/{uid}") //회원 uid로 프로필 정보 받아오기
+    fun getProfile(@Path("uid") uid:String) : Call<Profile>
+
+    @POST("/profile/edit") //프로필 수정
+    fun editProfile(@Body profile:Profile) : Call<Profile>
+
+    @POST("/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
     companion object{
@@ -278,6 +280,41 @@ interface RetrofitService {
 
             })
             return myPortfolio
+        }
+
+        fun _getProfile(uid:String) : Profile{
+            var profile = Profile(uid, "", "", "", "", 0)
+            retrofitService.getProfile(uid).enqueue(object :Callback<Profile>{
+                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                    if(response.isSuccessful){
+                        Log.d("getProfile test success", response.body().toString())
+                        profile = response.body()!!
+                    }else{
+                        Log.d("getProfile test", "success but something error")
+                    }
+                }
+
+                override fun onFailure(call: Call<Profile>, t: Throwable) {
+                    Log.d("getPortfolio test", "fail")
+                }
+            })
+            return profile
+        }
+
+        fun _editProfile(profile:Profile){
+            retrofitService.editProfile(profile).enqueue(object :Callback<Profile>{
+                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                    if(response.isSuccessful){
+                        Log.d("editProfile test success", response.body().toString())
+                    }else{
+                        Log.d("editProfile test", "success but something error")
+                    }
+                }
+                override fun onFailure(call: Call<Profile>, t: Throwable) {
+                    Log.d("editPortfolio test", "fail")
+                }
+
+            })
         }
     }
 }
