@@ -1,5 +1,6 @@
 package com.example.sofront
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.LightingColorFilter
 import android.graphics.drawable.GradientDrawable
@@ -39,6 +40,17 @@ class ProfileActivity : AppCompatActivity() {
         if(true){
             //현재 uid와 들어온 프로필의 uid가 같다면
             binding.suboreditBtn.text = "편집"
+        }
+        binding.suboreditBtn.setOnClickListener{
+            if(true){
+                val intent = Intent(this, EditProfileActivity::class.java)
+                //프로필사진, 배경사진(비트맵) _ 보고있는 프로필의 uid, 이름, 소개글(String)으로 넘겨줘야함.
+                intent.putExtra("nickname", "임시용")
+                intent.putExtra("subtitle", "하이 방가방가데스요")
+                startActivity(intent)
+            }else{
+                //구독
+            }
         }
 
         val fragmentList = listOf(ProfilePortfolioFragment(), ProfilePlanFragment())

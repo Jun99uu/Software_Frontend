@@ -19,10 +19,17 @@ import androidx.core.view.drawToBitmap
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.example.sofront.databinding.ActivityProfileBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class ProfileFragment : Fragment() {
     val converter = BitmapConverter()
+    val user = Firebase.auth.currentUser
+    val myUid = user?.uid.toString()
+    val defaultImg = R.drawable.gymdori
+    lateinit var profile:Profile
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -31,6 +38,18 @@ class ProfileFragment : Fragment() {
     ): View? {
         val binding = ActivityProfileBinding.inflate(layoutInflater)
         binding.profileImg.translationZ = 1f
+
+        profile = RetrofitService._getProfile(myUid)
+        binding.userName.text = profile.name
+        binding.subscribeNum.text = "Sub. ${profile.subscribeNum}명"
+        binding.profileContent.text = profile.subTitle
+        Glide.with(this)
+            .load(profile.profileImg) // 불러올 이미지 url
+            .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
+            .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
+            .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+//            .circleCrop() // 동그랗게 자르기
+            .into(binding.profileImg) // 이미지를 넣을 뷰
 
         val prevPadding:Int = Math.round(resources.displayMetrics.density * 30) //30dp 변환값
 
@@ -51,7 +70,7 @@ class ProfileFragment : Fragment() {
         binding.suboreditBtn.text = "편집"
         binding.suboreditBtn.setOnClickListener{
             val intent = Intent(context, EditProfileActivity::class.java)
-            //프로필사진, 배경사진(비트맵) _ 보고있는 프로필의 uid, 이름, 소개글(String)으로 넘겨줘야함.
+            //프로필사진, 배경사진(url) _ 보고있는 프로필의 uid, 이름, 소개글(String)으로 넘겨줘야함.
             intent.putExtra("nickname", "임시용")
             intent.putExtra("subtitle", "하이 방가방가데스요")
             startActivity(intent)

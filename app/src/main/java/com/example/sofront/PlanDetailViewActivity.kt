@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.ActivityPlanDetailViewBinding
@@ -68,6 +69,8 @@ class PlanDetailViewActivity : AppCompatActivity() {
             val content = binding.commentInput.text
             //TODO comment 서버로 전송
             //TODO commentList 다시 받아옴
+            binding.commentInput.setText("")
+            Toast.makeText(this, "댓글이 입력되었습니다.",Toast.LENGTH_SHORT).show()
             comments.add(planComment("하이", "uid", "${myName}", "${formatted}", "프사", "${content}"))
             commentAdapter.notifyDataSetChanged()
         }
