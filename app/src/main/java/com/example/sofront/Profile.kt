@@ -4,7 +4,7 @@ import android.provider.ContactsContract
 import java.sql.Blob
 
 data class Profile (
-    val uid:String, //해당 프로필 주인 uid
+    val UID:String, //해당 프로필 주인 uid
     val profileImg: String, //프로필 사진
     val backgroundImg: String, //배경 이미지
     val name:String, //해당 프로필 주인 이름

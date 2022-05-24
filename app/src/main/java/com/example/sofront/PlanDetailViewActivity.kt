@@ -1,9 +1,11 @@
 package com.example.sofront
 
+import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -71,8 +73,19 @@ class PlanDetailViewActivity : AppCompatActivity() {
             //TODO commentList 다시 받아옴
             binding.commentInput.setText("")
             Toast.makeText(this, "댓글이 입력되었습니다.",Toast.LENGTH_SHORT).show()
+            CloseKeyboard()
             comments.add(planComment("하이", "uid", "${myName}", "${formatted}", "프사", "${content}"))
             commentAdapter.notifyDataSetChanged()
+        }
+    }
+    fun CloseKeyboard()
+    {
+        var view = this.currentFocus
+
+        if(view != null)
+        {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 }

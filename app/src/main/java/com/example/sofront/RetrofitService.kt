@@ -1,6 +1,7 @@
 package com.example.sofront
 
 import android.util.Log
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +29,7 @@ interface RetrofitService {
     @GET("/workout/planGet/{planName}") //플랜이름으로 받아오기
     fun getPlanByPlanName(@Path("planName") planName : String) : Call<Plan>
 
-    @GET("/workout/planGetUID/{uid}") //uid로 플랜 가져오기
+    @GET("/workout/planGet/{uid}/UID") //uid로 플랜 가져오기
     fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
 
     @GET("/workout/planGetHashTag/{hashtag}")//해시태그로 플랜 가져오기
@@ -46,8 +47,8 @@ interface RetrofitService {
     //플랜 이름으로 다운로드 회원 보내기
     //플랜 이름으로 댓글 받아오기
 
-    @GET("/profile/{uid}") //회원 uid로 프로필 정보 받아오기
-    fun getProfile(@Path("uid") uid:String) : Call<Profile>
+    @GET("gymgguns/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
+    fun getProfile(@Path("UID") UID:String) : Call<Profile>
 
     @POST("/profile/edit") //프로필 수정
     fun editProfile(@Body profile:Profile) : Call<Profile>
@@ -56,7 +57,8 @@ interface RetrofitService {
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
     companion object{
-        private const val BASE_URL = "http://ef92-49-142-63-121.ngrok.io"
+        //        var gson = GsonBuilder().setLenient().create()
+        private const val BASE_URL = "https://9051-219-255-158-172.jp.ngrok.io"
 
         val retrofitService = create()
 
@@ -64,10 +66,10 @@ interface RetrofitService {
         private fun create():RetrofitService{
             val retrofit : Retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create()) //뭐오류나면 여기에 gson
                 .build()
 
-           return retrofit.create(RetrofitService::class.java)
+            return retrofit.create(RetrofitService::class.java)
         }
 
         //3. 인터페이스 사용
@@ -138,7 +140,7 @@ interface RetrofitService {
             return successful
         }
 
-        suspend fun _getPlanByUid(uid: String) : ArrayList<Plan>{
+        fun _getPlanByUid(uid: String) : ArrayList<Plan>{
             var myPlan = ArrayList<Plan>()
             retrofitService.getPlanByUid(uid).enqueue(object : Callback<ArrayList<Plan>> {
                 override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
@@ -295,7 +297,8 @@ interface RetrofitService {
                 }
 
                 override fun onFailure(call: Call<Profile>, t: Throwable) {
-                    Log.d("getPortfolio test", "fail")
+                    Log.d("getProfile test", "fail")
+                    Log.d("왜 오류남", t.message.toString())
                 }
             })
             return profile
