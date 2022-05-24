@@ -28,8 +28,11 @@ interface RetrofitService {
     @GET("/workout/planGet/{planName}") //플랜이름으로 받아오기
     fun getPlanByPlanName(@Path("planName") planName : String) : Call<Plan>
 
-    @GET("/workout/planGetUID/{uid}") //uid로 플랜 가져오기
+    @GET("/workout/planGet/{uid}/UID") //uid로 플랜 가져오기
     fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
+
+    @GET("/workout/plan/download/{uid}/UID")
+    fun getDownloadPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
 
     @GET("/workout/planGetHashTag/{hashtag}")//해시태그로 플랜 가져오기
     fun getPlanByHashTag(@Path("hashtag") hashTag:String) : Call<ArrayList<Plan>>
@@ -56,7 +59,7 @@ interface RetrofitService {
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
     companion object{
-        private const val BASE_URL = "http://ef92-49-142-63-121.ngrok.io"
+        private const val BASE_URL = "http://ae09-219-255-158-172.ngrok.io"
 
         val retrofitService = create()
 
@@ -138,7 +141,7 @@ interface RetrofitService {
             return successful
         }
 
-        suspend fun _getPlanByUid(uid: String) : ArrayList<Plan>{
+        fun _getPlanByUid(uid: String) : ArrayList<Plan>{
             var myPlan = ArrayList<Plan>()
             retrofitService.getPlanByUid(uid).enqueue(object : Callback<ArrayList<Plan>> {
                 override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
@@ -216,7 +219,25 @@ interface RetrofitService {
             })
             return myPlan
         }
+        fun _getDownloadPlanByUid(uid:String):ArrayList<Plan>{
+            var myPlan = ArrayList<Plan>()
+            retrofitService.getDownloadPlanByUid(uid).enqueue(object : Callback<ArrayList<Plan>> {
+                override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
+                    if (response.isSuccessful) {
+                        Log.d("getDownLoadPlan test success", response.body().toString())
+                        Log.d("getDownLoadPlan test success", response.body()!!.size.toString())
+                        myPlan = response.body()!!
+                    } else {
+                        Log.d("getDownLoadPlan test", "success but something error")
+                    }
+                }
 
+                override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
+                    Log.d("getDownLoadPlan test", "fail")
+                }
+            })
+            return myPlan
+        }
         fun _getPlanByHashTag(hashTag: String) : ArrayList<Plan>{
             var myPlan = ArrayList<Plan>()
             retrofitService.getPlanByUid(hashTag).enqueue(object : Callback<ArrayList<Plan>> {
