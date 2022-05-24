@@ -55,11 +55,7 @@ class ListFragment : Fragment() {
     private fun initRecyclerViewList(adapter:PlanRecyclerViewAdapter){
         val auth = FirebaseAuth.getInstance()
         if(auth.uid == null){
-            val planList = ArrayList<Plan>()
-            planList.add(TestFactory.getSomePlan())
-            planList.add(TestFactory.getSomePlan())
-            planList.add(TestFactory.getSomePlan())
-            planList.add(TestFactory.getSomePlan())
+            val planList = TestFactory.getSomePlan(10)
             for(plan in planList){
                 adapter.addItem(plan)
             }
