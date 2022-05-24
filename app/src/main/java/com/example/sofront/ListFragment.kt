@@ -46,41 +46,6 @@ class ListFragment : Fragment() {
         _binding=null
     }
 
-//    fun decorateDay(date:CalendarDay){
-//        val set:HashSet<CalendarDay> = HashSet()
-//        var d = date
-//        for(i in 1..planLength){
-//            set.add(d)
-//            Log.d("for",d.toString())
-//            d = addOnetoCalendarDay(d)
-//        }
-//        Log.d("Set",set.toString())
-//        calendarView.addDecorator(EventDecorator(set))
-//        planLength=0
-//    }
-//
-//    fun addOnetoCalendarDay(date: CalendarDay):CalendarDay{
-//        val days = arrayListOf<Int>(0,31,28,31,30,31,30,31,31,30,31,30,31)
-//
-//
-//        var day = date.day+1
-//        var month = date.month
-//        var year = date.year
-//        if( year % 4 == 0 && ( year % 100 !=0 || year % 400 == 0)){
-//            days[2] = 29
-//        }
-//        if(date.day >= days[date.month]){
-//            day = 1
-//            month = month+1
-//            if(month > 12){
-//                month = 1
-//                year = year+1
-//            }
-//
-//        }
-//        return CalendarDay.from(year,month,day)
-//    }
-
     private fun setRecyclerView(){
         //TODO: 서버에서 플랜을 가져와서 리사이클러뷰로 띄워줌
         val adapter = PlanRecyclerViewAdapter()
@@ -139,6 +104,8 @@ class ListFragment : Fragment() {
     private fun setCalendarView(){
         calendarView.setOnDateChangedListener { _, date, selected ->
             Log.d("Changed",date.toString()+selected)
+            val calendarDialogFragment = CalendarDialogFragment(date)
+            calendarDialogFragment.show(childFragmentManager,"CalendarDialogFragment")
         }
         calendarView.setWeekDayTextAppearance(R.font.nixgonm)
         calendarView.setDateTextAppearance(R.font.nixgonm)
@@ -151,33 +118,3 @@ class ListFragment : Fragment() {
 //        addPlanList()
     }
 }
-//
-//class EventDecorator(dates: Collection<CalendarDay>): DayViewDecorator {
-//
-//    var dates: HashSet<CalendarDay> = HashSet(dates)
-//
-//    override fun shouldDecorate(day: CalendarDay?): Boolean {
-//        return dates.contains(day)
-//    }
-//
-//    override fun decorate(view: DayViewFacade?) {
-//        view?.addSpan(LineSpan())
-//    }
-//}
-//
-////그림그리기
-//class LineSpan : LineBackgroundSpan{
-//    override fun drawBackground(
-//        canvas:Canvas,  paint:Paint,
-//        left:Int, right:Int, top:Int, baseline:Int, bottom:Int,
-//        charSequence: CharSequence,
-//        start:Int,end:Int,lineNum:Int)
-//        {
-//            val rect = Rect()
-//            rect.set(left, top-(top-bottom), right, bottom-(top-bottom))
-//
-//            paint.color = Color.parseColor("#1D872A")
-//            canvas.drawRect(rect,paint)
-//    }
-//
-//}
