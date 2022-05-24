@@ -28,7 +28,7 @@ class ProfilePortfolioRecyclerViewAdapter :
                 content.text = item.content
             }
             date.text = item.date
-            commentNum.text = item.commentList.size.toString()
+            commentNum.text = item.commentNum.toString()
             binding.root.setOnClickListener{
                 Log.d("click",binding.portfolioTitle.text.toString())
                 val intent = Intent(binding.root.context,PortfolioActivity::class.java)

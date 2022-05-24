@@ -18,7 +18,7 @@ class PortfolioActivity : AppCompatActivity() {
         Log.d("PortfolioAcitivy","good")
         binding.portfolioTitle.text  = portfolio.title
         binding.portfolioContent.text = portfolio.content
-        binding.portfolioCommentNum.text = portfolio.commentList.size.toString()
+        binding.portfolioCommentNum.text = portfolio.commentNum.toString()
 //        binding.portfolioLikeNum.text = portfolio.like
     }
 }

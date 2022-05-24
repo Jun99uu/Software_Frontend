@@ -11,7 +11,7 @@ data class Portfolio(
 //    var contentImage:ArrayList<Blob>, //포폴 내용 안 사진(최대 5장)
     var date:String, //yyyy-mm-dd-hh-mm
     var hashTagList:ArrayList<String>, //해쉬태그리스트 (최대 5개)
-    var commentList:ArrayList<portfolioComment> //댓글 리스트
+    var commentNum : Int
 ) : Serializable
 
 data class portfolioComment(

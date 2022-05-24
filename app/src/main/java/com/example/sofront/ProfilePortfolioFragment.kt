@@ -40,8 +40,8 @@ class ProfilePortfolioFragment : Fragment() {
             val commentList = ArrayList<portfolioComment>()
             commentList.add(portfolioComment("코멘트 작성자","uid","프사","2022-08-23","commentContent"))
             commentList.add(portfolioComment("댓글작성자 박재현","uid","프사","2022-08-31","댓글내용 : 날이 꾸리꾸리"))
-            adapter.addItem(Portfolio("제목1","이준규","날이 좋아","2022-08-22", hashTagList, commentList))
-            adapter.addItem(Portfolio("제목2","박성규","날이 안좋아","2022-08-17",hashTagList,commentList))
+            adapter.addItem(Portfolio("제목1","이준규","날이 좋아","2022-08-22", hashTagList, 10))
+            adapter.addItem(Portfolio("제목2","박성규","날이 안좋아","2022-08-17",hashTagList,10))
         }
         else{
             val portfolioList = RetrofitService._getPortfolio(auth.uid!!)
