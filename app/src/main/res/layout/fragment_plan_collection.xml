@@ -3,12 +3,284 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlanCollectionFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".PlanCollectionFragment"
+    android:paddingBottom="60dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/influencer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="@color/patel_yellow"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/pc_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="지금🔥한 짐꾼즈"
+                    android:fontFamily="@font/nixgonb"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"
+                    android:letterSpacing="-0.05"
+                    android:padding="12dp"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/agree_yes_back"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:elevation="10dp"/>
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pc_title">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="7dp"
+                        android:padding="8dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/first_hot"
+                            app:cardCornerRadius="8dp"
+                            android:elevation="10dp"
+                            android:layout_width="160dp"
+                            android:layout_height="110dp"
+                            android:layout_marginRight="15dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/psk"
+                                android:scaleType="centerCrop"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="성누멍"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="20sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="40dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="바보멍충이박성규입…"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="15sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="68.5dp"/>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/second_hot"
+                            app:cardCornerRadius="8dp"
+                            android:elevation="10dp"
+                            android:layout_width="160dp"
+                            android:layout_height="110dp"
+                            android:layout_marginRight="15dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ljk"
+                                android:scaleType="centerCrop"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="중규리"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="20sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="40dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="프론트무시하지마라"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="15sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="68.5dp"/>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/third_hot"
+                            app:cardCornerRadius="8dp"
+                            android:elevation="10dp"
+                            android:layout_width="160dp"
+                            android:layout_height="110dp"
+                            android:layout_marginRight="15dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/rsm"
+                                android:scaleType="centerCrop"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="유승민"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="20sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="40dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="안드로이드스튜디오남"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="15sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="68.5dp"/>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/fourth_hot"
+                            app:cardCornerRadius="8dp"
+                            android:elevation="10dp"
+                            android:layout_width="160dp"
+                            android:layout_height="110dp"
+                            android:layout_marginRight="15dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/rjm"
+                                android:scaleType="centerCrop"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="유재민"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="20sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="40dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="귀요미 잼잼이"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="15sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="68.5dp"/>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/fifth_hot"
+                            app:cardCornerRadius="8dp"
+                            android:elevation="10dp"
+                            android:layout_width="160dp"
+                            android:layout_height="110dp"
+                            android:layout_marginRight="15dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/pjh"
+                                android:scaleType="centerCrop"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="박재현"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="20sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="40dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="바지팀장아니라고"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/nixgonm"
+                                android:letterSpacing="-0.05"
+                                android:textSize="15sp"
+                                android:padding="3dp"
+                                android:background="@color/white"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="68.5dp"/>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/plantab_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/influencer_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

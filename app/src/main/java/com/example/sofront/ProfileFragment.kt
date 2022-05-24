@@ -29,6 +29,7 @@ class ProfileFragment : Fragment() {
     val user = Firebase.auth.currentUser
     val myUid = user?.uid.toString()
     val defaultImg = R.drawable.gymdori
+    val defaultBack = R.drawable.womanrun
     lateinit var profile:Profile
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -39,7 +40,8 @@ class ProfileFragment : Fragment() {
         val binding = ActivityProfileBinding.inflate(layoutInflater)
         binding.profileImg.translationZ = 1f
 
-        profile = RetrofitService._getProfile(myUid)
+        profile = RetrofitService._getProfile("a2")
+
         binding.userName.text = profile.name
         binding.subscribeNum.text = "Sub. ${profile.subscribeNum}명"
         binding.profileContent.text = profile.subTitle
@@ -50,6 +52,14 @@ class ProfileFragment : Fragment() {
             .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
 //            .circleCrop() // 동그랗게 자르기
             .into(binding.profileImg) // 이미지를 넣을 뷰
+
+        Glide.with(this)
+            .load(profile.backgroundImg) // 불러올 이미지 url
+            .placeholder(defaultBack) // 이미지 로딩 시작하기 전 표시할 이미지
+            .error(defaultBack) // 로딩 에러 발생 시 표시할 이미지
+            .fallback(defaultBack) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+//            .circleCrop() // 동그랗게 자르기
+            .into(binding.backgroundImage) // 이미지를 넣을 뷰
 
         val prevPadding:Int = Math.round(resources.displayMetrics.density * 30) //30dp 변환값
 
