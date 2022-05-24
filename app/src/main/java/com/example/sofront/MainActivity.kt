@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
         startActivity(tmpIntent)
 
         Firebase.auth.signOut()
-
+//        RetrofitService._getPlanByUid("test")
+//        RetrofitService._getDownloadPlanByUid("류승민")
         val fragmentList = listOf(IntroFragment1(), IntroFragment2(), IntroFragment3(), IntroFragment4(), IntroFragment5())
         val adapter = IntroViewPagerAdapter(this)
         adapter.fragments = fragmentList
@@ -73,8 +74,8 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // 2초내 다시 클릭하면 앱 종료
         if (System.currentTimeMillis() - backPressedTime < 1500) {
-            ActivityCompat.finishAffinity(this); // 액티비티를 종료하고
-            System.exit(0); // 프로세스를 종료
+            ActivityCompat.finishAffinity(this) // 액티비티를 종료하고
+            System.exit(0) // 프로세스를 종료
             return
         }
 
