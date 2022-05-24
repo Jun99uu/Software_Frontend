@@ -82,17 +82,10 @@ import org.threeten.bp.LocalDate;
           case DragEvent.ACTION_DROP:
             ClipData.Item item = e.getClipData().getItemAt(0);
             CharSequence dragData = item.getText();
-            int days = dragData.charAt(0)-'0';
+            int days = Integer.parseInt(dragData.toString());
             Log.d("Drop to", dayView.getDate().toString());
             //TODO: 핸드폰 내부저장소에 플랜 저장
-//              String filename = "plan";
-//              StringBuffer buff = new StringBuffer(dayView.getDate().toString());
-//              String content = buff.substring(12,buff.length()-1);
-//              try(FileOutputStream fos = getContext().openFileOutput(filename, Context.MODE_PRIVATE)){
-//                fos.write(content.getBytes());
-//              }catch(Exception exception){
-//                exception.getMessage();
-//              }
+
             ArrayList<CalendarDay> set = new ArrayList<>();
             CalendarDay tmp = dayView.getDate();
             for(int i=0; i<days; i++){
