@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.ActivityPlanDetailViewBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Comment
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -22,7 +21,7 @@ class PlanDetailViewActivity : AppCompatActivity() {
     var planUid = "" //해당 플랜의 uid
     val myName = user?.displayName
     lateinit var plan:Plan //전달받은 plan
-    lateinit var comments:ArrayList<planComment> //전달받은 comment
+    lateinit var comments:ArrayList<Comment> //전달받은 comment
     lateinit var commentAdapter: CommentAdapter
     var planName = ""
     var profileImg = ""
@@ -38,7 +37,7 @@ class PlanDetailViewActivity : AppCompatActivity() {
 
         myUid = user?.displayName.toString()
         plan = intent.getSerializableExtra("plan") as Plan
-        comments = intent.getSerializableExtra("comments") as ArrayList<planComment>
+        comments = intent.getSerializableExtra("comments") as ArrayList<Comment>
         planUid = plan.makerUid
         planName = plan.planName
         commentNum = plan.commentNum
@@ -74,7 +73,7 @@ class PlanDetailViewActivity : AppCompatActivity() {
             binding.commentInput.setText("")
             Toast.makeText(this, "댓글이 입력되었습니다.",Toast.LENGTH_SHORT).show()
             CloseKeyboard()
-            comments.add(planComment("하이", "uid", "${myName}", "${formatted}", "프사", "${content}"))
+            comments.add(Comment("하이", "uid", "${myName}", formatted, "프사", "${content}"))
             commentAdapter.notifyDataSetChanged()
         }
     }

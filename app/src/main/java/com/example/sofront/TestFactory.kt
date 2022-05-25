@@ -1,13 +1,16 @@
 package com.example.sofront
 
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class TestFactory {
     companion object{
-        val maxPlanSize = 10
-        val makerUid = "작성자 uid"
-        val likeNum = 99
-        val commentNum = 99
-        val downLoadNum = 99
+        private val maxPlanSize = 10
+        private val makerUid = "작성자 uid"
+        private val likeNum = 99
+        private val commentNum = 99
+        private val downLoadNum = 99
         fun getSomePlan(size : Int) : ArrayList<Plan>{
             val planList = ArrayList<Plan>()
             for(i in 0..size){
@@ -64,12 +67,24 @@ class TestFactory {
         }
         fun getSomePortfolio() : Portfolio{
             val randomNum = getRandomNum(10)
-            return Portfolio("PortfolioTitle$randomNum","PortfolioWriter$randomNum","content hmmm $randomNum",getSomeDate(),
+            return Portfolio(
+                getRandomNum(100),"PortfolioTitle$randomNum","PortfolioWriter$randomNum","content hmmm $randomNum",getSomeDate(),
                 getSomeHashTagList(),
+                getRandomNum(100),
                 getRandomNum(100))
         }
         fun getSomeDate() : String{
             return "2022-${getRandomNum(12)}-${ getRandomNum(31)}-${getRandomNum(24)}-${getRandomNum(60)}"
+        }
+        fun getSomeComment(size: Int) : ArrayList<Comment>{
+            val list = ArrayList<Comment>()
+            for(i in 0..size){
+                list.add(getSomeComment())
+            }
+            return list
+        }
+        fun getSomeComment() : Comment{
+            return Comment("tmpPlanName","tmpUid","tmpName","2022-08-17","","content")
         }
     }
 }

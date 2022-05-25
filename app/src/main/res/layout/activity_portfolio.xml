@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
     tools:context=".PortfolioActivity">
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="UselessParent">
@@ -72,6 +73,60 @@
             android:fontFamily="@font/nixgonb"
             android:textSize="@dimen/small_font_size"/>
     </LinearLayout>
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@drawable/radius"
+                android:backgroundTint="#8F8F8F"
+                android:layout_marginTop="20dp"/>
+
+            <LinearLayout
+                android:id="@+id/comment_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radius"
+                android:backgroundTint="#8F8F8F"
+                android:weightSum="7"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="8dp">
+
+                <EditText
+                    android:inputType="text"
+                    android:id="@+id/comment_input"
+                    android:layout_width="0dp"
+                    android:layout_weight="6"
+                    android:layout_height="60dp"
+                    android:gravity="top"
+                    android:background="@drawable/signup_eidt"
+                    android:backgroundTint="@color/white"
+                    android:hint="댓글을 작성해주세요"
+                    android:padding="8dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/nixgonm"
+                    android:textColor="@color/black"/>
+
+                <Button
+                    android:id="@+id/comment_save_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:background="@drawable/radius"
+                    android:layout_marginStart="10dp"
+                    android:text="등록"
+                    android:fontFamily="@font/nixgonb"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/pastel_blue"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/comment_rc"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

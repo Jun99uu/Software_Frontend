@@ -15,7 +15,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
-class CommentAdapter(private var commentList: ArrayList<planComment>) : RecyclerView.Adapter<CommentAdapter.MyViewHolder>() {
+class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView.Adapter<CommentAdapter.MyViewHolder>() {
     lateinit var context: Context
     var position = 0
     val user = Firebase.auth.currentUser
@@ -26,7 +26,7 @@ class CommentAdapter(private var commentList: ArrayList<planComment>) : Recycler
         val commentDate: TextView = itemView.findViewById(R.id.comment_date)
         val commentContent: TextView = itemView.findViewById(R.id.comment_content)
         val deleteBtn: Button = itemView.findViewById(R.id.comment_delete_btn)
-        fun bind(item: planComment) {
+        fun bind(item: Comment) {
             commentName.text = item.writerName
             commentDate.text = item.commentDate
             commentContent.text = item.commentContent

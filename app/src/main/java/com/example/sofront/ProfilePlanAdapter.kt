@@ -17,8 +17,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Adapter<ProfilePlanAdapter.MyViewHolder>() {
     lateinit var context: Context
     var position = 0
-    val tmpComment = planComment("하이", "1234", "김종국", "2022-05-24 17:23", "프사", "안녕하세요 댓글입니다.\n힘들다...")
-    val tmpCommentList = ArrayList<planComment>()
+    val tmpComment = Comment("하이", "1234", "김종국", "2022-05-24 17:23", "프사", "안녕하세요 댓글입니다.\n힘들다...")
+    val tmpCommentList = ArrayList<Comment>()
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val planImage : CircleImageView = itemView.findViewById(R.id.plan_profile_img)
@@ -41,7 +41,7 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ProfilePlanAdapter.MyViewHolder {
+    ): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.profile_plan_item, parent, false)
         context = parent.context
         return MyViewHolder(view)
