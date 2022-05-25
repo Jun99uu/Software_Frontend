@@ -21,8 +21,6 @@ class ProfilePlanFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentProfilePlanBinding.inflate(layoutInflater)
-
-
         //임시데이터
         //통신해서 planlist 채워야함
         val tmpHash = ArrayList<String>()
