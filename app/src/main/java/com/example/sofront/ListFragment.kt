@@ -30,7 +30,18 @@ class ListFragment : Fragment() {
         MonthView.materialCalendarView = calendarView
 //        val bottomSheet = CalendarPlanBottomSheet.newInstance(1)
 //        bottomSheet.show(requireActivity().supportFragmentManager, "CalendarPlanBottomSheet")
-
+    CoroutineScope(Dispatchers.IO).launch{
+        val db = CalendarDatabase.getInstance(requireContext())
+        val calendarDao = db!!.calendarDao()
+        val plan = TestFactory.getSomePlan()
+//        calendarDao.deletePlan(CalendarEntity(plan.planName,plan.routineList.size,calendarView.currentDate.year,calendarView.currentDate.month,calendarView.currentDate.day))
+        calendarDao.insertPlan(CalendarEntity(plan.planName,plan.routineList.size,calendarView.currentDate.year,calendarView.currentDate.month,calendarView.currentDate.day))
+//        calendarDao.insertPlan(CalendarEntity(plan.planName,plan.routineList.size,calendarView.currentDate.year,calendarView.currentDate.month,calendarView.currentDate.day))
+        val list = calendarDao.getAll()
+        for(i in list){
+            Log.d("캘린더 디비 저장 확인",i.toString())
+        }
+        }
 
         setRecyclerView()
         setCalendarView()
