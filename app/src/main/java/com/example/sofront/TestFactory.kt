@@ -76,6 +76,13 @@ class TestFactory {
         fun getSomeDate() : String{
             return "2022-${getRandomNum(12)}-${ getRandomNum(31)}-${getRandomNum(24)}-${getRandomNum(60)}"
         }
+        fun getSomeComment(size: Int) : ArrayList<Comment>{
+            val list = ArrayList<Comment>()
+            for(i in 0..size){
+                list.add(getSomeComment())
+            }
+            return list
+        }
         fun getSomeComment() : Comment{
             return Comment("tmpPlanName","tmpUid","tmpName","2022-08-17","","content")
         }

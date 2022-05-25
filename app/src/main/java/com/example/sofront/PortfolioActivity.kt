@@ -22,7 +22,7 @@ class PortfolioActivity : AppCompatActivity() {
         binding.portfolioTitle.text  = portfolio.title
         binding.portfolioContent.text = portfolio.content
         binding.portfolioCommentNum.text = portfolio.commentNum.toString()
-        val commentArray = ArrayList<Comment>()
+        val commentArray = TestFactory.getSomeComment(portfolio.commentNum)
         val adapter = CommentAdapter(commentArray)
         binding.portfolioLikeNum.text = portfolio.likeNum.toString()
         binding.commentSaveBtn.setOnClickListener {
@@ -48,17 +48,13 @@ class PortfolioActivity : AppCompatActivity() {
         }
         val recyclerView = binding.commentRc
 
-        commentArray.add(TestFactory.getSomeComment())
-        commentArray.add(TestFactory.getSomeComment())
-        commentArray.add(TestFactory.getSomeComment())
-
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(VerticalItemDecorator(30))
     }
     fun CloseKeyboard()
     {
-        var view = this.currentFocus
+        val view = this.currentFocus
 
         if(view != null)
         {
