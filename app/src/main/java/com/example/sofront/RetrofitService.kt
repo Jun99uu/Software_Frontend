@@ -50,7 +50,7 @@ interface RetrofitService {
     //플랜 이름으로 다운로드 회원 보내기
     //플랜 이름으로 댓글 받아오기
 
-    @GET("gymgguns/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
+    @GET("profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
     fun getProfile(@Path("UID") UID:String) : Call<Profile>
 
     @POST("/profile/edit") //프로필 수정
@@ -59,9 +59,12 @@ interface RetrofitService {
     @POST("/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
+    @GET("/내뇌피셜url/포트폴리오 댓글리스트/{portfolioID}")
+    fun getPortfolioComment(@Path("portfolioID") porfolioID:String) : Call<ArrayList<Comment>>
+
     companion object{
         //        var gson = GsonBuilder().setLenient().create()
-        private const val BASE_URL = "https://9051-219-255-158-172.jp.ngrok.io"
+        private const val BASE_URL = "http://7bfd-219-255-158-172.ngrok.io"
 
         val retrofitService = create()
 
@@ -305,7 +308,7 @@ interface RetrofitService {
             return myPortfolio
         }
 
-        fun _getProfile(uid:String) : Profile{
+        suspend fun _getProfile(uid:String) : Profile{
             var profile = Profile(uid, "", "", "", "", 0)
             retrofitService.getProfile(uid).enqueue(object :Callback<Profile>{
                 override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
@@ -339,6 +342,25 @@ interface RetrofitService {
                 }
 
             })
+        }
+        fun _getPortfolioComment(porfolioID: String) : ArrayList<Comment>{
+            var commentList = ArrayList<Comment>()
+            retrofitService.getPortfolioComment(porfolioID).enqueue(object :Callback<ArrayList<Comment>>{
+                override fun onResponse(call: Call<ArrayList<Comment>>, response: Response<ArrayList<Comment>>) {
+                    if(response.isSuccessful){
+                        Log.d("getProfile test success", response.body().toString())
+                        commentList = response.body()!!
+                    }else{
+                        Log.d("getProfile test", "success but something error")
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<Comment>>, t: Throwable) {
+                    Log.d("getProfile test", "fail")
+                    Log.d("왜 오류남", t.message.toString())
+                }
+            })
+            return commentList
         }
     }
 }
