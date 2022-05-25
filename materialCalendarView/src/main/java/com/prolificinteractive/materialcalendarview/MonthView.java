@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
@@ -85,6 +86,19 @@ import org.threeten.bp.LocalDate;
             int days = Integer.parseInt(dragData.toString());
             Log.d("Drop to", dayView.getDate().toString());
             //TODO: 핸드폰 내부저장소에 플랜 저장
+            new Thread(new Runnable() {
+              @Override
+              public void run() {
+                CalendarDatabase db = CalendarDatabase.getInstance(getContext());
+                CalendarDao dao = db.calendarDao();
+                List<CalendarEntity> list = dao.getAll();
+                for(int i=0; i<list.size(); i++){
+                  Log.d("드래그앤 드랍 하고 디비에 저장하면",list.get(i).planDay + " "+list.get(i).planName);
+                }
+              }
+            }).start();
+
+
 
             ArrayList<CalendarDay> set = new ArrayList<>();
             CalendarDay tmp = dayView.getDate();
@@ -153,38 +167,3 @@ import org.threeten.bp.LocalDate;
   }
 }
 
-class EventDecorator implements DayViewDecorator{
-  private ArrayList<CalendarDay> dates;
-  private int color;
-  EventDecorator(int color, Collection<CalendarDay> datesCollection){
-    dates = new ArrayList<>(datesCollection);
-    this.color = color;
-  }
-
-  @Override
-  public boolean shouldDecorate(CalendarDay day) {
-    return dates.contains(day);
-  }
-
-  @Override
-  public void decorate(DayViewFacade view) {
-    if(view!=null){
-      view.addSpan(new LineSpan(color));
-    }
-  }
-}
-
-class LineSpan implements LineBackgroundSpan{
-
-  private int color;
-  LineSpan(int color){
-    this.color = color;
-  }
-  @Override
-  public void drawBackground(@NonNull Canvas canvas, @NonNull Paint paint, int left, int right, int top, int baseline, int bottom, @NonNull CharSequence charSequence, int start, int end, int lineNum) {
-    Rect rect = new Rect();
-    rect.set(left,top-(top-bottom), right, bottom - (top-bottom));
-    paint.setColor(color);
-    canvas.drawRect(rect,paint);
-  }
-}
