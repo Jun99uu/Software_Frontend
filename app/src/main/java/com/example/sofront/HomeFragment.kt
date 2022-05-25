@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import com.example.sofront.databinding.ActivityHomeBinding
@@ -70,6 +71,26 @@ class HomeFragment : Fragment() {
         binding.hamburger.setOnClickListener{
             val intent = Intent(requireContext(), SettingActivity::class.java)
             this.startActivity(intent)
+        }
+
+        binding.makePlanBtn.setOnClickListener{
+            val makeIntent = Intent(context, MakePlanActivity::class.java)
+            startActivity(makeIntent)
+        }
+
+        val activity = requireActivity() as HomeActivity
+        binding.calendarBtn.setOnClickListener{
+            val planFragment = ListFragment()
+            activity.replaceFragment(planFragment, 0)
+        }
+
+        binding.viewPlanBtn.setOnClickListener{
+            val planFragment = PlanCollectionFragment()
+            activity.replaceFragment(planFragment, 1)
+        }
+
+        binding.metaBtn.setOnClickListener{
+            Toast.makeText(context, "메타버스로 이동합니다.",Toast.LENGTH_SHORT).show()
         }
 
         return binding.root

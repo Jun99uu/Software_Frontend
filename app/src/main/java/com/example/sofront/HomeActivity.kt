@@ -2,14 +2,18 @@ package com.example.sofront
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.example.sofront.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
+    lateinit var binding:ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.bottomBar.setItemSelected(R.id.daily)
@@ -44,6 +48,15 @@ class HomeActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frame_layout, HomeFragment())
         transaction.commit()
+    }
+
+    fun replaceFragment(fragment:Fragment, value:Int){
+        if(value == 0){
+            binding.bottomBar.setItemSelected(R.id.calendar,true)
+        }else if(value == 1){
+            binding.bottomBar.setItemSelected(R.id.plan, true)
+        }
+        supportFragmentManager.beginTransaction().replace(R.id.frame_layout, fragment).commit()
     }
 
     private var backPressedTime : Long = 0
