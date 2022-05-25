@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.FragmentProfilePortfolioBinding
 import com.example.sofront.databinding.ProfilePortfolioItemBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +25,8 @@ class ProfilePortfolioFragment : Fragment() {
     lateinit var recyclerView : RecyclerView
     lateinit var portfolioList : ArrayList<Portfolio>
     lateinit var adapter : ProfilePortfolioRecyclerViewAdapter
+    val user = Firebase.auth.currentUser
+    val myUid = user?.uid.toString()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,11 +37,14 @@ class ProfilePortfolioFragment : Fragment() {
         recyclerView = binding.profilePortfolioRv
 
         tmpCallback(callback = {
-            for(portfolio in portfolioList){
-                adapter.addItem(portfolio)
+            adapter.deleteFirstItem()
+            if(portfolioList.size > 0){
+                for(portfolio in portfolioList){
+                    adapter.addItem(portfolio)
+                }
             }
-            Log.d("제발제발", portfolioList.toString())
             adapter.notifyDataSetChanged()
+            binding.noViewLayout.visibility = View.VISIBLE
         })
 
         setRecyclerView()
@@ -52,21 +59,12 @@ class ProfilePortfolioFragment : Fragment() {
 
     fun setRecyclerView(adapter:ProfilePortfolioRecyclerViewAdapter){
         val auth = FirebaseAuth.getInstance()
-        if(auth.uid==null){
-//            val hashTagList = ArrayList<String>()
-//            hashTagList.add("hashTag1")
-//            val commentList = ArrayList<portfolioComment>()
-//            commentList.add(portfolioComment("코멘트 작성자","uid","프사","2022-08-23","commentContent"))
-//            commentList.add(portfolioComment("댓글작성자 박재현","uid","프사","2022-08-31","댓글내용 : 날이 꾸리꾸리"))
-//            adapter.addItem(Portfolio("제목1","이준규","날이 좋아","2022-08-22", hashTagList, 10))
-//            adapter.addItem(Portfolio("제목2","박성규","날이 안좋아","2022-08-17",hashTagList,10))
-        }
-        else{
-            _getPortfolio(auth.uid!!)
-            for(portfolio in portfolioList){
-                adapter.addItem(portfolio)
-            }
-        }
+        val hashTagList = ArrayList<String>()
+        hashTagList.add("hashTag1")
+        val commentList = ArrayList<Comment>()
+        commentList.add(Comment("index","uid","프사","2022-08-23","프사", "댓글입니다"))
+        commentList.add(Comment("index","uid","프사","2022-08-31","프사", "댓글입니다"))
+        adapter.addItem(Portfolio(12,"제목1","이준규","이준규", false,"날이 좋아","2022-08-22", 5, 5,"https://gymggun.s3.ap-northeast-2.amazonaws.com/None/default.png", "https://gymggun.s3.ap-northeast-2.amazonaws.com/None/background_default.jpg"))
     }
 
     fun setRecyclerViewAdapter(adapter: ProfilePortfolioRecyclerViewAdapter){
@@ -84,7 +82,9 @@ class ProfilePortfolioFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     Log.d("getPortfolio test success", response.body().toString())
-                    myPortfolio = response.body()!!
+                    if(response.body() == null){
+                        myPortfolio = response.body()!!
+                    }
                     portfolioList = myPortfolio
                 } else {
                     Log.d("getPortfolio test", "success but something error")
@@ -99,10 +99,9 @@ class ProfilePortfolioFragment : Fragment() {
     }
 
     fun tmpCallback(callback: ()->Unit){
-        _getPortfolio("류승민")
+        _getPortfolio(myUid)
         Handler().postDelayed({
             callback()
-        }, 3000L)
+        }, 810L)
     }
-
 }

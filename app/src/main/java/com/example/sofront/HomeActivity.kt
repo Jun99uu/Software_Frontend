@@ -63,8 +63,11 @@ class HomeActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // 2초내 다시 클릭하면 앱 종료
         if (System.currentTimeMillis() - backPressedTime < 1500) {
-            ActivityCompat.finishAffinity(this); // 액티비티를 종료하고
-            System.exit(0); // 프로세스를 종료
+//            ActivityCompat.finishAffinity(this); // 액티비티를 종료하고
+//            System.exit(0); // 프로세스를 종료
+            moveTaskToBack(true);						// 태스크를 백그라운드로 이동
+            finishAndRemoveTask();						// 액티비티 종료 + 태스크 리스트에서 지우기
+            android.os.Process.killProcess(android.os.Process.myPid());	// 앱 프로세스 종료
             return
         }
 

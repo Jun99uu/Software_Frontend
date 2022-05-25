@@ -29,8 +29,6 @@ class NumAuth : AppCompatActivity() {
                 Toast.makeText(this, "인증에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, DetailInfoActivity::class.java)
                 intent.putExtra("UID", UID)
-                intent.putExtra("prevEmail",prevEmail)
-                intent.putExtra("prevPWD", prevPWD)
 
                 val UIDjson = UID(UID)
                 RetrofitService._postAuth(UIDjson)

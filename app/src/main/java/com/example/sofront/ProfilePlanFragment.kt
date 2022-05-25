@@ -2,6 +2,7 @@ package com.example.sofront
 
 import android.R
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.FragmentProfilePlanBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ProfilePlanFragment : Fragment() {
@@ -46,16 +50,16 @@ class ProfilePlanFragment : Fragment() {
         routineList.add(Routine(false, initWorkout))
         val tmpPlan = Plan("하이", tmpHash, routineList, "사람uid", false, 0,0 ,0)
         planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
-        planList.add(tmpPlan)
         //임시데이터
+
+        tmpCallback(callback = {
+            adapter.deleteFirstItem()
+            if(planList.size > 0){
+                listenPlan(planList)
+            }else{
+                binding.noViewLayout.visibility = View.VISIBLE
+            }
+        })
 
         binding.profilePlanRecycler.layoutManager = linearLayoutManager
         adapter = ProfilePlanAdapter(planList)
@@ -69,8 +73,35 @@ class ProfilePlanFragment : Fragment() {
     fun listenPlan(listendPlans:ArrayList<Plan>){
         //서버에서 받아온 플랜리스트 여기에 파라미터로 넣어주기
         for(plan in listendPlans){
-//            planList.add(plan)
+            planList.add(plan)
         }
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun tmpCallback(callback: ()->Unit){
+        _getPlanByUid()
+        Handler().postDelayed({
+            callback()
+        }, 810L)
+    }
+
+    fun _getPlanByUid(){
+        var myPlan = ArrayList<Plan>()
+        RetrofitService.retrofitService.getPlanByUid().enqueue(object : Callback<ArrayList<Plan>> {
+            override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
+                if (response.isSuccessful) {
+                    Log.d("getPlan test", "success")
+                    myPlan = response.body()!!
+                } else {
+                    Log.d("getPlan test", "success but something error")
+                }
+                planList = myPlan
+            }
+
+            override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
+                Log.d("getPlan test", "fail")
+            }
+        })
     }
 
 }

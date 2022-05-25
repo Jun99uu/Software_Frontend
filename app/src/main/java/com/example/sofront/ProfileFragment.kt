@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -26,6 +27,7 @@ import com.example.sofront.RetrofitService.Companion.retrofitService
 import com.example.sofront.databinding.ActivityProfileBinding
 import com.example.sofront.databinding.FragmentProfileBinding
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
@@ -64,6 +66,8 @@ class ProfileFragment : Fragment() {
                 .error(defaultBack) // 로딩 에러 발생 시 표시할 이미지
                 .fallback(defaultBack) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
                 .into(binding.backgroundImage) // 이미지를 넣을 뷰
+
+            updatePhotoUrl(profile.profileImg)
         })
 
         val prevPadding:Int = Math.round(resources.displayMetrics.density * 30) //30dp 변환값
@@ -102,6 +106,10 @@ class ProfileFragment : Fragment() {
         binding.madePlanBtn.setOnClickListener{
             binding.profileMainSheet.setCurrentItem(1, true)
         }
+        binding.makePortfolioBtn.setOnClickListener{
+            val portfolioIntent = Intent(context, MakePortfolioActivity::class.java)
+            startActivity(portfolioIntent)
+        }
 
         binding.profileMainSheet.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
@@ -135,10 +143,10 @@ class ProfileFragment : Fragment() {
     }
 
     private fun tmpCallback(callback: ()->Unit){
-        _getProfile("test1")
+        _getProfile(myUid)
         Handler().postDelayed({
             callback()
-        }, 3000L)
+        }, 800L)
     }
 
     fun _getProfile(uid:String){
@@ -155,6 +163,19 @@ class ProfileFragment : Fragment() {
                 Log.d("getProfile test", "fail")
             }
         })
+    }
+
+    fun updatePhotoUrl(url:String){
+        val profileUpdates = userProfileChangeRequest {
+            photoUri = Uri.parse(url)
+        }
+
+        user!!.updateProfile(profileUpdates)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d("photoUrl update", "User profile updated.")
+                }
+            }
     }
 
 }

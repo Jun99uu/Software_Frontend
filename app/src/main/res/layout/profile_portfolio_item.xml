@@ -6,103 +6,139 @@
     android:layout_marginBottom="@dimen/default_margin"
     android:layout_marginTop="@dimen/default_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_weight="3"
-        android:src="@drawable/gymdori"
-        android:contentDescription="@string/image" />
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:orientation="vertical"
-        >
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/portfolio_profile"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/gymdori"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-        <TextView
-            android:id="@+id/portfolio_writer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="20dp"
-            app:layout_constraintStart_toEndOf="@+id/portfolio_profile"
-            android:text="@string/writer"
-            android:fontFamily="@font/nixgonm"
-            android:textSize="@dimen/small_font_size"/>
+        android:weightSum="2">
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/portfolio_writer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/portfolio_title"
-            android:text="@string/title"
-            android:fontFamily="@font/nixgonb"
-            android:textSize="@dimen/big_font_size"
-            />
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/portfolio_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/date"
-            android:fontFamily="@font/nixgonm"
-            android:letterSpacing="-0.05"
-            android:id="@+id/portfolio_date"
-            android:textSize="@dimen/small_font_size"/>
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/portfolio_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/portfolio_content"
-            android:fontFamily="@font/nixgonb"
-            android:text="@string/content"/>
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/portfolio_content"
-            android:src="@drawable/ic_comment"
-            android:id="@+id/portfolio_comment_icon"
-            android:contentDescription="@string/image" />
-        <TextView
-            app:layout_constraintStart_toEndOf="@+id/portfolio_comment_icon"
-            app:layout_constraintTop_toBottomOf="@+id/portfolio_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/small_font_size"
-            android:text="@string/default_number"
-            android:fontFamily="@font/nixgonb"
-            android:id="@+id/portfolio_comment_num"/>
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            app:layout_constraintStart_toEndOf="@id/portfolio_comment_num"
-            app:layout_constraintTop_toBottomOf="@+id/portfolio_content"
-            android:src="@drawable/ic_heart"
-            android:id="@+id/portfolio_like_icon"
-            android:contentDescription="@string/image" />
-        <TextView
-            app:layout_constraintStart_toEndOf="@+id/portfolio_like_icon"
-            app:layout_constraintTop_toBottomOf="@+id/portfolio_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/small_font_size"
-            android:text="@string/default_number"
-            android:fontFamily="@font/nixgonb"
-            android:id="@+id/portfolio_like_num"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="15dp"
+            android:elevation="150dp">
+            <ImageView
+                android:id="@+id/portfolio_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/gymdori"
+                android:scaleType="centerCrop"/>
+        </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/portfolio_profile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/gymdori"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/portfolio_writer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/portfolio_profile"
+                app:layout_constraintBottom_toBottomOf="@id/portfolio_profile"
+                app:layout_constraintLeft_toRightOf="@id/portfolio_profile"
+                android:layout_marginLeft="10dp"
+                android:text="@string/writer"
+                android:fontFamily="@font/nixgonm"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:letterSpacing="-0.05"/>
+
+            <TextView
+                android:id="@+id/portfolio_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title"
+                android:fontFamily="@font/nixgonb"
+                android:textColor="@color/black"
+                android:letterSpacing="-0.05"
+                app:layout_constraintTop_toBottomOf="@id/portfolio_profile"
+                android:layout_marginTop="10dp"
+                android:textSize="25sp"
+                />
+
+            <TextView
+                android:id="@+id/portfolio_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/portfolio_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:fontFamily="@font/nixgonm"
+                android:letterSpacing="-0.05"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/portfolio_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/portfolio_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nixgonm"
+                android:layout_marginTop="10dp"
+                android:text="@string/content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:letterSpacing="-0.05"/>
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/portfolio_content"
+                android:src="@drawable/ic_comment"
+                android:id="@+id/portfolio_comment_icon"
+                android:contentDescription="@string/image" />
+
+            <TextView
+                android:id="@+id/portfolio_comment_num"
+                app:layout_constraintStart_toEndOf="@+id/portfolio_comment_icon"
+                app:layout_constraintTop_toTopOf="@id/portfolio_comment_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/small_font_size"
+                android:text="@string/default_number"
+                android:textColor="@color/black"
+                android:layout_marginLeft="3dp"
+                android:fontFamily="@font/nixgonm"/>
+
+            <ImageView
+                android:id="@+id/portfolio_like_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintStart_toEndOf="@id/portfolio_comment_num"
+                app:layout_constraintTop_toTopOf="@id/portfolio_comment_icon"
+                android:src="@drawable/ic_heart"
+                android:contentDescription="@string/image" />
+
+            <TextView
+                android:id="@+id/portfolio_like_num"
+                app:layout_constraintStart_toEndOf="@+id/portfolio_like_icon"
+                app:layout_constraintTop_toTopOf="@id/portfolio_comment_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/small_font_size"
+                android:text="@string/default_number"
+                android:fontFamily="@font/nixgonm"
+                android:textColor="@color/black"
+                android:layout_marginLeft="2dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
