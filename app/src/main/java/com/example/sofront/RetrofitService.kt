@@ -59,6 +59,9 @@ interface RetrofitService {
     @POST("/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
+    @GET("/내뇌피셜url/포트폴리오 댓글리스트/{portfolioID}")
+    fun getPortfolioComment(@Path("portfolioID") porfolioID:String) : Call<ArrayList<Comment>>
+
     companion object{
         //var gson = GsonBuilder().setLenient().create()
         private const val BASE_URL = "http://7bfd-219-255-158-172.ngrok.io"
@@ -337,6 +340,25 @@ interface RetrofitService {
                 }
 
             })
+        }
+        fun _getPortfolioComment(porfolioID: String) : ArrayList<Comment>{
+            var commentList = ArrayList<Comment>()
+            retrofitService.getPortfolioComment(porfolioID).enqueue(object :Callback<ArrayList<Comment>>{
+                override fun onResponse(call: Call<ArrayList<Comment>>, response: Response<ArrayList<Comment>>) {
+                    if(response.isSuccessful){
+                        Log.d("getProfile test success", response.body().toString())
+                        commentList = response.body()!!
+                    }else{
+                        Log.d("getProfile test", "success but something error")
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<Comment>>, t: Throwable) {
+                    Log.d("getProfile test", "fail")
+                    Log.d("왜 오류남", t.message.toString())
+                }
+            })
+            return commentList
         }
     }
 }
