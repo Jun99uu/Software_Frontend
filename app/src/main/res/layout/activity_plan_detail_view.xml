@@ -207,6 +207,7 @@
                         android:layout_width="0dp"
                         android:layout_height="35dp"
                         android:layout_weight="1"
+                        android:layout_gravity="center"
                         android:background="@drawable/radius"
                         android:layout_marginLeft="10dp"
                         android:text="등록"
