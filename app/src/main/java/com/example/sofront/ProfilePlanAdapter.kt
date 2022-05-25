@@ -72,6 +72,10 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
         return planList.size
     }
 
+    fun deleteFirstItem(){
+        planList.removeAt(0)
+    }
+
 }
 
 class VerticalItemDecorator(private val divHeight : Int) : RecyclerView.ItemDecoration() {

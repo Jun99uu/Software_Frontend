@@ -11,13 +11,19 @@ data class Portfolio(
     var portfolioWriter:String, //포폴 작성자
     var portfolioWriterName:String,
     var liked : Boolean,
-//    var portfolioWriterProfile:Blob, //포포 작성자 프사
     var content:String, //포폴 내용
-//    var contentImage:ArrayList<Blob>, //포폴 내용 안 사진(최대 5장)
     var date:String, //yyyy-mm-dd-hh-mm
-    var hashTagList:ArrayList<String>, //해쉬태그리스트 (최대 5개)
     @SerializedName("commentN")
     var commentNum : Int,
     @SerializedName("likeN")
-    var likeNum : Int
+    var likeNum : Int,
+    var portfolioWriterProfile:String, //포포 작성자 프사
+    var contentImage:String //포폴 내용 안 사진
+) : Serializable
+
+data class SendPortfolio(
+    var portfolioWriter:String,
+    var title:String,
+    var content:String,
+    var file:String //이미지
 ) : Serializable
