@@ -61,7 +61,7 @@ interface RetrofitService {
 
     companion object{
         //        var gson = GsonBuilder().setLenient().create()
-        private const val BASE_URL = "https://9051-219-255-158-172.jp.ngrok.io"
+        private const val BASE_URL = "http://7bfd-219-255-158-172.ngrok.io"
 
         val retrofitService = create()
 
