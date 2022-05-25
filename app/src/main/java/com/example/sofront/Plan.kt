@@ -41,7 +41,7 @@ data class planLike(
     var likerUid:String
 )
 
-data class planComment(
+data class Comment(
     var planName:String, //플랜 이름
     var writerUid:String, //댓글 작성자 uid
     var writerName:String, //댓글 작성자 이름
