@@ -83,7 +83,25 @@
             android:text="@string/default_number"
             android:fontFamily="@font/nixgonb"
             android:id="@+id/portfolio_comment_num"/>
-
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintStart_toEndOf="@id/portfolio_comment_num"
+            app:layout_constraintTop_toBottomOf="@+id/portfolio_content"
+            android:src="@drawable/ic_heart"
+            android:id="@+id/portfolio_like_icon"
+            android:contentDescription="@string/image" />
+        <TextView
+            app:layout_constraintStart_toEndOf="@+id/portfolio_like_icon"
+            app:layout_constraintTop_toBottomOf="@+id/portfolio_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/small_font_size"
+            android:text="@string/default_number"
+            android:fontFamily="@font/nixgonb"
+            android:id="@+id/portfolio_like_num"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

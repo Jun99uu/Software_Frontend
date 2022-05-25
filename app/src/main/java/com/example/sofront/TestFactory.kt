@@ -67,8 +67,12 @@ class TestFactory {
         }
         fun getSomePortfolio() : Portfolio{
             val randomNum = getRandomNum(10)
+            val bool = when(randomNum%2){
+                0->true
+                else->false
+            }
             return Portfolio(
-                getRandomNum(100),"PortfolioTitle$randomNum","PortfolioWriter$randomNum","content hmmm $randomNum",getSomeDate(),
+                getRandomNum(100),"PortfolioTitle$randomNum","PortfolioWriter$randomNum","WriterName",bool,"content hmmm $randomNum",getSomeDate(),
                 getSomeHashTagList(),
                 getRandomNum(100),
                 getRandomNum(100))

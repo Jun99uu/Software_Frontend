@@ -1,6 +1,7 @@
 package com.example.sofront
 
 import android.content.Intent
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,9 @@ class ProfilePortfolioRecyclerViewAdapter :
                 binding.root.context.startActivity(intent)
             }
             writer.text = item.portfolioWriter
+            if(item.liked)
+            binding.portfolioLikeIcon.setBackgroundColor(Color.RED)
+            binding.portfolioLikeNum.text = item.likeNum.toString()
         }
     }
 

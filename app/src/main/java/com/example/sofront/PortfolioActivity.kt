@@ -1,6 +1,7 @@
 package com.example.sofront
 
 import android.content.Context
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,25 +20,24 @@ class PortfolioActivity : AppCompatActivity() {
 
         val intent = intent
         val portfolio  = intent.getSerializableExtra("portfolio") as Portfolio
-        binding.portfolioTitle.text  = portfolio.title
-        binding.portfolioContent.text = portfolio.content
-        binding.portfolioCommentNum.text = portfolio.commentNum.toString()
+        initView(portfolio,binding)
+
         val commentArray = TestFactory.getSomeComment(portfolio.commentNum)
         val adapter = CommentAdapter(commentArray)
-        binding.portfolioLikeNum.text = portfolio.likeNum.toString()
+        val user = adapter.user
+        val uid : String
+        val userName : String
+        if(user==null){
+            uid = "tmpUid"
+            userName = "tmpName"
+        }
+        else{
+            uid = user.uid
+            userName = user.displayName!!
+        }
+
         binding.commentSaveBtn.setOnClickListener {
             val text = binding.commentInput.text.toString()
-            val user = FirebaseAuth.getInstance().currentUser
-            val uid : String
-            val userName : String
-            if(user==null){
-                uid = "tmpUid"
-                userName = "tmpName"
-            }
-            else{
-                uid = user.uid
-                userName = user.displayName!!
-            }
             val comment = Comment(portfolio.title,uid,userName, Date().toString(),"",text)
 //            RetrofitService._postPortfolioComment(comment)
             //TODO("디비에 저장하고 불러오기")
@@ -46,11 +46,21 @@ class PortfolioActivity : AppCompatActivity() {
             CloseKeyboard()
             binding.commentInput.setText("")
         }
+
         val recyclerView = binding.commentRc
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(VerticalItemDecorator(30))
+    }
+    fun initView(portfolio: Portfolio, binding: ActivityPortfolioBinding){
+        binding.portfolioTitle.text  = portfolio.title
+        binding.portfolioContent.text = portfolio.content
+        binding.portfolioCommentNum.text = portfolio.commentNum.toString()
+        binding.portfolioLikeNum.text = portfolio.likeNum.toString()
+        if(portfolio.liked){
+            binding.like.setBackgroundColor(Color.RED)
+        }
     }
     fun CloseKeyboard()
     {
