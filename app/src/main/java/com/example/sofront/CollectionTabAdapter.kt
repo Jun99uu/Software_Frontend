@@ -80,8 +80,8 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>): RecyclerVie
         plans.add(tmpPlan)
         plans.add(tmpPlan)
         plans.add(tmpPlan)
-        val tmpCommentList = ArrayList<planComment>()
-        tmpCommentList.add(planComment("하이", "12345", "홍길동","2022-05-25 | 10:18", "ㅎㅇ", "하잉요오오ㅗ"))
+        val tmpCommentList = ArrayList<Comment>()
+        tmpCommentList.add(Comment("하이", "12345", "홍길동","2022-05-25 | 10:18", "ㅎㅇ", "하잉요오오ㅗ"))
 
 
 //        TODO 아래주석 서버 통신 + 바인딩 구문
