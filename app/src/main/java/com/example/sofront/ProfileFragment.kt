@@ -1,5 +1,6 @@
 package com.example.sofront
 
+import android.content.ComponentCallbacks
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -8,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,9 +22,14 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.sofront.RetrofitService.Companion.retrofitService
 import com.example.sofront.databinding.ActivityProfileBinding
+import com.example.sofront.databinding.FragmentProfileBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileFragment : Fragment() {
     val converter = BitmapConverter()
@@ -40,26 +47,24 @@ class ProfileFragment : Fragment() {
         val binding = ActivityProfileBinding.inflate(layoutInflater)
         binding.profileImg.translationZ = 1f
 
-        profile = RetrofitService._getProfile("a2")
+        tmpCallback(callback = {
+            binding.userName.text = profile.name
+            binding.subscribeNum.text = "Sub. ${profile.subscribeNum}명"
+            binding.profileContent.text = profile.subTitle
+            Glide.with(this)
+                .load(profile.profileImg) // 불러올 이미지 url
+                .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
+                .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
+                .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                .into(binding.profileImg) // 이미지를 넣을 뷰
 
-        binding.userName.text = profile.name
-        binding.subscribeNum.text = "Sub. ${profile.subscribeNum}명"
-        binding.profileContent.text = profile.subTitle
-        Glide.with(this)
-            .load(profile.profileImg) // 불러올 이미지 url
-            .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
-            .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
-            .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
-//            .circleCrop() // 동그랗게 자르기
-            .into(binding.profileImg) // 이미지를 넣을 뷰
-
-        Glide.with(this)
-            .load(profile.backgroundImg) // 불러올 이미지 url
-            .placeholder(defaultBack) // 이미지 로딩 시작하기 전 표시할 이미지
-            .error(defaultBack) // 로딩 에러 발생 시 표시할 이미지
-            .fallback(defaultBack) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
-//            .circleCrop() // 동그랗게 자르기
-            .into(binding.backgroundImage) // 이미지를 넣을 뷰
+            Glide.with(this)
+                .load(profile.backgroundImg) // 불러올 이미지 url
+                .placeholder(defaultBack) // 이미지 로딩 시작하기 전 표시할 이미지
+                .error(defaultBack) // 로딩 에러 발생 시 표시할 이미지
+                .fallback(defaultBack) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+                .into(binding.backgroundImage) // 이미지를 넣을 뷰
+        })
 
         val prevPadding:Int = Math.round(resources.displayMetrics.density * 30) //30dp 변환값
 
@@ -127,6 +132,29 @@ class ProfileFragment : Fragment() {
             }
         })
         return binding.root
+    }
+
+    private fun tmpCallback(callback: ()->Unit){
+        _getProfile("test1")
+        Handler().postDelayed({
+            callback()
+        }, 3000L)
+    }
+
+    fun _getProfile(uid:String){
+        retrofitService.getProfile(uid).enqueue(object : Callback<Profile> {
+            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                if(response.isSuccessful){
+                    Log.d("getProfile test success", response.body().toString())
+                    profile = response.body()!!
+                }else{
+                    Log.d("getProfile test", "success but something error")
+                }
+            }
+            override fun onFailure(call: Call<Profile>, t: Throwable) {
+                Log.d("getProfile test", "fail")
+            }
+        })
     }
 
 }

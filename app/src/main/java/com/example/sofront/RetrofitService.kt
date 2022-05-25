@@ -38,7 +38,7 @@ interface RetrofitService {
     @GET("/workout/planGetHashTag/{hashtag}")//해시태그로 플랜 가져오기
     fun getPlanByHashTag(@Path("hashtag") hashTag:String) : Call<ArrayList<Plan>>
 
-    @GET("/portfolio/{uid}") //uid로 포트폴리오 가져오기
+    @GET("/profiles/get_portfolio/{uid}") //uid로 포트폴리오 가져오기
     fun getPortfolio(@Path("uid") uid:String) : Call<ArrayList<Portfolio>>
 
     @GET("/portfolio/subscription/{uid}") //uid로 구독 목록 가져오기
@@ -50,7 +50,7 @@ interface RetrofitService {
     //플랜 이름으로 다운로드 회원 보내기
     //플랜 이름으로 댓글 받아오기
 
-    @GET("gymgguns/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
+    @GET("profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
     fun getProfile(@Path("UID") UID:String) : Call<Profile>
 
     @POST("/profile/edit") //프로필 수정
@@ -60,7 +60,7 @@ interface RetrofitService {
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
     companion object{
-        //        var gson = GsonBuilder().setLenient().create()
+        //var gson = GsonBuilder().setLenient().create()
         private const val BASE_URL = "http://7bfd-219-255-158-172.ngrok.io"
 
         val retrofitService = create()
@@ -259,28 +259,28 @@ interface RetrofitService {
             return myPlan
         }
 
-        fun _getPortfolio(uid:String) : ArrayList<Portfolio>{
-            var myPortfolio = ArrayList<Portfolio>()
-            retrofitService.getPortfolio(uid).enqueue(object  :Callback<ArrayList<Portfolio>>{
-                override fun onResponse(
-                    call: Call<ArrayList<Portfolio>>,
-                    response: Response<ArrayList<Portfolio>>
-                ) {
-                    if (response.isSuccessful) {
-                        Log.d("getPortfolio test success", response.body().toString())
-                        myPortfolio = response.body()!!
-                    } else {
-                        Log.d("getPortfolio test", "success but something error")
-                    }
-                }
-
-                override fun onFailure(call: Call<ArrayList<Portfolio>>, t: Throwable) {
-                    Log.d("getPortfolio test", "fail")
-                }
-
-            })
-            return myPortfolio
-        }
+//        fun _getPortfolio(uid:String) : ArrayList<Portfolio>{
+//            var myPortfolio = ArrayList<Portfolio>()
+//            retrofitService.getPortfolio(uid).enqueue(object  :Callback<ArrayList<Portfolio>>{
+//                override fun onResponse(
+//                    call: Call<ArrayList<Portfolio>>,
+//                    response: Response<ArrayList<Portfolio>>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        Log.d("getPortfolio test success", response.body().toString())
+//                        myPortfolio = response.body()!!
+//                    } else {
+//                        Log.d("getPortfolio test", "success but something error")
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<ArrayList<Portfolio>>, t: Throwable) {
+//                    Log.d("getPortfolio test", "fail")
+//                }
+//
+//            })
+//            return myPortfolio
+//        }
 
         fun _getSubscribingPortfolio(uid:String) : ArrayList<Portfolio>{
             var myPortfolio = ArrayList<Portfolio>()
@@ -305,25 +305,23 @@ interface RetrofitService {
             return myPortfolio
         }
 
-        fun _getProfile(uid:String) : Profile{
-            var profile = Profile(uid, "", "", "", "", 0)
-            retrofitService.getProfile(uid).enqueue(object :Callback<Profile>{
-                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                    if(response.isSuccessful){
-                        Log.d("getProfile test success", response.body().toString())
-                        profile = response.body()!!
-                    }else{
-                        Log.d("getProfile test", "success but something error")
-                    }
-                }
-
-                override fun onFailure(call: Call<Profile>, t: Throwable) {
-                    Log.d("getProfile test", "fail")
-                    Log.d("왜 오류남", t.message.toString())
-                }
-            })
-            return profile
-        }
+//        fun _getProfile(uid:String) : Profile{
+//            var profile = Profile(uid, "", "", "", "", 0)
+//            retrofitService.getProfile(uid).enqueue(object :Callback<Profile>{
+//                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+//                    if(response.isSuccessful){
+//                        Log.d("getProfile test success", response.body().toString())
+//                        profile = response.body()!!
+//                    }else{
+//                        Log.d("getProfile test", "success but something error")
+//                    }
+//                }
+//                override fun onFailure(call: Call<Profile>, t: Throwable) {
+//                    Log.d("getProfile test", "fail")
+//                }
+//            })
+//            return profile
+//        }
 
         fun _editProfile(profile:Profile){
             retrofitService.editProfile(profile).enqueue(object :Callback<Profile>{
