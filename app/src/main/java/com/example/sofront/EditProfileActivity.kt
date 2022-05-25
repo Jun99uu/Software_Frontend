@@ -173,6 +173,7 @@ class EditProfileActivity : AppCompatActivity() {
                             val bitmap = ImageDecoder.decodeBitmap(source)
                             profileImg?.setImageBitmap(bitmap)
                             afterProfileImg = converter.bitmapToString(bitmap)
+//                            Log.d("프사", afterProfileImg)
                         }
                     }
 

@@ -147,96 +147,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:id="@+id/community_box"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/googlebtn"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/upper_lay"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="커뮤니티"
-                    android:fontFamily="@font/nixgonb"
-                    android:textColor="@color/black"
-                    android:letterSpacing="-0.05"
-                    android:textSize="25sp"
-                    android:paddingTop="15dp"
-                    android:paddingLeft="15dp"
-                    android:paddingBottom="5dp"/>
-
-                <FrameLayout
-                    android:id="@+id/change_nick_case"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/signout"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="20dp"/>
-
-                    <Button
-                        android:id="@+id/change_nick_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:backgroundTint="@color/pastel_white"
-                        android:fontFamily="@font/nixgonm"
-                        android:gravity="center_vertical"
-                        android:letterSpacing="-0.05"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:text="닉네임 변경"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"/>
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/change_detail_case"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/change_detail_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:backgroundTint="@color/pastel_white"
-                        android:fontFamily="@font/nixgonm"
-                        android:gravity="center_vertical"
-                        android:letterSpacing="-0.05"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:text="추가정보 변경"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"/>
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/signout"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginRight="20dp"/>
-
-                </FrameLayout>
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/account_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/googlebtn"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/community_box"
+                app:layout_constraintTop_toBottomOf="@id/upper_lay"
                 android:padding="10dp"
                 android:layout_margin="10dp"
                 android:orientation="vertical">
