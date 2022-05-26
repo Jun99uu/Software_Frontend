@@ -1,12 +1,12 @@
 package com.example.sofront
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +17,6 @@ import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 
@@ -63,7 +62,7 @@ class ListFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch{
             val db = CalendarDatabase.getInstance(requireContext())
             val calendarDao = db!!.calendarDao()
-            calendarDao.deleteAll()
+//            calendarDao.deleteAll()
 
 //        calendarDao.deletePlan(CalendarEntity(plan.planName,calendarView.currentDate.toString()))
 //            calendarDao.deletePlan(CalendarEntity(plan.planName,""+calendarView.currentDate.year+"-"+calendarView.currentDate.month+"-"+calendarView.currentDate.day,plan.routineList.size,1))
@@ -191,9 +190,18 @@ class ListFragment : Fragment() {
 
     private fun setCalendarView(){
         calendarView.setOnDateChangedListener { _, date, selected ->
-            Log.d("Changed",date.toString()+selected)
-            val calendarDialogFragment = CalendarDialogFragment(date)
-            calendarDialogFragment.show(childFragmentManager,"CalendarDialogFragment")
+            val db = CalendarDatabase.getInstance(requireContext())
+            val dao = db.calendarDao()
+            CoroutineScope(Dispatchers.Main).launch {
+
+                val plan = CoroutineScope(Dispatchers.IO).async {
+                    dao.getPlanByDay(date.year.toString() + "-" + date.month.toString() + "-" + date.day)
+                }.await()
+
+                Toast.makeText(requireContext(),plan.planName + ", "+plan.count,Toast.LENGTH_SHORT).show()
+                val calendarDialogFragment = CalendarDialogFragment(date,plan.planName,plan.count)
+                calendarDialogFragment.show(childFragmentManager,"CalendarDialogFragment")
+            }
         }
         calendarView.setWeekDayTextAppearance(R.font.nixgonm)
         calendarView.setDateTextAppearance(R.font.nixgonm)

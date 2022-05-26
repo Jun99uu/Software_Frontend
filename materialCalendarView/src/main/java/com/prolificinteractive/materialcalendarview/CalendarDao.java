@@ -22,5 +22,7 @@ public interface CalendarDao{
     @Query("SELECT * FROM calendarentity WHERE planName = :name")
     List<CalendarEntity> getEntityByName(String name);
 //    @Query("SELECT * FROM calendarentity WHERE plan")
+    @Query("SELECT * From calendarentity WHERE planDay = :planDay")
+    CalendarEntity getPlanByDay(String planDay);
 
 }

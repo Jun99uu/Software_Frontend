@@ -86,14 +86,12 @@ import org.threeten.bp.LocalDate;
           case DragEvent.ACTION_DROP:
             ClipData.Item item = e.getClipData().getItemAt(0);
             CharSequence dragData = item.getText();
-            Log.d("dragData",dragData.toString());
+
             String[] split = dragData.toString().split("-");
             int days = Integer.parseInt(split[0]);
             String planName = split[1];
-            Log.d("Drop to", dayView.getDate().toString());
-            //TODO: 핸드폰 내부저장소에 플랜 저장
-            ArrayList<CalendarDay> set = new ArrayList<>();
 
+            ArrayList<CalendarDay> set = new ArrayList<>();
             new Thread(new Runnable() {
               @Override
               public void run() {
@@ -109,29 +107,23 @@ import org.threeten.bp.LocalDate;
                         set.add(tmp);
                         dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i));
                         tmp = addOnetoCalendarDay(tmp);
-                        ((Activity)context).runOnUiThread(new Runnable() {
-                          @Override
-                          public void run() {
-                            materialCalendarView.addDecorator(new EventDecorator(colors[colorIndex],set));
-                            colorIndex = (colorIndex+1)%colors.length;
-                          }
-                        });
                       }
                     }
                   });
                 }catch (SQLiteConstraintException exception){
-                  Log.e("중복!!!!!!!",exception.getMessage());
+                  set.clear();
                 }
-//                List<CalendarEntity> list = dao.getAll();
-//                for(int i=0; i<list.size(); i++){
-//                  Log.d("드래그앤 드랍 하고 디비에 저장하면",list.get(i).planDay + " "+list.get(i).planName);
-//                }
+                ((Activity)context).runOnUiThread(new Runnable() {
+                  @Override
+                  public void run() {
+                    if(set.size()==0)
+                    Toast.makeText(context,"하루에 두개 이상의 플랜을 넣을수는 없어요",Toast.LENGTH_LONG).show();
+                    materialCalendarView.addDecorator(new EventDecorator(colors[colorIndex],set));
+                    colorIndex = (colorIndex+1)%colors.length;
+                  }
+                });
               }
             }).start();
-
-
-            Toast.makeText(getContext(), "Drag data is " + dragData, Toast.LENGTH_SHORT).show();
-            v.invalidate();
             return true;
           case DragEvent.ACTION_DRAG_ENDED:
 //            imageView.clearColorFilter();

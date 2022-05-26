@@ -12,6 +12,10 @@ import com.example.sofront.databinding.FragmentCalendarDialogBinding
 import com.example.sofront.databinding.FragmentCalendarPlanBottomSheetListDialogBinding
 import com.prolificinteractive.materialcalendarview.CalendarDatabase
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,7 +27,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CalendarDialogFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CalendarDialogFragment(val date : CalendarDay) : DialogFragment(){
+class CalendarDialogFragment(val date : CalendarDay, val planName:String,val count:Int) : DialogFragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -54,6 +58,18 @@ class CalendarDialogFragment(val date : CalendarDay) : DialogFragment(){
 //        val adapter =  RoutineRecyclerViewAdapter()
         val adapter = CalendarDialogRecyclerViewAdapter()
         val db = CalendarDatabase.getInstance(requireContext())
+        CoroutineScope(Dispatchers.Main).launch {
+            val plan = CoroutineScope(Dispatchers.IO).async {
+                RetrofitService._getPlanByPlanName(planName)
+            }.await()
+
+            if(plan.routineList.size>0)
+            for(workout in plan.routineList[count].workoutList)
+                adapter.addItem(workout)
+
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        }
 //        db.calendarDao()
         //테스트용
         val workoutList = ArrayList<Workout>()
