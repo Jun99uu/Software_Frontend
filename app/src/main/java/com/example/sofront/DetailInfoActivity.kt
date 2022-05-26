@@ -1,6 +1,9 @@
 package com.example.sofront
 
 import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +19,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.regex.Pattern
 
 class DetailInfoActivity : AppCompatActivity() {
@@ -25,8 +31,6 @@ class DetailInfoActivity : AppCompatActivity() {
     private lateinit var textArray: ArrayList<Array<String>>
     private var userInfo: UserInfo = UserInfo()
     val adapter = SelectItemAdapter()
-    var prevEmail = ""
-    var prevPWD = ""
     lateinit var auth:FirebaseAuth
     lateinit var user:FirebaseUser
 
@@ -36,23 +40,6 @@ class DetailInfoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val UID = intent.getStringExtra("UID")
-        prevEmail = intent.getStringExtra("prevEmail").toString()
-        prevPWD = intent.getStringExtra("prevPWD").toString()
-
-        auth.signInWithEmailAndPassword(prevEmail, prevPWD)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    RetrofitService._login(auth.uid.toString())
-                    Log.d(ContentValues.TAG, "signInWithEmail:success")
-                    auth = Firebase.auth
-                    user = auth.currentUser!!
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(ContentValues.TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "로그인에 실패했습니다😢",
-                        Toast.LENGTH_SHORT).show()
-                }
-            }
 
         setList()
         adapter.toggleList = toggleList
@@ -86,8 +73,9 @@ class DetailInfoActivity : AppCompatActivity() {
             }
             if(check()) {
                 userInfo.UID=UID.toString()
-                RetrofitService._postUserInfo(userInfo)
+                _postUserInfo(userInfo, this)
                 //여기서 비동기 처리
+
             }
             else{
                 println("hi")
@@ -195,5 +183,29 @@ class DetailInfoActivity : AppCompatActivity() {
         // 처음 클릭 메시지
         Toast.makeText(this, "'뒤로' 버튼을 한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
         backPressedTime = System.currentTimeMillis()
+    }
+
+    //3. 인터페이스 사용
+    fun _postUserInfo(userInfo: UserInfo, context: Context){
+        /////////////////id 가져오기
+        RetrofitService.retrofitService.postUserInfo(userInfo).enqueue(object: Callback<UserInfo> {
+            override fun onResponse(call: Call<UserInfo>, response: Response<UserInfo>) {
+                if(response.isSuccessful){
+                    response.message()
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                    Toast.makeText(context, "회원가입이 완료되었습니다.\n로그인해주세요!", Toast.LENGTH_LONG).show()
+                    Log.d("Post","success $response")
+                }
+                else {
+                    Log.d("Post", "success,but ${response.errorBody()}")
+                }
+            }
+
+            override fun onFailure(call: Call<UserInfo>, t: Throwable) {
+                Log.d("Post","fail $t")
+            }
+        })
     }
 }

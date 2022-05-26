@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
                             RetrofitService._login(auth.uid.toString())
                             Log.d(TAG, "signInWithEmail:success")
                             val user = auth.currentUser
-//                            updateUI(user)
+                            updateUI(user)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -95,4 +95,6 @@ class LoginActivity : AppCompatActivity() {
             this.finish()
         }
     }
+
+
 }

@@ -72,10 +72,8 @@ class TestFactory {
                 else->false
             }
             return Portfolio(
-                getRandomNum(100),"PortfolioTitle$randomNum","PortfolioWriter$randomNum","WriterName",bool,"content hmmm $randomNum",getSomeDate(),
-                getSomeHashTagList(),
-                getRandomNum(100),
-                getRandomNum(100))
+                getRandomNum(100),"PortfolioTitle$randomNum","PortfolioWriter$randomNum","WriterName",bool,"content hmmm $randomNum",getSomeDate(), getRandomNum(100),
+                getRandomNum(100), "","")
         }
         fun getSomeDate() : String{
             return "2022-${getRandomNum(12)}-${ getRandomNum(31)}-${getRandomNum(24)}-${getRandomNum(60)}"

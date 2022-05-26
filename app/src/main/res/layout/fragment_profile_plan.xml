@@ -18,4 +18,28 @@
         android:layout_gravity="center_horizontal"
         android:nestedScrollingEnabled="true"/>
 
+    <LinearLayout
+        android:id="@+id/no_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_sadpicture"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아직 플랜이 없네요😥"
+            android:letterSpacing="-0.05"
+            android:textSize="25sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/nixgonb"
+            android:textColor="@color/gray" />
+    </LinearLayout>
+
+
 </FrameLayout>

@@ -31,83 +31,98 @@
                     android:id="@+id/background_image"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:src="@drawable/womanrun"
                     android:scaleType="centerCrop"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/womanrun"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="50dp"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="홍길동"
-                        android:textSize="45sp"
-                        android:fontFamily="@font/nixgonb"
-                        android:textColor="@color/white"
                         android:background="#803F3F3F"
+                        android:fontFamily="@font/nixgonb"
                         android:letterSpacing="-0.05"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:padding="3dp"
+                        android:text="홍길동"
+                        android:textColor="@color/white"
+                        android:textSize="45sp"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        android:padding="3dp"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/subscribe_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sub. 0명"
-                        android:textColor="@color/white"
                         android:background="#803F3F3F"
                         android:fontFamily="@font/nixgonb"
-                        android:textSize="20sp"
                         android:letterSpacing="-0.05"
-                        app:layout_constraintLeft_toRightOf="@id/user_name"
-                        app:layout_constraintBottom_toBottomOf="@id/user_name"
+                        android:padding="3dp"
                         android:paddingLeft="5dp"
-                        android:padding="3dp"/>
+                        android:text="Sub. 0명"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="@id/user_name"
+                        app:layout_constraintLeft_toRightOf="@id/user_name" />
 
                     <Button
                         android:id="@+id/suboredit_btn"
                         android:layout_width="60dp"
                         android:layout_height="30dp"
-                        android:text="구독"
+                        android:layout_marginLeft="5dp"
                         android:background="@drawable/new_radius"
                         android:backgroundTint="@color/tomato"
                         android:fontFamily="@font/nixgonb"
-                        android:textSize="15sp"
                         android:letterSpacing="-0.05"
+                        android:text="구독"
                         android:textColor="@color/white"
-                        app:layout_constraintLeft_toRightOf="@id/subscribe_num"
+                        android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@id/subscribe_num"
-                        android:layout_marginLeft="5dp"/>
+                        app:layout_constraintLeft_toRightOf="@id/subscribe_num" />
 
                     <TextView
                         android:id="@+id/profile_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="안녕하세요, 짐꾼입니다.\n오늘도 신나게 운동해볼까요?"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/nixgonm"
                         android:background="#803F3F3F"
-                        android:textSize="23sp"
+                        android:fontFamily="@font/nixgonm"
                         android:letterSpacing="-0.05"
                         android:padding="3dp"
-                        app:layout_constraintTop_toBottomOf="@id/user_name"
-                        app:layout_constraintLeft_toLeftOf="parent"/>
+                        android:text="안녕하세요, 짐꾼입니다.\n오늘도 신나게 운동해볼까요?"
+                        android:textColor="@color/white"
+                        android:textSize="23sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/user_name" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/make_portfolio_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radius"
+                android:text="작성"
+                android:fontFamily="@font/nixgonb"
+                android:letterSpacing="-0.05"
+                android:textSize="20sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"/>
 
 
             <LinearLayout

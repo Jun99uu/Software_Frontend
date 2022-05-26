@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sofront">
         <activity
+            android:name=".MakePortfolioActivity"
+            android:exported="false" />
+        <activity
             android:name=".SettingActivity"
             android:exported="false" />
         <activity
