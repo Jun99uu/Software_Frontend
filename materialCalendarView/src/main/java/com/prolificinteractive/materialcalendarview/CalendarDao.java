@@ -15,4 +15,12 @@ public interface CalendarDao{
     void insertPlan(CalendarEntity calendarEntity);
     @Delete
     void deletePlan(CalendarEntity calendarEntity);
+    @Query("DELETE FROM calendarentity")
+    void deleteAll();
+    @Query("SELECT distinct planName From calendarentity ")
+    List<String> getPlanName();
+    @Query("SELECT * FROM calendarentity WHERE planName = :name")
+    List<CalendarEntity> getEntityByName(String name);
+//    @Query("SELECT * FROM calendarentity WHERE plan")
+
 }

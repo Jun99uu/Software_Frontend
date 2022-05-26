@@ -19,6 +19,7 @@ public class CalendarEntity {
             @NonNull
     String planDay;
     int planLength;
+    int count;
     public String getPlanName(){
         return planName;
     }
@@ -27,6 +28,9 @@ public class CalendarEntity {
     }
     public int getPlanLength(){
         return planLength;
+    }
+    public int getCount(){
+        return count;
     }
     public void setPlanName(String planName){
         this.planName = planName;
@@ -37,10 +41,14 @@ public class CalendarEntity {
     public void setPlanLength(int length){
         planLength = length;
     }
-    public CalendarEntity(String planName,String planDay,int planLength){
+    public void setCount(int count){
+        this.count = count;
+    }
+    public CalendarEntity(String planName,String planDay,int planLength,int count){
         this.planName = planName;
         this.planDay = planDay;
         this.planLength = planLength;
+        this.count = count;
     }
 }
 

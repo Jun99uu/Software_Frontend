@@ -1,9 +1,11 @@
 package com.prolificinteractive.materialcalendarview;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -37,6 +39,7 @@ import org.threeten.bp.LocalDate;
 @SuppressLint("ViewConstructor") public class MonthView extends CalendarPagerView {
 
   public static MaterialCalendarView materialCalendarView = null;
+  public static Context context = null;
   public static int colorIndex = 0;
   public static int[] colors = {Color.BLUE,Color.YELLOW,Color.GREEN,Color.BLACK,Color.RED,Color.CYAN,Color.rgb(255,165,0)};
   public MonthView(
@@ -83,31 +86,50 @@ import org.threeten.bp.LocalDate;
           case DragEvent.ACTION_DROP:
             ClipData.Item item = e.getClipData().getItemAt(0);
             CharSequence dragData = item.getText();
-            int days = Integer.parseInt(dragData.toString());
+            Log.d("dragData",dragData.toString());
+            String[] split = dragData.toString().split("-");
+            int days = Integer.parseInt(split[0]);
+            String planName = split[1];
             Log.d("Drop to", dayView.getDate().toString());
             //TODO: 핸드폰 내부저장소에 플랜 저장
+            ArrayList<CalendarDay> set = new ArrayList<>();
+
             new Thread(new Runnable() {
               @Override
               public void run() {
                 CalendarDatabase db = CalendarDatabase.getInstance(getContext());
                 CalendarDao dao = db.calendarDao();
-                List<CalendarEntity> list = dao.getAll();
-                for(int i=0; i<list.size(); i++){
-                  Log.d("드래그앤 드랍 하고 디비에 저장하면",list.get(i).planDay + " "+list.get(i).planName);
+
+                try{
+                  db.runInTransaction(new Runnable() {
+                    CalendarDay tmp = dayView.getDate();
+                    @Override
+                    public void run() {
+                      for(int i=0; i<days-1; i++){
+                        set.add(tmp);
+                        dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i));
+                        tmp = addOnetoCalendarDay(tmp);
+                        ((Activity)context).runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
+                            materialCalendarView.addDecorator(new EventDecorator(colors[colorIndex],set));
+                            colorIndex = (colorIndex+1)%colors.length;
+                          }
+                        });
+                      }
+                    }
+                  });
+                }catch (SQLiteConstraintException exception){
+                  Log.e("중복!!!!!!!",exception.getMessage());
                 }
+//                List<CalendarEntity> list = dao.getAll();
+//                for(int i=0; i<list.size(); i++){
+//                  Log.d("드래그앤 드랍 하고 디비에 저장하면",list.get(i).planDay + " "+list.get(i).planName);
+//                }
               }
             }).start();
 
 
-
-            ArrayList<CalendarDay> set = new ArrayList<>();
-            CalendarDay tmp = dayView.getDate();
-            for(int i=0; i<days; i++){
-              set.add(tmp);
-              tmp = addOnetoCalendarDay(tmp);
-            }
-            materialCalendarView.addDecorator(new EventDecorator(colors[colorIndex],set));
-            colorIndex = (colorIndex+1)%colors.length;
             Toast.makeText(getContext(), "Drag data is " + dragData, Toast.LENGTH_SHORT).show();
             v.invalidate();
             return true;
