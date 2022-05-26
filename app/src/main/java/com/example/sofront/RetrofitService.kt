@@ -2,6 +2,9 @@ package com.example.sofront
 
 import android.util.Log
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,12 +62,15 @@ interface RetrofitService {
     @POST("/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
-    @GET("/내뇌피셜url/포트폴리오 댓글리스트/{portfolioID}")
+    @GET("/포트폴리오 댓글리스트 겟/{portfolioID}")
     fun getPortfolioComment(@Path("portfolioID") porfolioID:String) : Call<ArrayList<Comment>>
+
+    @POST("/포트폴리오 댓글 포스트요/{porfolioID}")
+    fun postPortfolioComment(@Path("portfolioID") portfolioID : String,@Body comment: Comment) : Call<Comment>
 
     companion object{
         //        var gson = GsonBuilder().setLenient().create()
-        private const val BASE_URL = "http://7bfd-219-255-158-172.ngrok.io"
+        private const val BASE_URL = /*"http://7bfd-219-255-158-172.ngrok.io"*/"http://hi.asdf.asdfopij"
 
         val retrofitService = create()
 
@@ -308,24 +314,27 @@ interface RetrofitService {
             return myPortfolio
         }
 
-        suspend fun _getProfile(uid:String) : Profile{
-            var profile = Profile(uid, "", "", "", "", 0)
-            retrofitService.getProfile(uid).enqueue(object :Callback<Profile>{
-                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                    if(response.isSuccessful){
-                        Log.d("getProfile test success", response.body().toString())
-                        profile = response.body()!!
-                    }else{
-                        Log.d("getProfile test", "success but something error")
-                    }
-                }
+        fun _getProfile(uid:String) : Profile{
 
-                override fun onFailure(call: Call<Profile>, t: Throwable) {
-                    Log.d("getProfile test", "fail")
-                    Log.d("왜 오류남", t.message.toString())
-                }
-            })
-            return profile
+
+                var profile = Profile(uid, "", "", "", "", 0)
+                retrofitService.getProfile(uid).enqueue(object : Callback<Profile> {
+                    override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                        if (response.isSuccessful) {
+                            Log.d("getProfile test success", response.body().toString())
+                            profile = response.body()!!
+                        } else {
+                            Log.d("getProfile test", "success but something error")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Profile>, t: Throwable) {
+                        Log.d("getProfile test", "fail")
+                        Log.d("왜 오류남", t.message.toString())
+                    }
+                })
+                return profile
+
         }
 
         fun _editProfile(profile:Profile){
@@ -348,19 +357,40 @@ interface RetrofitService {
             retrofitService.getPortfolioComment(porfolioID).enqueue(object :Callback<ArrayList<Comment>>{
                 override fun onResponse(call: Call<ArrayList<Comment>>, response: Response<ArrayList<Comment>>) {
                     if(response.isSuccessful){
-                        Log.d("getProfile test success", response.body().toString())
+                        Log.d("getPortfolioComment test success", response.body().toString())
                         commentList = response.body()!!
                     }else{
-                        Log.d("getProfile test", "success but something error")
+                        Log.d("getPortfolioComment test", "success but something error")
                     }
                 }
 
                 override fun onFailure(call: Call<ArrayList<Comment>>, t: Throwable) {
-                    Log.d("getProfile test", "fail")
+                    Log.d("getPortfolioComment test", "fail")
                     Log.d("왜 오류남", t.message.toString())
                 }
             })
             return commentList
+        }
+        fun _postPortfolioComment(portfolioID: String,comment: Comment) : Boolean{
+            var bool  = true
+            retrofitService.postPortfolioComment(portfolioID,comment).enqueue(object : Callback<Comment>{
+                override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
+                    if(response.isSuccessful){
+                        Log.d("getPortfolioComment test success", response.body().toString())
+                        bool = true
+                    }else{
+                        bool= false
+                        Log.d("getPortfolioComment test", "success but something error")
+                    }
+                }
+
+                override fun onFailure(call: Call<Comment>, t: Throwable) {
+                    Log.e("getPortfolioComment Test","error")
+                    bool= false
+                }
+
+            })
+            return bool
         }
     }
 }
