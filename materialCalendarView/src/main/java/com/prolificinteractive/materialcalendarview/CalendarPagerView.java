@@ -85,53 +85,6 @@ abstract class CalendarPagerView extends ViewGroup
   protected void addDayView(Collection<DayView> dayViews, LocalDate temp) {
     CalendarDay day = CalendarDay.from(temp);
     DayView dayView = new DayView(getContext(), day);
-//    dayView.setOnDragListener(new OnDragListener() {
-//      @Override
-//      public boolean onDrag(View v, DragEvent e) {
-////        ImageView imageView = (ImageView)v;
-//        switch (e.getAction()) {
-//          case DragEvent.ACTION_DRAG_STARTED:
-//            if (e.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-//
-////              imageView.setColorFilter(Color.BLUE);
-//              v.invalidate();
-//              return true;
-//            } else {
-//              return false;
-//            }
-//          case DragEvent.ACTION_DRAG_ENTERED:
-////            imageView.setColorFilter(Color.GREEN);
-//            v.invalidate();
-//            return true;
-//          case DragEvent.ACTION_DRAG_LOCATION:
-//            return true;
-//          case DragEvent.ACTION_DRAG_EXITED:
-////            imageView.setColorFilter(Color.BLUE);
-//            v.invalidate();
-//            return true;
-//          case DragEvent.ACTION_DROP:
-//            ClipData.Item item = e.getClipData().getItemAt(0);
-//            CharSequence dragData = item.getText();
-//            Log.d("Drop to",dayView.getDate().toString());
-//            Toast.makeText(getContext(),"Drag data is "+dragData,Toast.LENGTH_SHORT).show();
-//            v.invalidate();
-//            return true;
-//          case DragEvent.ACTION_DRAG_ENDED:
-////            imageView.clearColorFilter();
-//            v.invalidate();
-//            if(e.getResult()){
-//             Log.d("Drop ended","handled");
-//            }
-//            else{
-//             Log.d("Drop ended","didn't work");
-//            }
-//            return true;
-//          default:
-//            Log.e("DragDrop Example","Unknown action type");
-//            return false;
-//        }
-//      }
-//    });
     dayView.setOnClickListener(this);
     dayView.setOnLongClickListener(this);
     dayViews.add(dayView);
