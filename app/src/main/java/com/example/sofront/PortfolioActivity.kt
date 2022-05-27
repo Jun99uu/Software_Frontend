@@ -39,7 +39,7 @@ class PortfolioActivity : AppCompatActivity() {
         binding.commentSaveBtn.setOnClickListener {
             val text = binding.commentInput.text.toString()
             val comment = Comment(portfolio.title,uid,userName, Date().toString(),"",text)
-//            RetrofitService._postPortfolioComment(comment)
+            RetrofitService._postPortfolioComment(portfolio.id.toString(), comment)
             //TODO("디비에 저장하고 불러오기")
             commentArray.add(comment)
             adapter.notifyDataSetChanged()

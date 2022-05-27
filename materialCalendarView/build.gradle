@@ -32,6 +32,8 @@ archivesBaseName = 'material-calendarview'
 dependencies {
   implementation 'androidx.annotation:annotation:1.3.0'
 //  implementation 'org.threeten:threetenbp:1.6.0'
+  implementation "androidx.room:room-runtime:2.4.2"
+  annotationProcessor "androidx.room:room-compiler:2.4.2"
   testImplementation('junit:junit:4.12')
   implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
   implementation 'androidx.viewpager:viewpager:1.0.0'

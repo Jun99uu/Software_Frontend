@@ -1,16 +1,26 @@
 package com.example.sofront
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.FragmentCalendarDialogBinding
 import com.example.sofront.databinding.FragmentCalendarPlanBottomSheetListDialogBinding
+import com.prolificinteractive.materialcalendarview.CalendarDatabase
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CalendarDialogFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CalendarDialogFragment(val date : CalendarDay) : DialogFragment(){
+class CalendarDialogFragment(private val date : CalendarDay,private val planName:String,private val count:Int) : DialogFragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -50,9 +60,54 @@ class CalendarDialogFragment(val date : CalendarDay) : DialogFragment(){
         val recyclerView = binding.calendarDialogRv
         val titleText = date.month.toString() + "월 " + date.day.toString() + "일의 운동"
         binding.title.text = titleText
-//        val adapter =  RoutineRecyclerViewAdapter()
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         val adapter = CalendarDialogRecyclerViewAdapter()
+        val db = CalendarDatabase.getInstance(requireContext())
+        val dao = db.calendarDao()
+        var clickTime = 0L
+        binding.calendarDeleteBtn.setOnClickListener {
 
+            if(System.currentTimeMillis() - clickTime < 3000) {
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    dao.deletePlanByName(planName)
+//                    dialog?.dismiss()
+//                    container?.invalidate()
+//                }
+                CoroutineScope(Dispatchers.Main).launch {
+                    val check = CoroutineScope(Dispatchers.IO).async {
+                        dao.deletePlanByName(planName)
+                        true
+                    }.await()
+                    if(check){
+                        dialog?.dismiss()
+                        TODO("화면 리프레쉬")
+//                        container?.invalidate()
+//                        requireActivity().supportFragmentManager.beginTransaction().detach(requireParentFragment()).attach(requireParentFragment()).commit()
+                    }
+
+                }
+            }
+            else{
+                Toast.makeText(requireContext(),"한번 더 누르면 플랜 전체가 삭제",Toast.LENGTH_LONG).show()
+            }
+            clickTime = System.currentTimeMillis()
+        }
+//        val adapter =  RoutineRecyclerViewAdapter()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val plan = CoroutineScope(Dispatchers.IO).async {
+                RetrofitService._getPlanByPlanName(planName)
+            }.await()
+
+            if(plan.routineList.size>0)
+            for(workout in plan.routineList[count].workoutList)
+                adapter.addItem(workout)
+
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        }
+//        db.calendarDao()
         //테스트용
         val workoutList = ArrayList<Workout>()
         workoutList.add(Workout("운동이름1",1,ArrayList<Set>()))

@@ -2,6 +2,9 @@ package com.example.sofront
 
 import android.util.Log
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,8 +35,8 @@ interface RetrofitService {
     @GET("/workout/planGet") //uid로 플랜 가져오기
     fun getPlanByUid() : Call<ArrayList<Plan>>
 
-    @GET("/workout/plan/download/{uid}/UID")
-    fun getDownloadPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
+    @GET("/workout/plan/all/{uid}")
+    fun getDownloadPlan(@Path("uid") uid : String) : Call<ArrayList<Plan>>
 
     @GET("/workout/planGetHashTag/{hashtag}")//해시태그로 플랜 가져오기
     fun getPlanByHashTag(@Path("hashtag") hashTag:String) : Call<ArrayList<Plan>>
@@ -59,12 +62,15 @@ interface RetrofitService {
     @POST("/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
-    @GET("/내뇌피셜url/포트폴리오 댓글리스트/{portfolioID}")
+    @GET("/포트폴리오 댓글리스트 겟/{portfolioID}")
     fun getPortfolioComment(@Path("portfolioID") porfolioID:String) : Call<ArrayList<Comment>>
+
+    @POST("/plan/comment/{porfolioID}")
+    fun postPortfolioComment(@Path("portfolioID") portfolioID : String,@Body comment: Comment) : Call<Comment>
 
     companion object{
         //var gson = GsonBuilder().setLenient().create()
-        private const val BASE_URL = "http://7bfd-219-255-158-172.ngrok.io"
+        private const val BASE_URL = "http://b832-49-142-63-121.ngrok.io "
 
         val retrofitService = create()
 
@@ -184,9 +190,16 @@ interface RetrofitService {
             })
             return myPlan
         }
-        fun _getDownloadPlanByUid(uid:String):ArrayList<Plan>{
+        fun _getDownloadPlanUsingExecute(uid:String) : ArrayList<Plan>{
+            val body = retrofitService.getDownloadPlan(uid).execute().body()
+            if(body == null){
+                return ArrayList<Plan>()
+            }
+            else return body
+        }
+        fun _getDownloadPlan(uid : String):ArrayList<Plan>{
             var myPlan = ArrayList<Plan>()
-            retrofitService.getDownloadPlanByUid(uid).enqueue(object : Callback<ArrayList<Plan>> {
+            retrofitService.getDownloadPlan(uid).enqueue(object : Callback<ArrayList<Plan>> {
                 override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
                     if (response.isSuccessful) {
                         Log.d("getDownLoadPlan test success", response.body().toString())
@@ -195,10 +208,12 @@ interface RetrofitService {
                     } else {
                         Log.d("getDownLoadPlan test", "success but something error")
                     }
+                    Log.d("getDownloadPlan code",response.code().toString())
                 }
 
                 override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
                     Log.d("getDownLoadPlan test", "fail")
+                    Log.d("getDownloadPlan error code",t.message.toString())
                 }
             })
             return myPlan
@@ -223,6 +238,28 @@ interface RetrofitService {
             return myPlan
         }
 
+//        fun _getPortfolio(uid:String) : ArrayList<Portfolio>{
+//            var myPortfolio = ArrayList<Portfolio>()
+//            retrofitService.getPortfolio(uid).enqueue(object  :Callback<ArrayList<Portfolio>>{
+//                override fun onResponse(
+//                    call: Call<ArrayList<Portfolio>>,
+//                    response: Response<ArrayList<Portfolio>>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        Log.d("getPortfolio test success", response.body().toString())
+//                        myPortfolio = response.body()!!
+//                    } else {
+//                        Log.d("getPortfolio test", "success but something error")
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<ArrayList<Portfolio>>, t: Throwable) {
+//                    Log.d("getPortfolio test", "fail")
+//                }
+//
+//            })
+//            return myPortfolio
+//        }
 
         fun _getSubscribingPortfolio(uid:String) : ArrayList<Portfolio>{
             var myPortfolio = ArrayList<Portfolio>()
@@ -268,19 +305,40 @@ interface RetrofitService {
             retrofitService.getPortfolioComment(porfolioID).enqueue(object :Callback<ArrayList<Comment>>{
                 override fun onResponse(call: Call<ArrayList<Comment>>, response: Response<ArrayList<Comment>>) {
                     if(response.isSuccessful){
-                        Log.d("getProfile test success", response.body().toString())
+                        Log.d("getPortfolioComment test success", response.body().toString())
                         commentList = response.body()!!
                     }else{
-                        Log.d("getProfile test", "success but something error")
+                        Log.d("getPortfolioComment test", "success but something error")
                     }
                 }
 
                 override fun onFailure(call: Call<ArrayList<Comment>>, t: Throwable) {
-                    Log.d("getProfile test", "fail")
+                    Log.d("getPortfolioComment test", "fail")
                     Log.d("왜 오류남", t.message.toString())
                 }
             })
             return commentList
+        }
+        fun _postPortfolioComment(portfolioID: String,comment: Comment) : Boolean{
+            var bool  = true
+            retrofitService.postPortfolioComment(portfolioID,comment).enqueue(object : Callback<Comment>{
+                override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
+                    if(response.isSuccessful){
+                        Log.d("getPortfolioComment test success", response.body().toString())
+                        bool = true
+                    }else{
+                        bool= false
+                        Log.d("getPortfolioComment test", "success but something error")
+                    }
+                }
+
+                override fun onFailure(call: Call<Comment>, t: Throwable) {
+                    Log.e("getPortfolioComment Test","error")
+                    bool= false
+                }
+
+            })
+            return bool
         }
     }
 }

@@ -1,10 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     android:paddingBottom="60dp"
     tools:context=".HeartFragment">
+    <HorizontalScrollView
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/gym1"
+            android:src="@drawable/psk"/>
+            <TextView
+                android:gravity="center"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:text="규구99"
+                app:layout_constraintTop_toBottomOf="@+id/gym1"
+                app:layout_constraintStart_toStartOf="parent"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_height="80dp"
+            android:id="@+id/gym2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gym1"
+            android:src="@drawable/rjm"/>
+            <TextView
+                android:gravity="center"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:text="woawoa"
+                app:layout_constraintTop_toBottomOf="@+id/gym2"
+                app:layout_constraintStart_toEndOf="@+id/gym1"/>
+            <TextView
+                android:gravity="center"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:text="감자"
+                app:layout_constraintTop_toBottomOf="@+id/gym3"
+                app:layout_constraintStart_toEndOf="@+id/gym2"/>
+            <TextView
+                android:gravity="center"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:text="유뚱민"
+                app:layout_constraintTop_toBottomOf="@+id/gym4"
+                app:layout_constraintStart_toEndOf="@+id/gym3"/>
+            <TextView
+                android:gravity="center"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:text="중구난방"
+                app:layout_constraintTop_toBottomOf="@+id/gym5"
+                app:layout_constraintStart_toEndOf="@+id/gym4"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_height="80dp"
+            android:id="@+id/gym3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gym2"
+            android:src="@drawable/pjh"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_height="80dp"
+            android:id="@+id/gym4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gym3"
+            android:src="@drawable/rsm"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_height="80dp"
+            android:id="@+id/gym5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gym4"
+            android:src="@drawable/ljk"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -12,4 +101,4 @@
         android:layout_marginBottom="@dimen/default_margin"
         android:id="@+id/heart_portfolio_rv"/>
 
-</FrameLayout>
+</LinearLayout>

@@ -38,10 +38,10 @@ class PlanRecyclerViewAdapter : RecyclerView.Adapter<PlanRecyclerViewAdapter.Vie
         fun bind(item: Plan) {
             textView.text = item.planName
             textView.setOnLongClickListener { v ->
-                val clipItem = ClipData.Item(item.routineList.size.toString())
+                val clipItem = ClipData.Item(item.routineList.size.toString() + "-" + item.planName)
                 val dragData = ClipData(
 //                    v.tag as? CharSequence,
-                    item.routineList.size.toString(),
+                    item.routineList.size.toString() + "-" + item.planName,
                     arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN),
                     clipItem)
                 val myShadow = MyDragShadowBuilder(v)

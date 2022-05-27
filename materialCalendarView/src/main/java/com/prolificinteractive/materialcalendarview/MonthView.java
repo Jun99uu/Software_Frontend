@@ -1,9 +1,11 @@
 package com.prolificinteractive.materialcalendarview;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -25,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
@@ -36,6 +39,7 @@ import org.threeten.bp.LocalDate;
 @SuppressLint("ViewConstructor") public class MonthView extends CalendarPagerView {
 
   public static MaterialCalendarView materialCalendarView = null;
+  public static Context context = null;
   public static int colorIndex = 0;
   public static int[] colors = {Color.BLUE,Color.YELLOW,Color.GREEN,Color.BLACK,Color.RED,Color.CYAN,Color.rgb(255,165,0)};
   public MonthView(
@@ -82,20 +86,44 @@ import org.threeten.bp.LocalDate;
           case DragEvent.ACTION_DROP:
             ClipData.Item item = e.getClipData().getItemAt(0);
             CharSequence dragData = item.getText();
-            int days = Integer.parseInt(dragData.toString());
-            Log.d("Drop to", dayView.getDate().toString());
-            //TODO: 핸드폰 내부저장소에 플랜 저장
+
+            String[] split = dragData.toString().split("-");
+            int days = Integer.parseInt(split[0]);
+            String planName = split[1];
 
             ArrayList<CalendarDay> set = new ArrayList<>();
-            CalendarDay tmp = dayView.getDate();
-            for(int i=0; i<days; i++){
-              set.add(tmp);
-              tmp = addOnetoCalendarDay(tmp);
-            }
-            materialCalendarView.addDecorator(new EventDecorator(colors[colorIndex],set));
-            colorIndex = (colorIndex+1)%colors.length;
-            Toast.makeText(getContext(), "Drag data is " + dragData, Toast.LENGTH_SHORT).show();
-            v.invalidate();
+            new Thread(new Runnable() {
+              @Override
+              public void run() {
+                CalendarDatabase db = CalendarDatabase.getInstance(getContext());
+                CalendarDao dao = db.calendarDao();
+
+                try{
+                  db.runInTransaction(new Runnable() {
+                    CalendarDay tmp = dayView.getDate();
+                    @Override
+                    public void run() {
+                      for(int i=0; i<days-1; i++){
+                        set.add(tmp);
+                        dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i));
+                        tmp = addOnetoCalendarDay(tmp);
+                      }
+                    }
+                  });
+                }catch (SQLiteConstraintException exception){
+                  set.clear();
+                }
+                ((Activity)context).runOnUiThread(new Runnable() {
+                  @Override
+                  public void run() {
+                    if(set.size()==0)
+                    Toast.makeText(context,"하루에 두개 이상의 플랜을 넣을수는 없어요",Toast.LENGTH_LONG).show();
+                    materialCalendarView.addDecorator(new EventDecorator(colors[colorIndex],set));
+                    colorIndex = (colorIndex+1)%colors.length;
+                  }
+                });
+              }
+            }).start();
             return true;
           case DragEvent.ACTION_DRAG_ENDED:
 //            imageView.clearColorFilter();
@@ -153,38 +181,3 @@ import org.threeten.bp.LocalDate;
   }
 }
 
-class EventDecorator implements DayViewDecorator{
-  private ArrayList<CalendarDay> dates;
-  private int color;
-  EventDecorator(int color, Collection<CalendarDay> datesCollection){
-    dates = new ArrayList<>(datesCollection);
-    this.color = color;
-  }
-
-  @Override
-  public boolean shouldDecorate(CalendarDay day) {
-    return dates.contains(day);
-  }
-
-  @Override
-  public void decorate(DayViewFacade view) {
-    if(view!=null){
-      view.addSpan(new LineSpan(color));
-    }
-  }
-}
-
-class LineSpan implements LineBackgroundSpan{
-
-  private int color;
-  LineSpan(int color){
-    this.color = color;
-  }
-  @Override
-  public void drawBackground(@NonNull Canvas canvas, @NonNull Paint paint, int left, int right, int top, int baseline, int bottom, @NonNull CharSequence charSequence, int start, int end, int lineNum) {
-    Rect rect = new Rect();
-    rect.set(left,top-(top-bottom), right, bottom - (top-bottom));
-    paint.setColor(color);
-    canvas.drawRect(rect,paint);
-  }
-}
