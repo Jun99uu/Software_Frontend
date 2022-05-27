@@ -10,6 +10,7 @@
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:layout_width="match_parent"
             android:id="@+id/calendar"
+            app:mcv_selectionColor="@color/yellow"
             android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

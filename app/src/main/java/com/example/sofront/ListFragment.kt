@@ -1,25 +1,21 @@
 package com.example.sofront
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.FragmentListBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.prolificinteractive.materialcalendarview.*
+import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
+import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
 import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import kotlin.collections.ArrayList
-import kotlin.collections.HashSet
+
 
 class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
@@ -214,9 +210,21 @@ class ListFragment : Fragment() {
                 }
             }
         }
-        calendarView.setWeekDayTextAppearance(R.font.nixgonm)
-        calendarView.setDateTextAppearance(R.font.nixgonm)
-        calendarView.setHeaderTextAppearance(R.font.nixgonm)
+        // 월, 요일을 한글로 보이게 설정 (MonthArrayTitleFormatter의 작동을 확인하려면 밑의 setTitleFormatter()를 지운다)
+        calendarView.setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(com.example.sofront.R.array.custom_month)))
+        calendarView.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(com.example.sofront.R.array.custom_weekdays)))
+
+        calendarView.setHeaderTextAppearance(com.prolificinteractive.materialcalendarview.R.style.CalendarWidgetHeader)
+
+
+        // 좌우 화살표 사이 연, 월의 폰트 스타일 설정
+        calendarView.setHeaderTextAppearance(com.prolificinteractive.materialcalendarview.R.style.CustomTextAppearance)
+
+
+//        calendarView.setHeaderTextAppearance(R.font.nixgonb)
+//        calendarView.setWeekDayTextAppearance(R.font.nixgonm)
+//        calendarView.setDateTextAppearance(R.font.nixgonm)
+//        calendarView.setHeaderTextAppearance(R.font.nixgonm)
         calendarView.setTileHeightDp(40)
     }
 

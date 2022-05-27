@@ -16,6 +16,7 @@ import android.graphics.drawable.Drawable;
 import android.text.style.LineBackgroundSpan;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
