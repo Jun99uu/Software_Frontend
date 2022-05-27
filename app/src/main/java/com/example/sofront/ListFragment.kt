@@ -25,6 +25,7 @@ class ListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerview:RecyclerView
     private lateinit var calendarView: MaterialCalendarView
+    private val adapter = PlanRecyclerViewAdapter()
     val planArray  = ArrayList<Plan>()
 //    var planLength =0
     override fun onCreateView(
@@ -130,7 +131,7 @@ class ListFragment : Fragment() {
     }
     private fun setRecyclerView(){
         //TODO: 서버에서 플랜을 가져와서 리사이클러뷰로 띄워줌
-        val adapter = PlanRecyclerViewAdapter()
+
         initRecyclerViewList(adapter)
         setRecyclerViewAdapter(adapter)
     }
@@ -148,44 +149,53 @@ class ListFragment : Fragment() {
         }else{
 
         }
-//        CoroutineScope(Dispatchers.Main).launch{
-            runBlocking<Unit> {
-                getDownloadPlanByUid("류승민")
-                Log.d("planArraysize","${planArray.size}")
-                for(plan in planArray) {
-                    Log.d("Plan Class", plan.toString())
+
+////        CoroutineScope(Dispatchers.Main).launch{
+//            runBlocking<Unit> {
+//                getDownloadPlanByUid("류승민")
+//                Log.d("planArraysize","${planArray.size}")
+//                for(plan in planArray) {
+//                    Log.d("Plan Class", plan.toString())
+//                    adapter.addItem(plan)
+//                }
+////            }
+        CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).async {
+                Log.d("firebase uid",FirebaseAuth.getInstance().uid.toString())
+                val planList = RetrofitService._getDownloadPlanUsingExecute(FirebaseAuth.getInstance().uid.toString())
+                for(plan in planList){
                     adapter.addItem(plan)
                 }
+            }.await()
+//            Log.d("ListFragment,다운로드 플랜",planList.size.toString())
+
+        }
+
+
+    }
+//    fun getDownloadPlan(uid : String):PlanRecyclerViewAdapter{
+//        RetrofitService.retrofitService.getDownloadPlan(uid).enqueue(object : Callback<ArrayList<Plan>> {
+//            override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
+//                if (response.isSuccessful) {
+//                    Log.d("getDownLoadPlan test success", response.body().toString())
+//                    Log.d("getDownLoadPlan test success", response.body()!!.size.toString())
+//                    for(plan in response.body() as ArrayList<Plan>) {
+//                        adapter.addItem(plan)
+//                        adapter.notifyDataSetChanged()
+//                    }
+//                } else {
+//                    Log.d("getDownLoadPlan test", "success but something error")
+//                }
+//                Log.d("getDownloadPlan code",response.code().toString())
 //            }
-
-        }
-
-
-    }
-    suspend fun getDownloadPlanByUid(uid:String) : Job{
-        return CoroutineScope(Dispatchers.IO).launch {
-            RetrofitService.retrofitService.getDownloadPlanByUid(uid).enqueue(object :
-                Callback<ArrayList<Plan>> {
-                override fun onResponse(
-                    call: Call<ArrayList<Plan>>,
-                    response: Response<ArrayList<Plan>>
-                ) {
-                    if (response.isSuccessful) {
-                        for(item in response.body() as ArrayList<Plan>)
-                            planArray.add(item)
-                        Log.d("getDownLoadPlan test success", response.body().toString())
-                        Log.d("getDownLoadPlan test success", response.body()!!.size.toString())
-                    } else {
-                        Log.d("getDownLoadPlan test", "success but something error")
-                    }
-                }
-
-                override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
-                    Log.d("getDownLoadPlan test", "fail")
-                }
-            })
-        }
-    }
+//
+//            override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
+//                Log.d("getDownLoadPlan test", "fail")
+//                Log.d("getDownloadPlan error code",t.message.toString())
+//            }
+//        })
+//        return adapter
+//    }
 
 
     private fun setCalendarView(){
