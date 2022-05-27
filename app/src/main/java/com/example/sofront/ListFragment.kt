@@ -146,8 +146,6 @@ class ListFragment : Fragment() {
             for(plan in planList){
                 adapter.addItem(plan)
             }
-        }else{
-
         }
 
 ////        CoroutineScope(Dispatchers.Main).launch{
@@ -208,9 +206,11 @@ class ListFragment : Fragment() {
                     dao.getPlanByDay(date.year.toString() + "-" + date.month.toString() + "-" + date.day)
                 }.await()
 
-                Toast.makeText(requireContext(),plan.planName + ", "+plan.count,Toast.LENGTH_SHORT).show()
-                val calendarDialogFragment = CalendarDialogFragment(date,plan.planName,plan.count)
-                calendarDialogFragment.show(childFragmentManager,"CalendarDialogFragment")
+//                Toast.makeText(requireContext(),plan.planName + ", "+plan.count,Toast.LENGTH_SHORT).show()
+                if(plan!=null){
+                    val calendarDialogFragment = CalendarDialogFragment(date,plan.planName,plan.count)
+                    calendarDialogFragment.show(childFragmentManager,"CalendarDialogFragment")
+                }
             }
         }
         calendarView.setWeekDayTextAppearance(R.font.nixgonm)
