@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@drawable/radius"
+    android:padding="@dimen/default_margin"
     tools:context=".CalendarDialogFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin">
     <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
-        android:text="hi"/>
+        android:fontFamily="@font/nixgonb"
+        android:layout_marginTop="4dp"
+        android:textSize="@dimen/big_font_size"
+        android:text="title"
+        android:layout_gravity="center"
+        android:id="@+id/title" />
+    <Button
+        android:id="@+id/calendar_delete_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:fontFamily="@font/nixgonm"
+        android:textSize="@dimen/small_font_size"
+        android:background="@drawable/radius"
+        android:textColor="#000"
+        android:backgroundTint="#FFD394"
+        android:layout_gravity="end"
+        android:text="삭제하기"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#FF8844"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendar_dialog_rv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

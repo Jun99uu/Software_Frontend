@@ -24,5 +24,6 @@ public interface CalendarDao{
 //    @Query("SELECT * FROM calendarentity WHERE plan")
     @Query("SELECT * From calendarentity WHERE planDay = :planDay")
     CalendarEntity getPlanByDay(String planDay);
-
+    @Query("DELETE FROM CalendarEntity WHERE planName = :planName")
+    void deletePlanByName(String planName);
 }
