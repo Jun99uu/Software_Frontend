@@ -81,7 +81,7 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planName
                     }.await()
                     if(check){
                         dialog?.dismiss()
-                        TODO("화면 리프레쉬")
+//                        TODO("화면 리프레쉬")
 //                        container?.invalidate()
 //                        requireActivity().supportFragmentManager.beginTransaction().detach(requireParentFragment()).attach(requireParentFragment()).commit()
                     }
