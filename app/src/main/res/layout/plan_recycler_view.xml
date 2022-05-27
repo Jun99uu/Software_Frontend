@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:elevation="7dp"
+    android:background="@drawable/radius"
+    android:backgroundTint="#73D5FF"
+    android:padding="5dp"
+    android:layout_margin="8dp"
+    android:orientation="vertical">
     <TextView
+        android:layout_width="match_parent"
+        android:letterSpacing="0.05"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/big_font_size"
+        android:fontFamily="@font/nixgonl"
+        android:id="@+id/plan_list_tv"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp"
+        />
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:id="@+id/plan_list_tv"
-        />
+        android:orientation="horizontal">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/plan_list_hashtag_rv"/>
+    </LinearLayout>
 
 </LinearLayout>

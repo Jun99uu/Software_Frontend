@@ -23,14 +23,18 @@
                         android:layout_height="wrap_content"
                         android:text="@string/planlist"
                         android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/default_margin"
+                        android:layout_marginStart="16dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:fontFamily="@font/nixgonb"
+                        android:letterSpacing="0.05"
                         android:textSize="@dimen/medium_font_size"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/add"
+                        android:letterSpacing="0.05"
+                        android:fontFamily="@font/nixgonb"
                         android:layout_gravity="end"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +46,9 @@
                     android:layout_width="match_parent"
                     android:layout_marginStart="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginEnd="@dimen/default_margin"
                     android:id="@+id/plan_rv"
+                    android:layout_marginBottom="68dp"
                     android:layout_height="match_parent"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>

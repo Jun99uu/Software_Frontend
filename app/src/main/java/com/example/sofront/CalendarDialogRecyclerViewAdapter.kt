@@ -12,16 +12,9 @@ class CalendarDialogRecyclerViewAdapter :
     private val routine = ArrayList<Workout>()
     inner class ViewHolder(val binding: FragmentCalendarDialogItemBinding) : RecyclerView.ViewHolder(binding.root) {
         private val routineDayTv = binding.routineDayTv
-//        private val dialogRoutineRv = binding.dialogRoutineRv
         fun bind(item : Workout){
             val tmpStr = item.workoutName + " : "+ item.setNum + "세트"
             routineDayTv.text = tmpStr
-//            val adapter = RoutineRecyclerViewAdapter()
-//            dialogRoutineRv.adapter = adapter
-//            dialogRoutineRv.layoutManager = LinearLayoutManager(binding.root.context)
-//            for(workout in item.workoutList){
-//                adapter.addItem(workout)
-//            }
         }
     }
 

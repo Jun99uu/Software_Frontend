@@ -69,11 +69,6 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planName
         binding.calendarDeleteBtn.setOnClickListener {
 
             if(System.currentTimeMillis() - clickTime < 3000) {
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    dao.deletePlanByName(planName)
-//                    dialog?.dismiss()
-//                    container?.invalidate()
-//                }
                 CoroutineScope(Dispatchers.Main).launch {
                     val check = CoroutineScope(Dispatchers.IO).async {
                         dao.deletePlanByName(planName)
@@ -93,7 +88,6 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planName
             }
             clickTime = System.currentTimeMillis()
         }
-//        val adapter =  RoutineRecyclerViewAdapter()
 
         CoroutineScope(Dispatchers.Main).launch {
             val plan = CoroutineScope(Dispatchers.IO).async {
@@ -107,7 +101,6 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planName
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
-//        db.calendarDao()
         //테스트용
         val workoutList = ArrayList<Workout>()
         workoutList.add(Workout("운동이름1",1,ArrayList<Set>()))
@@ -123,25 +116,5 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planName
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CalendarDialogFragment.
-         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            CalendarDialogFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
     }
 }

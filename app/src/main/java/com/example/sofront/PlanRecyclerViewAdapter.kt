@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.PlanRecyclerViewBinding
 
@@ -32,10 +33,13 @@ class PlanRecyclerViewAdapter : RecyclerView.Adapter<PlanRecyclerViewAdapter.Vie
     override fun getItemCount(): Int {
         return testList.size
     }
-    inner class ViewHolder(binding: PlanRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: PlanRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root){
         private val textView = binding.planListTv
+        private val hashtagRecyclerView = binding.planListHashtagRv
+
 
         fun bind(item: Plan) {
+
             textView.text = item.planName
             textView.setOnLongClickListener { v ->
                 val clipItem = ClipData.Item(item.routineList.size.toString() + "-" + item.planName)
@@ -51,6 +55,9 @@ class PlanRecyclerViewAdapter : RecyclerView.Adapter<PlanRecyclerViewAdapter.Vie
                     v.startDrag(dragData,myShadow,null,0)
                 }
             }
+            val hashtagAdapter = ProfilePlanHashtagAdapter(item.hashTagList)
+            hashtagRecyclerView.adapter = hashtagAdapter
+            hashtagRecyclerView.layoutManager = LinearLayoutManager(binding.root.context,LinearLayoutManager.HORIZONTAL,false)
         }
     }
     fun addItem(item:Plan){
