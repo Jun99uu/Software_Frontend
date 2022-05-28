@@ -168,8 +168,18 @@ class ListFragment : Fragment() {
                             call: Call<ArrayList<Plan>>,
                             response: Response<ArrayList<Plan>>
                         ) {
-                            for(plan in response.body()!!)
-                                adapter.addItem(plan)
+                            if(response.isSuccessful) {
+                                Log.d("getDownloadPlan","success")
+                                Log.d("getDownloadPlan body",response.body().toString())
+                                for (plan in response.body()!!) {
+                                    adapter.addItem(plan)
+                                    adapter.notifyItemInserted(adapter.itemCount-1)
+                                }
+                            }
+                            else{
+                                Log.e("getDownloadPlan","success but something error")
+                                Log.e("getDownloadPlan error code",response.code().toString())
+                            }
                         }
 
                         override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
@@ -242,8 +252,8 @@ class ListFragment : Fragment() {
             }
         }
         // 월, 요일을 한글로 보이게 설정 (MonthArrayTitleFormatter의 작동을 확인하려면 밑의 setTitleFormatter()를 지운다)
-        calendarView.setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(com.example.sofront.R.array.custom_month)))
-        calendarView.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(com.example.sofront.R.array.custom_weekdays)))
+        calendarView.setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(R.array.custom_month)))
+        calendarView.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(R.array.custom_weekdays)))
         calendarView.setHeaderTextAppearance(com.prolificinteractive.materialcalendarview.R.style.CalendarWidgetHeader)
         // 좌우 화살표 사이 연, 월의 폰트 스타일 설정
         calendarView.setHeaderTextAppearance(com.prolificinteractive.materialcalendarview.R.style.CustomTextAppearance)
