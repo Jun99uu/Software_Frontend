@@ -1,16 +1,29 @@
 package com.example.sofront
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.room.RoomDatabase
 import com.example.sofront.databinding.ActivityHomeBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.prolificinteractive.materialcalendarview.CalendarDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class HomeActivity : AppCompatActivity() {
     lateinit var binding:ActivityHomeBinding
+    val user = Firebase.auth.currentUser
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -44,10 +57,23 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun openHomeFragment() {
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-M-d")
+        val formatted = current.format(formatter)
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_layout, HomeFragment())
-        transaction.commit()
+        val calendarInstance = CalendarDatabase.getInstance(this)
+        val calendarDao = calendarInstance.calendarDao()
+        CoroutineScope(Dispatchers.IO).launch {
+            val planEntity = calendarDao.getPlanByDay(formatted)
+            if(planEntity!=null){
+                transaction.replace(R.id.frame_layout, DailyRoutineFragment())
+            }else{
+                transaction.replace(R.id.frame_layout, HomeFragment())
+            }
+            transaction.commit()
+        }
     }
 
     fun replaceFragment(fragment:Fragment, value:Int){

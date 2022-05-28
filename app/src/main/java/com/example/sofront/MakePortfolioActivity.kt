@@ -57,10 +57,11 @@ class MakePortfolioActivity : AppCompatActivity() {
         binding.portfolioSaveBtn.setOnClickListener{
             title = binding.makePortfolioTitle.text.toString()
             content = binding.makePortfolioContent.text.toString()
+            savePressed(title, file, content)
         }
 
         binding.portfolioCancleBtn.setOnClickListener{
-            onBackPressed()
+            canclePressed()
         }
     }
 
@@ -121,10 +122,9 @@ class MakePortfolioActivity : AppCompatActivity() {
             .setPositiveButton("확인",
                 DialogInterface.OnClickListener { dialog, id ->
                     //확인클릭
-                    //afterProfileImg, afterBackground, afterNickname, afterSubtitle로 서버에 저장
-                    //서버 저장 성공시 액티비티 종료
                     val tmp = SendPortfolio(myUid, title, file, content)
                     sendPortfolio = tmp
+                    RetrofitService._postPortfolio(sendPortfolio)
                 })
             .setNegativeButton("취소",
                 DialogInterface.OnClickListener { dialog, id ->

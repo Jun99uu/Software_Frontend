@@ -34,7 +34,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ProfileFragment : Fragment() {
-    val converter = BitmapConverter()
+    private var mBinding: ActivityProfileBinding? = null
+    private val binding get() = mBinding!!
+
     val user = Firebase.auth.currentUser
     val myUid = user?.uid.toString()
     val defaultImg = R.drawable.gymdori
@@ -46,30 +48,10 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = ActivityProfileBinding.inflate(layoutInflater)
+        mBinding = ActivityProfileBinding.inflate(layoutInflater)
+
+        _getProfile(myUid)
         binding.profileImg.translationZ = 1f
-
-        tmpCallback(callback = {
-            binding.userName.text = profile.name
-            binding.subscribeNum.text = "Sub. ${profile.subscribeNum}명"
-            binding.profileContent.text = profile.subTitle
-            Glide.with(this)
-                .load(profile.profileImg) // 불러올 이미지 url
-                .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
-                .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
-                .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
-                .into(binding.profileImg) // 이미지를 넣을 뷰
-
-            Glide.with(this)
-                .load(profile.backgroundImg) // 불러올 이미지 url
-                .placeholder(defaultBack) // 이미지 로딩 시작하기 전 표시할 이미지
-                .error(defaultBack) // 로딩 에러 발생 시 표시할 이미지
-                .fallback(defaultBack) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
-                .into(binding.backgroundImage) // 이미지를 넣을 뷰
-
-            updatePhotoUrl(profile.profileImg)
-        })
-
         val prevPadding:Int = Math.round(resources.displayMetrics.density * 30) //30dp 변환값
 
         binding.profileScrollView.run {
@@ -142,19 +124,13 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
-    private fun tmpCallback(callback: ()->Unit){
-        _getProfile(myUid)
-        Handler().postDelayed({
-            callback()
-        }, 800L)
-    }
-
     fun _getProfile(uid:String){
         retrofitService.getProfile(uid).enqueue(object : Callback<Profile> {
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if(response.isSuccessful){
                     Log.d("getProfile test success", response.body().toString())
                     profile = response.body()!!
+                    refreshProfile()
                 }else{
                     Log.d("getProfile test", "success but something error")
                 }
@@ -176,6 +152,27 @@ class ProfileFragment : Fragment() {
                     Log.d("photoUrl update", "User profile updated.")
                 }
             }
+    }
+
+    fun refreshProfile(){
+        binding.userName.text = profile.name
+        binding.subscribeNum.text = "Sub. ${profile.subscribeNum}명"
+        binding.profileContent.text = profile.subTitle
+        Glide.with(this)
+            .load(profile.profileImg) // 불러올 이미지 url
+            .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
+            .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
+            .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+            .into(binding.profileImg) // 이미지를 넣을 뷰
+
+        Glide.with(this)
+            .load(profile.backgroundImg) // 불러올 이미지 url
+            .placeholder(defaultBack) // 이미지 로딩 시작하기 전 표시할 이미지
+            .error(defaultBack) // 로딩 에러 발생 시 표시할 이미지
+            .fallback(defaultBack) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+            .into(binding.backgroundImage) // 이미지를 넣을 뷰
+
+        updatePhotoUrl(profile.profileImg)
     }
 
 }

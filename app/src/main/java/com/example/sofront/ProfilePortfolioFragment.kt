@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sofront.databinding.ActivityProfileBinding
 import com.example.sofront.databinding.FragmentProfilePortfolioBinding
 import com.example.sofront.databinding.ProfilePortfolioItemBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +22,9 @@ import retrofit2.Response
 import java.sql.Blob
 
 class ProfilePortfolioFragment : Fragment() {
-    lateinit var binding: FragmentProfilePortfolioBinding
+    private var mBinding: FragmentProfilePortfolioBinding? = null
+    private val binding get() = mBinding!!
+
     lateinit var recyclerView : RecyclerView
     lateinit var portfolioList : ArrayList<Portfolio>
     lateinit var adapter : ProfilePortfolioRecyclerViewAdapter
@@ -33,21 +36,10 @@ class ProfilePortfolioFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentProfilePortfolioBinding.inflate(inflater,container,false)
+        mBinding = FragmentProfilePortfolioBinding.inflate(inflater,container,false)
         recyclerView = binding.profilePortfolioRv
-
-        tmpCallback(callback = {
-            adapter.deleteFirstItem()
-            if(portfolioList.size > 0){
-                for(portfolio in portfolioList){
-                    adapter.addItem(portfolio)
-                }
-            }
-            adapter.notifyDataSetChanged()
-            binding.noViewLayout.visibility = View.VISIBLE
-        })
-
         setRecyclerView()
+        _getPortfolio(myUid)
         return binding.root
     }
 
@@ -84,6 +76,7 @@ class ProfilePortfolioFragment : Fragment() {
                     Log.d("getPortfolio test success", response.body().toString())
                     if(response.body() == null){
                         myPortfolio = response.body()!!
+                        updatePortfolio()
                     }
                     portfolioList = myPortfolio
                 } else {
@@ -102,6 +95,17 @@ class ProfilePortfolioFragment : Fragment() {
         _getPortfolio(myUid)
         Handler().postDelayed({
             callback()
-        }, 810L)
+        }, 3010L)
+    }
+
+    fun updatePortfolio(){
+        adapter.deleteFirstItem()
+        if(portfolioList.size > 0){
+            for(portfolio in portfolioList){
+                adapter.addItem(portfolio)
+            }
+        }
+        adapter.notifyDataSetChanged()
+        binding.noViewLayout.visibility = View.VISIBLE
     }
 }

@@ -43,7 +43,6 @@ dependencies {
 //  implementation rootProject.ext.supportAppCompat
 //  implementation rootProject.ext.supportAnnotations
 
-
 //  testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 //  vectorDrawables.useSupportLibrary = true
 }

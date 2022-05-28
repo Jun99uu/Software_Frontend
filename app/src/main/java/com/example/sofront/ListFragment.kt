@@ -168,8 +168,14 @@ class ListFragment : Fragment() {
                             call: Call<ArrayList<Plan>>,
                             response: Response<ArrayList<Plan>>
                         ) {
-                            for(plan in response.body()!!)
-                                adapter.addItem(plan)
+                            if(response.isSuccessful){
+                                Log.d("getDownloadPlan","success")
+                                for(plan in response.body()!!)
+                                    adapter.addItem(plan)
+                            }
+                            else{
+                                Log.d("getDownloadPlan","success but something error")
+                            }
                         }
 
                         override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {

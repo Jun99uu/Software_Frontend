@@ -157,8 +157,6 @@ class MakePlanActivity : AppCompatActivity() {
                 Log.d("최종 데이터", "${plan}")
                 RetrofitService._setPlan(plan)
             }
-
-
         }
 
         binding.planCancleBtn.setOnClickListener{

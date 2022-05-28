@@ -68,9 +68,12 @@ interface RetrofitService {
     @POST("/plan/comment/{porfolioID}")
     fun postPortfolioComment(@Path("portfolioID") portfolioID : String,@Body comment: Comment) : Call<Comment>
 
+    @POST("~~")
+    fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
+
     companion object{
         //var gson = GsonBuilder().setLenient().create()
-        private const val BASE_URL = "http://b832-49-142-63-121.ngrok.io "
+        private const val BASE_URL = "http://985e-49-142-63-121.ngrok.io"
 
         val retrofitService = create()
 
@@ -139,8 +142,6 @@ interface RetrofitService {
                         Log.d("login","success")
                         Log.d("login code ",response.code().toString())
                         Log.d("login body", response.body().toString())
-
-
                     }
                     else{
                         Log.d("login","success but something error")
@@ -339,6 +340,21 @@ interface RetrofitService {
 
             })
             return bool
+        }
+
+        fun _postPortfolio(sendPortfolio: SendPortfolio){
+            retrofitService.postPortfolio(sendPortfolio).enqueue(object :Callback<SendPortfolio>{
+                override fun onResponse(call: Call<SendPortfolio>, response: Response<SendPortfolio>) {
+                    if(response.isSuccessful){
+                        Log.d("editProfile test success", response.body().toString())
+                    }else{
+                        Log.d("editProfile test", "success but something error")
+                    }
+                }
+                override fun onFailure(call: Call<SendPortfolio>, t: Throwable) {
+                    Log.d("editPortfolio test", "fail")
+                }
+            })
         }
     }
 }
