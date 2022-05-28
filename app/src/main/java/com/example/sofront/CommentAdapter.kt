@@ -2,6 +2,7 @@ package com.example.sofront
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +49,9 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
         holder.deleteBtn.setOnClickListener{
             deleteComment(position)
         }
+        holder.profileImg.setOnClickListener{
+            onClickProfileImg(commentList[position].writerUid)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -75,5 +79,11 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
         builder.show()
 
         Log.d("지울 댓글", commentList[position].toString())
+    }
+
+    private fun onClickProfileImg(uid:String){
+        val intent = Intent(context, ProfileActivity::class.java)
+        intent.putExtra("UID", uid)
+        context.startActivity(intent)
     }
 }
