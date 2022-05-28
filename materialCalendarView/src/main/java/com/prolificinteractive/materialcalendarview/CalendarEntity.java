@@ -14,12 +14,17 @@ import java.util.List;
 
 @Entity
 public class CalendarEntity {
-    String planName;
+    private String planName;
     @PrimaryKey
             @NonNull
-    String planDay;
-    int planLength;
-    int count;
+    private String planDay;
+    private int planLength;
+    private int count;
+    private String planId;
+    public String getPlanId(){ return planId;}
+    public void setPlanId(String planId){
+        this.planId = planId;
+    }
     public String getPlanName(){
         return planName;
     }
@@ -44,11 +49,12 @@ public class CalendarEntity {
     public void setCount(int count){
         this.count = count;
     }
-    public CalendarEntity(String planName,String planDay,int planLength,int count){
+    public CalendarEntity(String planName,String planDay,int planLength,int count, String planId){
         this.planName = planName;
         this.planDay = planDay;
         this.planLength = planLength;
         this.count = count;
+        this.planId = planId;
     }
 }
 

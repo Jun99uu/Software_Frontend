@@ -24,11 +24,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.io.FileOutputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
@@ -104,9 +106,12 @@ import org.threeten.bp.LocalDate;
                     CalendarDay tmp = dayView.getDate();
                     @Override
                     public void run() {
+                      byte[] array = new byte[7]; // length is bounded by 7
+                      new Random().nextBytes(array);
+                      String generatedString = new String(array, Charset.forName("UTF-8"));
                       for(int i=0; i<days-1; i++){
                         set.add(tmp);
-                        dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i));
+                        dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i,generatedString));
                         tmp = addOnetoCalendarDay(tmp);
                       }
                     }

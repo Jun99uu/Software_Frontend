@@ -12,15 +12,14 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.FragmentCalendarDialogBinding
 import com.example.sofront.databinding.FragmentCalendarPlanBottomSheetListDialogBinding
 import com.prolificinteractive.materialcalendarview.CalendarDatabase
 import com.prolificinteractive.materialcalendarview.CalendarDay
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import com.prolificinteractive.materialcalendarview.CalendarEntity
+import kotlinx.coroutines.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +31,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CalendarDialogFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CalendarDialogFragment(private val date : CalendarDay,private val planName:String,private val count:Int) : DialogFragment(){
+class CalendarDialogFragment(private val date : CalendarDay,private val planEntity: CalendarEntity) : DialogFragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -69,18 +68,13 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planName
         binding.calendarDeleteBtn.setOnClickListener {
 
             if(System.currentTimeMillis() - clickTime < 3000) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    val check = CoroutineScope(Dispatchers.IO).async {
-                        dao.deletePlanByName(planName)
-                        true
-                    }.await()
-                    if(check){
+                CoroutineScope(Dispatchers.IO).launch {
+                    dao.deletePlanByPlanId(planEntity.planId)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val parentFragment = requireParentFragment()
+                        parentFragment.parentFragmentManager.beginTransaction().replace(R.id.frame_layout,ListFragment()).commit()
                         dialog?.dismiss()
-//                        TODO("화면 리프레쉬")
-//                        container?.invalidate()
-//                        requireActivity().supportFragmentManager.beginTransaction().detach(requireParentFragment()).attach(requireParentFragment()).commit()
                     }
-
                 }
             }
             else{
@@ -91,11 +85,11 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planName
 
         CoroutineScope(Dispatchers.Main).launch {
             val plan = CoroutineScope(Dispatchers.IO).async {
-                RetrofitService._getPlanByPlanName(planName)
+                RetrofitService._getPlanByPlanName(planEntity.planName)
             }.await()
 
             if(plan.routineList.size>0)
-            for(workout in plan.routineList[count].workoutList)
+            for(workout in plan.routineList[planEntity.count].workoutList)
                 adapter.addItem(workout)
 
             recyclerView.adapter = adapter
@@ -116,5 +110,10 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planName
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("CalendarDialogFragment","onResume")
     }
 }

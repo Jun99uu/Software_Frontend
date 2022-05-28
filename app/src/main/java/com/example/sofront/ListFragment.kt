@@ -1,5 +1,6 @@
 package com.example.sofront
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,9 @@ import com.prolificinteractive.materialcalendarview.*
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
 import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ListFragment : Fragment() {
@@ -38,8 +42,6 @@ class ListFragment : Fragment() {
         MonthView.materialCalendarView = calendarView
         MonthView.context = requireContext()
 
-//        val bottomSheet = CalendarPlanBottomSheet.newInstance(1)
-//        bottomSheet.show(requireActivity().supportFragmentManager, "CalendarPlanBottomSheet")
         initCalendarDeco()
 
         setRecyclerView()
@@ -56,17 +58,26 @@ class ListFragment : Fragment() {
         _binding=null
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("ListFragment","onResume")
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("ListFragment","onAttach")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("ListFragment","detached")
+    }
+
     private fun initCalendarDeco(){
         CoroutineScope(Dispatchers.IO).launch{
             val db = CalendarDatabase.getInstance(requireContext())
             val calendarDao = db!!.calendarDao()
 //            calendarDao.deleteAll()
-
-//        calendarDao.deletePlan(CalendarEntity(plan.planName,calendarView.currentDate.toString()))
-//            calendarDao.deletePlan(CalendarEntity(plan.planName,""+calendarView.currentDate.year+"-"+calendarView.currentDate.month+"-"+calendarView.currentDate.day,plan.routineList.size,1))
-//            calendarDao.insertPlan(CalendarEntity(plan.planName,""+calendarView.currentDate.year+"-"+calendarView.currentDate.month+"-"+calendarView.currentDate.day,plan.routineList.size,2))
-//            calendarDao.deletePlan(CalendarEntity("하","2022-05-15",5,1))
-//            calendarDao.insertPlan(CalendarEntity("하","2022-05-15",5,2))
             val tmp = calendarDao.planName
             for(item in tmp) {
                 val list = calendarDao.getEntityByName(item)
@@ -144,6 +155,34 @@ class ListFragment : Fragment() {
                 adapter.addItem(plan)
             }
         }
+        else{
+            CoroutineScope(Dispatchers.Main).launch {
+                CoroutineScope(Dispatchers.IO).async {
+                    Log.d("firebase uid",FirebaseAuth.getInstance().uid.toString())
+//                val planList = RetrofitService._getDownloadPlanUsingExecute(FirebaseAuth.getInstance().uid.toString())
+//                for(plan in planList){
+//                    adapter.addItem(plan)
+//                }
+                    RetrofitService.retrofitService.getDownloadPlan(auth.uid.toString()).enqueue(object : Callback<ArrayList<Plan>>{
+                        override fun onResponse(
+                            call: Call<ArrayList<Plan>>,
+                            response: Response<ArrayList<Plan>>
+                        ) {
+                            for(plan in response.body()!!)
+                                adapter.addItem(plan)
+                        }
+
+                        override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
+                            Log.e("getDownloadPlan","error{${t.message}")
+                        }
+
+                    })
+                }.await()
+//            Log.d("ListFragment,다운로드 플랜",planList.size.toString())
+
+            }
+
+        }
 
 ////        CoroutineScope(Dispatchers.Main).launch{
 //            runBlocking<Unit> {
@@ -154,17 +193,6 @@ class ListFragment : Fragment() {
 //                    adapter.addItem(plan)
 //                }
 ////            }
-        CoroutineScope(Dispatchers.Main).launch {
-            CoroutineScope(Dispatchers.IO).async {
-                Log.d("firebase uid",FirebaseAuth.getInstance().uid.toString())
-                val planList = RetrofitService._getDownloadPlanUsingExecute(FirebaseAuth.getInstance().uid.toString())
-                for(plan in planList){
-                    adapter.addItem(plan)
-                }
-            }.await()
-//            Log.d("ListFragment,다운로드 플랜",planList.size.toString())
-
-        }
 
 
     }
@@ -195,17 +223,20 @@ class ListFragment : Fragment() {
 
     private fun setCalendarView(){
         calendarView.setOnDateChangedListener { _, date, selected ->
+            val ft = parentFragmentManager.beginTransaction()
+            ft.remove(this).add(ListFragment(),"hi")
             val db = CalendarDatabase.getInstance(requireContext())
             val dao = db.calendarDao()
+
             CoroutineScope(Dispatchers.Main).launch {
 
-                val plan = CoroutineScope(Dispatchers.IO).async {
+                val planEntity = CoroutineScope(Dispatchers.IO).async {
                     dao.getPlanByDay(date.year.toString() + "-" + date.month.toString() + "-" + date.day)
                 }.await()
 
 //                Toast.makeText(requireContext(),plan.planName + ", "+plan.count,Toast.LENGTH_SHORT).show()
-                if(plan!=null){
-                    val calendarDialogFragment = CalendarDialogFragment(date,plan.planName,plan.count)
+                if(planEntity!=null){
+                    val calendarDialogFragment = CalendarDialogFragment(date,planEntity)
                     calendarDialogFragment.show(childFragmentManager,"CalendarDialogFragment")
                 }
             }
@@ -213,18 +244,9 @@ class ListFragment : Fragment() {
         // 월, 요일을 한글로 보이게 설정 (MonthArrayTitleFormatter의 작동을 확인하려면 밑의 setTitleFormatter()를 지운다)
         calendarView.setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(com.example.sofront.R.array.custom_month)))
         calendarView.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(com.example.sofront.R.array.custom_weekdays)))
-
         calendarView.setHeaderTextAppearance(com.prolificinteractive.materialcalendarview.R.style.CalendarWidgetHeader)
-
-
         // 좌우 화살표 사이 연, 월의 폰트 스타일 설정
         calendarView.setHeaderTextAppearance(com.prolificinteractive.materialcalendarview.R.style.CustomTextAppearance)
-
-
-//        calendarView.setHeaderTextAppearance(R.font.nixgonb)
-//        calendarView.setWeekDayTextAppearance(R.font.nixgonm)
-//        calendarView.setDateTextAppearance(R.font.nixgonm)
-//        calendarView.setHeaderTextAppearance(R.font.nixgonm)
         calendarView.setTileHeightDp(40)
     }
 
