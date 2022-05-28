@@ -6,30 +6,15 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.text.style.LineBackgroundSpan;
 import android.util.Log;
 import android.view.DragEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import java.io.FileOutputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
 import org.threeten.bp.DayOfWeek;
@@ -110,7 +95,7 @@ import org.threeten.bp.LocalDate;
                     for(int i=0; i<days; i++){
                       set.add(tmp);
                       dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i,generatedString));
-                      tmp = addOnetoCalendarDay(tmp);
+                      tmp = addOneToCalendarDay(tmp);
                     }
                   }
                 });
@@ -142,7 +127,7 @@ import org.threeten.bp.LocalDate;
       });
     }
   }
-  private CalendarDay addOnetoCalendarDay(CalendarDay date){
+  private CalendarDay addOneToCalendarDay(CalendarDay date){
 //    val days = arrayListOf<Int>(0,31,28,31,30,31,30,31,31,30,31,30,31);
     int[] days = new int[]{0,31,28,31,30,31,30,31,31,30,31,30,31};
 

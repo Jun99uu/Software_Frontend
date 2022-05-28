@@ -26,7 +26,7 @@ class ListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerview:RecyclerView
     private lateinit var calendarView: MaterialCalendarView
-    private val adapter = PlanRecyclerViewAdapter()
+
     val planArray  = ArrayList<Plan>()
 //    var planLength =0
     override fun onCreateView(
@@ -44,7 +44,7 @@ class ListFragment : Fragment() {
 
         initCalendarDeco()
 
-        setRecyclerView()
+
         setCalendarView()
         addPlanBtn.setOnClickListener {
             callSetPlanActivity()
@@ -60,6 +60,7 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        setRecyclerView()
         Log.d("ListFragment","onResume")
     }
 
@@ -139,7 +140,7 @@ class ListFragment : Fragment() {
     }
     private fun setRecyclerView(){
         //TODO: 서버에서 플랜을 가져와서 리사이클러뷰로 띄워줌
-
+        val adapter = PlanRecyclerViewAdapter()
         initRecyclerViewList(adapter)
         setRecyclerViewAdapter(adapter)
     }
