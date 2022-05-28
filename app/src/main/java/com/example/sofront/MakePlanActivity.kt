@@ -173,7 +173,7 @@ class MakePlanActivity : AppCompatActivity() {
                                 Toast.makeText(applicationContext,"중복된 이름입니다.",Toast.LENGTH_LONG).show()
                             }
                             else {
-                                Log.d("setPlan", "success but something error")
+                                Log.e("setPlan", "success but something error")
                                 Log.e("setPlan error code", response.code().toString())
                                 Log.e("setPlan error message", response.message())
                             }

@@ -119,10 +119,12 @@ interface RetrofitService {
             retrofitService.postAuth(UID).enqueue(object: Callback<UID>{
                 override fun onResponse(call: Call<UID>, response: Response<UID>) {
                     if(response.isSuccessful){
-                        Log.d("Post","success $response")
+                        Log.d("PostAuth","success $response")
                         successful = true
                     }else {
-                        Log.d("Post", "success,but ${response.errorBody()}")
+                        Log.e("PostAuth ", "success,but something error")
+                        Log.e("PostAuth error code",response.code().toString())
+                        Log.e("PostAuth error message",response.message())
                     }
                 }
                 override fun onFailure(call: Call<UID>, t: Throwable) {
@@ -139,11 +141,13 @@ interface RetrofitService {
                         Log.d("login","success")
                         Log.d("login code ",response.code().toString())
                         Log.d("login body", response.body().toString())
-
-
                     }
                     else{
-                        Log.d("login","success but something error")
+                        Log.e("login","success but something error")
+                        Log.e("login error code",response.code().toString())
+                        Log.e("login error message",response.message())
+                        Log.e("login error errorbody",response.errorBody()!!.string())
+                        Log.e("login error body",response.body().toString())
                     }
                 }
 
@@ -158,15 +162,18 @@ interface RetrofitService {
             retrofitService.setPlan(plan).enqueue(object : Callback<Plan>{
                 override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
                     if(response.isSuccessful){
-                        Log.d("setPlan test","success")
+                        Log.d("setPlan","success")
                     }
                     else{
-                        Log.d("setPlan test","success but something error"+response.code())
+                        Log.d("setPlan","success but something error")
+                        Log.e("setPlan error code",response.code().toString())
+                        Log.e("setPlan error message", response.message())
                     }
                 }
 
                 override fun onFailure(call: Call<Plan>, t: Throwable) {
-                    Log.d("setPlan test","fail")
+                    Log.e("setPlan","fail")
+                    Log.e("setPlan error message",t.message.toString())
                 }
             })
         }

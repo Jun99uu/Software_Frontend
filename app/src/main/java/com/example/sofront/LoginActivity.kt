@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -70,14 +73,51 @@ class LoginActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            RetrofitService._login(auth.uid.toString())
-                            Log.d(TAG, "signInWithEmail:success")
-                            val user = auth.currentUser
-                            updateUI(user)
+//                            RetrofitService._login(auth.uid.toString())
+                            RetrofitService.retrofitService.login(UID(auth.uid.toString())).enqueue(object :
+                                Callback<UID> {
+                                override fun onResponse(call: Call<UID>, response: Response<UID>) {
+                                    if(response.isSuccessful){
+                                        Log.d("login","success")
+                                        Log.d("login code ",response.code().toString())
+                                        Log.d("login body", response.body().toString())
+                                        Log.d(TAG, "signInWithEmail:success")
+                                        val user = auth.currentUser
+                                        updateUI(user)
+                                    }
+                                    else{
+                                        //TODO("로그인 실패한 이유를 받아서 추가정보를 받는 등의 대응을 해줘야함")
+                                        if(response.message().equals("Unauthorized")){
+                                            //TODO("번호인증 안한놈")
+                                        }
+                                        Log.e("login","success but something error")
+                                        Log.e("login error code",response.code().toString())
+                                        Log.e("login error message",response.message())
+                                        Log.e("login error errorbody",response.errorBody()!!.string())
+                                        Log.e("login error body",response.body().toString())
+                                        Log.w(TAG, "signInWithEmail:failure", task.exception)
+                                        Toast.makeText(baseContext, "로그인에 실패했습니다😢",
+                                            Toast.LENGTH_SHORT).show()
+                                        updateUI(null)
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<UID>, t: Throwable) {
+                                    Log.e("login","fail")
+                                    Log.e("login error message",t.message.toString())
+                                    Toast.makeText(baseContext, "로그인에 실패했습니다😢",
+                                        Toast.LENGTH_SHORT).show()
+                                    updateUI(null)
+                                }
+
+                            })
+//                            Log.d(TAG, "signInWithEmail:success")
+//                            val user = auth.currentUser
+//                            updateUI(user)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
-                            Toast.makeText(baseContext, "로그인에 실패했습니다😢",
+                            Toast.makeText(baseContext, "로그인에 실패했습니다😢\n아이디와 비밀번호를 확인해 주세요",
                                 Toast.LENGTH_SHORT).show()
                             updateUI(null)
                         }
@@ -88,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?){
         if(user != null){
-            var intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             Toast.makeText(baseContext, "환영합니다😊",
                 Toast.LENGTH_SHORT).show()
             startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
