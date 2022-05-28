@@ -16,14 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:nestedScrollingEnabled="true"/>
+        android:nestedScrollingEnabled="true"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/no_view_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"

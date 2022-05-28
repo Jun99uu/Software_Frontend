@@ -23,7 +23,6 @@ import retrofit2.Response
 class ProfileActivity : AppCompatActivity() {
     private var mBinding: ActivityProfileBinding? = null
     private val binding get() = mBinding!!
-
     val user = Firebase.auth.currentUser
     val myUid = user?.uid.toString()
     lateinit var thisUid:String
@@ -73,25 +72,6 @@ class ProfileActivity : AppCompatActivity() {
                 //구독
             }
         }
-
-//        tmpCallback(callback = {
-//            binding.userName.text = profile.name
-//            binding.subscribeNum.text = "Sub. ${profile.subscribeNum}명"
-//            binding.profileContent.text = profile.subTitle
-//            Glide.with(this)
-//                .load(profile.profileImg) // 불러올 이미지 url
-//                .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
-//                .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
-//                .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
-//                .into(binding.profileImg) // 이미지를 넣을 뷰
-//
-//            Glide.with(this)
-//                .load(profile.backgroundImg) // 불러올 이미지 url
-//                .placeholder(defaultBack) // 이미지 로딩 시작하기 전 표시할 이미지
-//                .error(defaultBack) // 로딩 에러 발생 시 표시할 이미지
-//                .fallback(defaultBack) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
-//                .into(binding.backgroundImage) // 이미지를 넣을 뷰
-//        })
 
         val fragmentList = listOf(ProfilePortfolioFragment(), ProfilePlanFragment())
         val adapter = ProfileVPAdapter(this)

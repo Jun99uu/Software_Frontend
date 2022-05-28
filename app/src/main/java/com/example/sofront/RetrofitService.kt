@@ -32,8 +32,8 @@ interface RetrofitService {
     @GET("/workout/planGet/{planName}/plan") //플랜이름으로 받아오기
     fun getPlanByPlanName(@Path("planName") planName : String) : Call<Plan>
 
-    @GET("/workout/planGet") //uid로 플랜 가져오기
-    fun getPlanByUid() : Call<ArrayList<Plan>>
+    @GET("/planGet/{uid}/UID") //uid로 플랜 가져오기
+    fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
 
     @GET("/workout/plan/all/{uid}")
     fun getDownloadPlan(@Path("uid") uid : String) : Call<ArrayList<Plan>>

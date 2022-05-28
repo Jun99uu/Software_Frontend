@@ -48,7 +48,7 @@ class ProfilePortfolioRecyclerViewAdapter :
                 intent.putExtra("portfolio",item)
                 binding.root.context.startActivity(intent)
             }
-            writer.text = item.portfolioWriter
+            writer.text = item.portfolioWriterName
             if(item.liked)
             binding.portfolioLikeIcon.setImageResource(R.drawable.ic_heart_fill)
             binding.portfolioLikeNum.text = item.likeNum.toString()

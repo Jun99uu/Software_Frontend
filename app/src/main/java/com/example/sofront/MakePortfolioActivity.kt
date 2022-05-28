@@ -19,6 +19,9 @@ import androidx.core.app.ActivityCompat
 import com.example.sofront.databinding.ActivityMakePortfolioBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MakePortfolioActivity : AppCompatActivity() {
     lateinit var sendPortfolio: SendPortfolio
@@ -39,6 +42,9 @@ class MakePortfolioActivity : AppCompatActivity() {
         val binding = ActivityMakePortfolioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
         afterImageView = binding.afterContentImageView
         beforeView = binding.beforeContentImage
         afterView = binding.afterContentImage
@@ -57,7 +63,7 @@ class MakePortfolioActivity : AppCompatActivity() {
         binding.portfolioSaveBtn.setOnClickListener{
             title = binding.makePortfolioTitle.text.toString()
             content = binding.makePortfolioContent.text.toString()
-            savePressed(title, file, content)
+            savePressed(title, file, content, intent)
         }
 
         binding.portfolioCancleBtn.setOnClickListener{
@@ -115,7 +121,7 @@ class MakePortfolioActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun savePressed(title:String, file:String, content:String){
+    fun savePressed(title:String, file:String, content:String, intent:Intent){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("포트폴리오를 저장하시겠습니까?")
             .setMessage("정말로 저장하시겠습니까?")
@@ -124,7 +130,7 @@ class MakePortfolioActivity : AppCompatActivity() {
                     //확인클릭
                     val tmp = SendPortfolio(myUid, title, file, content)
                     sendPortfolio = tmp
-                    RetrofitService._postPortfolio(sendPortfolio)
+                    _postPortfolio(sendPortfolio, intent)
                 })
             .setNegativeButton("취소",
                 DialogInterface.OnClickListener { dialog, id ->
@@ -133,5 +139,22 @@ class MakePortfolioActivity : AppCompatActivity() {
                 })
         // 다이얼로그를 띄워주기
         builder.show()
+    }
+
+    fun _postPortfolio(sendPortfolio: SendPortfolio, intent:Intent){
+        RetrofitService.retrofitService.postPortfolio(sendPortfolio).enqueue(object :
+            Callback<SendPortfolio> {
+            override fun onResponse(call: Call<SendPortfolio>, response: Response<SendPortfolio>) {
+                if(response.isSuccessful){
+                    Log.d("editProfile test success", response.body().toString())
+                    startActivity(intent)
+                }else{
+                    Log.d("editProfile test", "success but something error")
+                }
+            }
+            override fun onFailure(call: Call<SendPortfolio>, t: Throwable) {
+                Log.d("editPortfolio test", "fail")
+            }
+        })
     }
 }

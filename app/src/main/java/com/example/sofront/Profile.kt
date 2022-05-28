@@ -22,7 +22,7 @@ data class editProfile (
     val profileImg: String,
     val backgroundImg: String,
     val name: String,
-    val subtitle: String,
+    val subTitle: String,
 )
 
 data class subscribeProfile(
