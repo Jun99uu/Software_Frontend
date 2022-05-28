@@ -16,6 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.ActivityMakePlanBinding
+import com.google.firebase.auth.FirebaseAuth
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MakePlanActivity : AppCompatActivity() {
@@ -32,6 +36,8 @@ class MakePlanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMakePlanBinding.inflate(layoutInflater)
         val view = binding.root
+        val auth = FirebaseAuth.getInstance()
+
         setContentView(view)
 
         binding.title.addTextChangedListener(object: TextWatcher{
@@ -153,9 +159,32 @@ class MakePlanActivity : AppCompatActivity() {
             if(!planNameCheck){
                 Toast.makeText(this, "플랜명 중복검사를 진행해주세요.", Toast.LENGTH_LONG).show()
             }else{
-                val plan = Plan(planName, hashtags, routineList, "류승민", false,0,0,0)
+                val plan = Plan(planName, hashtags, routineList, auth.uid.toString(), false,0,0,0)
                 Log.d("최종 데이터", "${plan}")
-                RetrofitService._setPlan(plan)
+//                RetrofitService._setPlan(plan)
+                RetrofitService.retrofitService.setPlan(plan).enqueue(object : Callback<Plan> {
+                    override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
+                        if(response.isSuccessful){
+                            Log.d("setPlan","success")
+                            finish()
+                        }
+                        else{
+                            if(response.code() == NetworkErrorCode.PLAN_NAME_OVERLAP){
+                                Toast.makeText(applicationContext,"중복된 이름입니다.",Toast.LENGTH_LONG).show()
+                            }
+                            else {
+                                Log.e("setPlan", "success but something error")
+                                Log.e("setPlan error code", response.code().toString())
+                                Log.e("setPlan error message", response.message())
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Plan>, t: Throwable) {
+                        Log.e("setPlan","fail")
+                        Log.e("setPlan error message",t.message.toString())
+                    }
+                })
             }
         }
 
