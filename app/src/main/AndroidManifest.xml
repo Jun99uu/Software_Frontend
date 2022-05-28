@@ -16,6 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sofront">
         <activity
+            android:name=".DailyRoutinePlayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DailyRoutineDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NetworkNotConnectedActivity"
+            android:exported="false" />
+        <activity
             android:name=".MakePortfolioActivity"
             android:exported="false" />
         <activity

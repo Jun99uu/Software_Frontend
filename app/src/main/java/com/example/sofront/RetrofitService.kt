@@ -32,8 +32,8 @@ interface RetrofitService {
     @GET("/workout/planGet/{planName}/plan") //플랜이름으로 받아오기
     fun getPlanByPlanName(@Path("planName") planName : String) : Call<Plan>
 
-    @GET("/workout/planGet") //uid로 플랜 가져오기
-    fun getPlanByUid() : Call<ArrayList<Plan>>
+    @GET("/planGet/{uid}/UID") //uid로 플랜 가져오기
+    fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
 
     @GET("/workout/plan/all/{uid}")
     fun getDownloadPlan(@Path("uid") uid : String) : Call<ArrayList<Plan>>
@@ -56,8 +56,8 @@ interface RetrofitService {
     @GET("profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
     fun getProfile(@Path("UID") UID:String) : Call<Profile>
 
-    @POST("/profile/edit") //프로필 수정
-    fun editProfile(@Body profile:Profile) : Call<Profile>
+    @PUT("profiles/modify_profile/{UID}") //프로필 수정
+    fun editProfile(@Path("UID") UID:String, @Body editProfile:editProfile) : Call<editProfile>
 
     @POST("/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
@@ -67,6 +67,9 @@ interface RetrofitService {
 
     @POST("/plan/comment/{porfolioID}")
     fun postPortfolioComment(@Path("portfolioID") portfolioID : String,@Body comment: Comment) : Call<Comment>
+
+    @POST("profiles/makes_portfolios/")
+    fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
 
     companion object{
         //var gson = GsonBuilder().setLenient().create()
@@ -289,22 +292,6 @@ interface RetrofitService {
 
             })
             return myPortfolio
-        }
-
-        fun _editProfile(profile:Profile){
-            retrofitService.editProfile(profile).enqueue(object :Callback<Profile>{
-                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                    if(response.isSuccessful){
-                        Log.d("editProfile test success", response.body().toString())
-                    }else{
-                        Log.d("editProfile test", "success but something error")
-                    }
-                }
-                override fun onFailure(call: Call<Profile>, t: Throwable) {
-                    Log.d("editPortfolio test", "fail")
-                }
-
-            })
         }
 
         fun _getPortfolioComment(porfolioID: String) : ArrayList<Comment>{

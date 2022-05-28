@@ -1,5 +1,6 @@
 package com.example.sofront
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
@@ -19,14 +20,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.sofront.databinding.ActivityEditProfileBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class EditProfileActivity : AppCompatActivity() {
     val user = Firebase.auth.currentUser
-    var UID:String = "" //이전 액티비티에서 전달받은 uid
-    var currentUID:String = "" //현재로그인된 유저의 uid
+    val currentUID = user!!.uid //현재로그인된 유저의 uid
     var state:Boolean = false //편집 상황 _ false->편집버튼 클릭 전, true->편집버튼 클릭 후
     var afterNickname = ""
     var afterSubtitle = ""
@@ -35,6 +39,8 @@ class EditProfileActivity : AppCompatActivity() {
     var afterBackground = "" //String
     lateinit var profileImg:ImageView
     lateinit var backgroundImg:ImageView
+    val defaultImg = R.drawable.gymdori
+    val defaultBack = R.drawable.womanrun
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,26 +51,28 @@ class EditProfileActivity : AppCompatActivity() {
         profileImg = binding.profileImagePreview
         backgroundImg = binding.backgroundPreview
 
-        UID = intent.getStringExtra("UID").toString()
-
-        user?.let {
-            currentUID = user.uid
-            if(!currentUID.equals(UID)){
-                //이전에 전달받은 uid와 현재 사용자의 uid가 일치하지 않을때 -> 예외처리일뿐
-                Toast.makeText(this,"잘못된 접근입니다", Toast.LENGTH_LONG).show()
-                ActivityCompat.finishAffinity(this) //해당 액티비티 종료
-            }
-        }
-
         val prevNickname = intent.getStringExtra("nickname").toString()
         val prevSubtitle = intent.getStringExtra("subtitle").toString()
-//        val prevProfileImg = intent.getStringExtra("profile")!! //스트링으로 받음
-//        val prevBackground = intent.getStringExtra("background")!! //스트링으로 받음
+        val prevProfileImg = intent.getStringExtra("profileImg").toString()
+        val prevBackground = intent.getStringExtra("background").toString()
         binding.profileEditTitle.text = "${prevNickname}님의\n프로필입니다🔥"
         binding.profileEditNickname.hint = "${prevNickname}"
         binding.profileEditSubtitle.hint = "${prevSubtitle}"
-//        binding.profileImagePreview?.setImageBitmap(converter.stringToBitmap(prevProfileImg))
-//        binding.backgroundPreview?.setImageBitmap(converter.stringToBitmap(prevBackground))
+        Glide.with(this)
+            .load(prevProfileImg) // 불러올 이미지 url
+            .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
+            .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
+            .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+            .into(binding.profileImagePreview) // 이미지를 넣을 뷰
+
+        Glide.with(this)
+            .load(prevBackground) // 불러올 이미지 url
+            .placeholder(defaultBack) // 이미지 로딩 시작하기 전 표시할 이미지
+            .error(defaultBack) // 로딩 에러 발생 시 표시할 이미지
+            .fallback(defaultBack) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+            .into(binding.backgroundPreview) // 이미지를 넣을 뷰
+
+
         afterSubtitle = prevSubtitle
         afterNickname = prevNickname
 
@@ -93,6 +101,9 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
         binding.editSaveBtn.setOnClickListener{
             if(!state){
                 state = true
@@ -106,14 +117,12 @@ class EditProfileActivity : AppCompatActivity() {
                 state = false
                 afterNickname = binding.profileEditNickname.text.toString()
                 afterSubtitle = binding.profileEditSubtitle.text.toString()
-//                if(afterProfileImg.equals("")) afterProfileImg = prevProfileImg
-//                if(afterBackground.equals("")) afterBackground = prevBackground
                 binding.editSaveBtn.text = "편집"
                 binding.editSaveBtn.background = ContextCompat.getDrawable(this, R.drawable.blue_radius)
                 binding.imgEditBtn.visibility = View.INVISIBLE
                 binding.profileEditNickname.isEnabled = false
                 binding.profileEditSubtitle.isEnabled = false
-                savePressed()
+                savePressed(intent)
             }
         }
     }
@@ -136,7 +145,7 @@ class EditProfileActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun savePressed(){
+    fun savePressed(intent : Intent){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("수정사항을 저장하시겠습니까?")
             .setMessage("이전의 내용은 복구하실 수 없습니다.\n정말로 저장하시겠습니까?")
@@ -145,7 +154,8 @@ class EditProfileActivity : AppCompatActivity() {
                     //확인클릭
                     //afterProfileImg, afterBackground, afterNickname, afterSubtitle로 서버에 저장
                     //서버 저장 성공시 액티비티 종료
-                    val sendData = editProfile(UID, afterProfileImg, afterBackground, afterNickname, afterSubtitle)
+                    val sendData = editProfile(currentUID, afterProfileImg, afterBackground, afterNickname, afterSubtitle)
+                    _editProfile(sendData, intent)
                 })
             .setNegativeButton("취소",
                 DialogInterface.OnClickListener { dialog, id ->
@@ -231,5 +241,21 @@ class EditProfileActivity : AppCompatActivity() {
             PERMISSION_READ_EXTERNAL_STORAGE,
             PERMISSION_WRITE_EXTERNAL_STORAGE,
         )
+    }
+
+    fun _editProfile(editProfile:editProfile, intent:Intent){
+        RetrofitService.retrofitService.editProfile(currentUID, editProfile).enqueue(object : Callback<editProfile> {
+            override fun onResponse(call: Call<editProfile>, response: Response<editProfile>) {
+                if(response.isSuccessful){
+                    Log.d("editProfile test success", response.body().toString())
+                    startActivity(intent)
+                }else{
+                    Log.d("editProfile test", "success but something error")
+                }
+            }
+            override fun onFailure(call: Call<editProfile>, t: Throwable) {
+                Log.d("editPortfolio test", "fail")
+            }
+        })
     }
 }

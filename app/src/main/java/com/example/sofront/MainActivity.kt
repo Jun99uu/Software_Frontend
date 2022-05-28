@@ -40,8 +40,6 @@ class MainActivity : AppCompatActivity() {
 
         val user = Firebase.auth.currentUser
         if(user != null){
-            val uid = user.uid
-//            Firebase.auth.signOut() //임시 로그아웃
             // <통신> 여기서 우리 서버에 해당 uid를 가진 db가 있는지 확인. 있으면 바로 메인화면으로 넘어가고, 없으면 인증페이지(NumAuth)로 넘어감
             intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)

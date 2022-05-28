@@ -186,8 +186,6 @@ class MakePlanActivity : AppCompatActivity() {
                     }
                 })
             }
-
-
         }
 
         binding.planCancleBtn.setOnClickListener{
