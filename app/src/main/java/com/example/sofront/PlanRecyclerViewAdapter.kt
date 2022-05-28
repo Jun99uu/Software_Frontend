@@ -42,6 +42,7 @@ class PlanRecyclerViewAdapter : RecyclerView.Adapter<PlanRecyclerViewAdapter.Vie
 
             textView.text = item.planName
             textView.setOnLongClickListener { v ->
+                Log.d(item.planName+"drag start","size is ${item.routineList.size}")
                 val clipItem = ClipData.Item(item.routineList.size.toString() + "-" + item.planName)
                 val dragData = ClipData(
 //                    v.tag as? CharSequence,

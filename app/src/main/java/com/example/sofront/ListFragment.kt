@@ -26,7 +26,7 @@ class ListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerview:RecyclerView
     private lateinit var calendarView: MaterialCalendarView
-    private val adapter = PlanRecyclerViewAdapter()
+
     val planArray  = ArrayList<Plan>()
 //    var planLength =0
     override fun onCreateView(
@@ -44,7 +44,7 @@ class ListFragment : Fragment() {
 
         initCalendarDeco()
 
-        setRecyclerView()
+
         setCalendarView()
         addPlanBtn.setOnClickListener {
             callSetPlanActivity()
@@ -60,6 +60,7 @@ class ListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        setRecyclerView()
         Log.d("ListFragment","onResume")
     }
 
@@ -139,7 +140,7 @@ class ListFragment : Fragment() {
     }
     private fun setRecyclerView(){
         //TODO: 서버에서 플랜을 가져와서 리사이클러뷰로 띄워줌
-
+        val adapter = PlanRecyclerViewAdapter()
         initRecyclerViewList(adapter)
         setRecyclerViewAdapter(adapter)
     }
@@ -168,13 +169,17 @@ class ListFragment : Fragment() {
                             call: Call<ArrayList<Plan>>,
                             response: Response<ArrayList<Plan>>
                         ) {
-                            if(response.isSuccessful){
+                            if(response.isSuccessful) {
                                 Log.d("getDownloadPlan","success")
-                                for(plan in response.body()!!)
+                                Log.d("getDownloadPlan body",response.body().toString())
+                                for (plan in response.body()!!) {
                                     adapter.addItem(plan)
+                                    adapter.notifyItemInserted(adapter.itemCount-1)
+                                }
                             }
                             else{
-                                Log.d("getDownloadPlan","success but something error")
+                                Log.e("getDownloadPlan","success but something error")
+                                Log.e("getDownloadPlan error code",response.code().toString())
                             }
                         }
 
@@ -248,8 +253,8 @@ class ListFragment : Fragment() {
             }
         }
         // 월, 요일을 한글로 보이게 설정 (MonthArrayTitleFormatter의 작동을 확인하려면 밑의 setTitleFormatter()를 지운다)
-        calendarView.setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(com.example.sofront.R.array.custom_month)))
-        calendarView.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(com.example.sofront.R.array.custom_weekdays)))
+        calendarView.setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(R.array.custom_month)))
+        calendarView.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(R.array.custom_weekdays)))
         calendarView.setHeaderTextAppearance(com.prolificinteractive.materialcalendarview.R.style.CalendarWidgetHeader)
         // 좌우 화살표 사이 연, 월의 폰트 스타일 설정
         calendarView.setHeaderTextAppearance(com.prolificinteractive.materialcalendarview.R.style.CustomTextAppearance)

@@ -6,30 +6,15 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.text.style.LineBackgroundSpan;
 import android.util.Log;
 import android.view.DragEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import java.io.FileOutputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
 import org.threeten.bp.DayOfWeek;
@@ -95,40 +80,35 @@ import org.threeten.bp.LocalDate;
             String planName = split[1];
 
             ArrayList<CalendarDay> set = new ArrayList<>();
-            new Thread(new Runnable() {
-              @Override
-              public void run() {
-                CalendarDatabase db = CalendarDatabase.getInstance(getContext());
-                CalendarDao dao = db.calendarDao();
+            new Thread(() -> {
+              CalendarDatabase db = CalendarDatabase.getInstance(getContext());
+              CalendarDao dao = db.calendarDao();
 
-                try{
-                  db.runInTransaction(new Runnable() {
-                    CalendarDay tmp = dayView.getDate();
-                    @Override
-                    public void run() {
-                      byte[] array = new byte[7]; // length is bounded by 7
-                      new Random().nextBytes(array);
-                      String generatedString = new String(array, Charset.forName("UTF-8"));
-                      for(int i=0; i<days-1; i++){
-                        set.add(tmp);
-                        dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i,generatedString));
-                        tmp = addOnetoCalendarDay(tmp);
-                      }
-                    }
-                  });
-                }catch (SQLiteConstraintException exception){
-                  set.clear();
-                }
-                ((Activity)context).runOnUiThread(new Runnable() {
+              try{
+                db.runInTransaction(new Runnable() {
+                  CalendarDay tmp = dayView.getDate();
                   @Override
                   public void run() {
-                    if(set.size()==0)
-                    Toast.makeText(context,"하루에 두개 이상의 플랜을 넣을수는 없어요",Toast.LENGTH_LONG).show();
-                    materialCalendarView.addDecorator(new EventDecorator(colors[colorIndex],set));
-                    colorIndex = (colorIndex+1)%colors.length;
+                    byte[] array = new byte[7]; // length is bounded by 7
+                    new Random().nextBytes(array);
+                    String generatedString = new String(array, StandardCharsets.UTF_8);
+                    for(int i=0; i<days; i++){
+                      set.add(tmp);
+                      dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i,generatedString));
+                      tmp = addOneToCalendarDay(tmp);
+                    }
                   }
                 });
+              }catch (SQLiteConstraintException exception){
+                Log.e("MonthView::DragListener","DB insert exception");
+                set.clear();
               }
+              ((Activity)context).runOnUiThread(() -> {
+                if(set.size()==0)
+                Toast.makeText(context,"하루에 두개 이상의 플랜을 넣을수는 없어요",Toast.LENGTH_LONG).show();
+                materialCalendarView.addDecorator(new EventDecorator(colors[colorIndex],set));
+                colorIndex = (colorIndex+1)%colors.length;
+              });
             }).start();
             return true;
           case DragEvent.ACTION_DRAG_ENDED:
@@ -147,7 +127,7 @@ import org.threeten.bp.LocalDate;
       });
     }
   }
-  private CalendarDay addOnetoCalendarDay(CalendarDay date){
+  private CalendarDay addOneToCalendarDay(CalendarDay date){
 //    val days = arrayListOf<Int>(0,31,28,31,30,31,30,31,31,30,31,30,31);
     int[] days = new int[]{0,31,28,31,30,31,30,31,31,30,31,30,31};
 

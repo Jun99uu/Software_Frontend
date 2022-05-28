@@ -20,22 +20,22 @@ import com.prolificinteractive.materialcalendarview.CalendarDatabase
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.CalendarEntity
 import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CalendarDialogFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class CalendarDialogFragment(private val date : CalendarDay,private val planEntity: CalendarEntity) : DialogFragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentCalendarDialogBinding? = null
+    val adapter = CalendarDialogRecyclerViewAdapter()
 
 
     // This property is only valid between onCreateView and
@@ -61,7 +61,7 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planEnti
         binding.title.text = titleText
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        val adapter = CalendarDialogRecyclerViewAdapter()
+
         val db = CalendarDatabase.getInstance(requireContext())
         val dao = db.calendarDao()
         var clickTime = 0L
@@ -82,31 +82,7 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planEnti
             }
             clickTime = System.currentTimeMillis()
         }
-
-        CoroutineScope(Dispatchers.Main).launch {
-            val plan = CoroutineScope(Dispatchers.IO).async {
-                RetrofitService._getPlanByPlanName(planEntity.planName)
-            }.await()
-
-            if(plan.routineList.size>0)
-            for(workout in plan.routineList[planEntity.count].workoutList)
-                adapter.addItem(workout)
-
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        }
-        //테스트용
-        val workoutList = ArrayList<Workout>()
-        workoutList.add(Workout("운동이름1",1,ArrayList<Set>()))
-        workoutList.add(Workout("운동이름2",11,ArrayList<Set>()))
-        workoutList.add(Workout("운동이름3",21,ArrayList<Set>()))
-
-        val routine = Routine(true,workoutList)
-        //테스트용 끝
-        Log.d("size of workoutList",workoutList.size.toString())
-        for(workout in routine.workoutList)
-        adapter.addItem(workout)
-
+        getRoutineByPlanName(planEntity.planName)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
@@ -115,5 +91,26 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planEnti
     override fun onResume() {
         super.onResume()
         Log.d("CalendarDialogFragment","onResume")
+    }
+    fun getRoutineByPlanName(planName : String){
+        RetrofitService.retrofitService.getPlanByPlanName(planName).enqueue(object :
+            Callback<Plan> {
+            override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
+                if (response.isSuccessful) {
+                    Log.d("getPlan test", "success")
+                    Log.d("getPlan test success", response.body().toString())
+                    for(workout in response.body()!!.routineList[planEntity.count].workoutList)
+                    adapter.addItem(workout)
+                    for(i in 0..adapter.itemCount)
+                    adapter.notifyItemInserted(i)
+                } else {
+                    Log.d("getPlan test", "success but something error")
+                }
+            }
+
+            override fun onFailure(call: Call<Plan>, t: Throwable) {
+                Log.d("getPlan test", "fail")
+            }
+        })
     }
 }

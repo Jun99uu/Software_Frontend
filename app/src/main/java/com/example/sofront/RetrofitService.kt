@@ -29,7 +29,7 @@ interface RetrofitService {
     @POST("/workout/planSet") //플랜 생성
     fun setPlan(@Body Plan: Plan): Call<Plan>
 
-    @GET("/workout/planGet/{planName}") //플랜이름으로 받아오기
+    @GET("/workout/planGet/{planName}/plan") //플랜이름으로 받아오기
     fun getPlanByPlanName(@Path("planName") planName : String) : Call<Plan>
 
     @GET("/workout/planGet") //uid로 플랜 가져오기
