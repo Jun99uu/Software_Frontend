@@ -56,8 +56,8 @@ interface RetrofitService {
     @GET("profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
     fun getProfile(@Path("UID") UID:String) : Call<Profile>
 
-    @POST("/profile/edit") //프로필 수정
-    fun editProfile(@Body profile:Profile) : Call<Profile>
+    @PUT("profiles/modify_profile/{UID}") //프로필 수정
+    fun editProfile(@Path("UID") UID:String, @Body editProfile:editProfile) : Call<editProfile>
 
     @POST("/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
@@ -68,7 +68,7 @@ interface RetrofitService {
     @POST("/plan/comment/{porfolioID}")
     fun postPortfolioComment(@Path("portfolioID") portfolioID : String,@Body comment: Comment) : Call<Comment>
 
-    @POST("~~")
+    @POST("profiles/makes_portfolios/")
     fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
 
     companion object{
@@ -294,22 +294,6 @@ interface RetrofitService {
             return myPortfolio
         }
 
-        fun _editProfile(profile:Profile){
-            retrofitService.editProfile(profile).enqueue(object :Callback<Profile>{
-                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                    if(response.isSuccessful){
-                        Log.d("editProfile test success", response.body().toString())
-                    }else{
-                        Log.d("editProfile test", "success but something error")
-                    }
-                }
-                override fun onFailure(call: Call<Profile>, t: Throwable) {
-                    Log.d("editPortfolio test", "fail")
-                }
-
-            })
-        }
-
         fun _getPortfolioComment(porfolioID: String) : ArrayList<Comment>{
             var commentList = ArrayList<Comment>()
             retrofitService.getPortfolioComment(porfolioID).enqueue(object :Callback<ArrayList<Comment>>{
@@ -349,21 +333,6 @@ interface RetrofitService {
 
             })
             return bool
-        }
-
-        fun _postPortfolio(sendPortfolio: SendPortfolio){
-            retrofitService.postPortfolio(sendPortfolio).enqueue(object :Callback<SendPortfolio>{
-                override fun onResponse(call: Call<SendPortfolio>, response: Response<SendPortfolio>) {
-                    if(response.isSuccessful){
-                        Log.d("editProfile test success", response.body().toString())
-                    }else{
-                        Log.d("editProfile test", "success but something error")
-                    }
-                }
-                override fun onFailure(call: Call<SendPortfolio>, t: Throwable) {
-                    Log.d("editPortfolio test", "fail")
-                }
-            })
         }
     }
 }
