@@ -67,8 +67,6 @@ class ProfilePortfolioFragment : Fragment() {
                         myPortfolio = response.body()!!
                         portfolioList = myPortfolio
                         updatePortfolio()
-                        binding.noViewLayout.visibility = View.GONE
-                        binding.profilePortfolioRv.visibility = View.VISIBLE
                     }
                 } else {
                     Log.d("getPortfolio test", "success but something error")
@@ -87,6 +85,11 @@ class ProfilePortfolioFragment : Fragment() {
             for(portfolio in portfolioList){
                 adapter.addItem(portfolio)
             }
+            binding.noViewLayout.visibility = View.GONE
+            binding.profilePortfolioRv.visibility = View.VISIBLE
+        }else{
+            binding.noViewLayout.visibility = View.VISIBLE
+            binding.profilePortfolioRv.visibility = View.GONE
         }
         adapter.notifyDataSetChanged()
     }

@@ -44,7 +44,7 @@ interface RetrofitService {
     @GET("/profiles/get_portfolio/{uid}") //uid로 포트폴리오 가져오기
     fun getPortfolio(@Path("uid") uid:String) : Call<ArrayList<Portfolio>>
 
-    @GET("/portfolio/subscription/{uid}") //uid로 구독 목록 가져오기
+    @GET("subscription/portfolio/{uid}") //uid로 구독 목록 가져오기
     fun getSubscribingPortfolio(@Path("uid")uid: String) : Call<ArrayList<Portfolio>>
 
     @POST("/plan/like") //플랜 이름으로 좋아요 보내기
