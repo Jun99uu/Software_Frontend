@@ -42,12 +42,16 @@ data class planLike(
 )
 
 data class Comment(
+    @SerializedName("postN")
     var planName:String, //플랜 이름
+    @SerializedName("commentWriter")
     var writerUid:String, //댓글 작성자 uid
+    @SerializedName("commentWriterName")
     var writerName:String, //댓글 작성자 이름
     var commentDate:String, // yyyy-mm-dd-hh-mm
     var writerProfileImg:String, //댓글 작성자 프사
-    var commentContent:String //댓글 내용
+    @SerializedName("comContent")
+    var commentContent:String, //댓글 내용
+    @SerializedName("commentN")
+    var commentN:String
 ) : Serializable
-
-//쓴사람 uid, 쓴사람 이름, 댓글날짜, 내용

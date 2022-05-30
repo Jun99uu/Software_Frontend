@@ -66,6 +66,7 @@ class MakePortfolioActivity : AppCompatActivity() {
             }else if(file.equals("")){
                 Toast.makeText(this, "사진을 첨부해주세요", Toast.LENGTH_SHORT).show()
             }else{
+                Log.d("profileText",binding.makePortfolioTitle.text.toString())
                 title = binding.makePortfolioTitle.text.toString()
                 content = binding.makePortfolioContent.text.toString()
                 savePressed(title, file, content)
@@ -80,7 +81,7 @@ class MakePortfolioActivity : AppCompatActivity() {
     private val Launcher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if(it.resultCode == RESULT_OK && it.data !=null) {
-                var currentImageUri = it.data?.data
+                val currentImageUri = it.data?.data
                 try {
                     currentImageUri?.let {
                         if(Build.VERSION.SDK_INT < 28) {
@@ -95,7 +96,7 @@ class MakePortfolioActivity : AppCompatActivity() {
                         } else {
                             val source = ImageDecoder.createSource(this.contentResolver, currentImageUri)
                             val bitmap = ImageDecoder.decodeBitmap(source)
-                            afterImageView?.setImageBitmap(bitmap)
+                            afterImageView.setImageBitmap(bitmap)
                             file = converter.bitmapToString(bitmap)
                             afterView.visibility = View.VISIBLE
                             beforeView.visibility = View.GONE
@@ -106,7 +107,7 @@ class MakePortfolioActivity : AppCompatActivity() {
                     e.printStackTrace()
                 }
             } else if(it.resultCode == RESULT_CANCELED){
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show()
             }else{
                 Log.d("ActivityResult","something wrong")
             }

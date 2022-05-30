@@ -73,7 +73,7 @@ class PlanDetailViewActivity : AppCompatActivity() {
             binding.commentInput.setText("")
             Toast.makeText(this, "댓글이 입력되었습니다.",Toast.LENGTH_SHORT).show()
             CloseKeyboard()
-            comments.add(Comment("하이", "uid", "${myName}", formatted, "프사", "${content}"))
+//            comments.add(Comment("하이", "uid", "${myName}", formatted, "프사", "${content}"))
             commentAdapter.notifyDataSetChanged()
         }
     }
