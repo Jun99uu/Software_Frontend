@@ -76,6 +76,10 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
         planList.removeAt(0)
     }
 
+    fun addItem(plan:Plan){
+        planList.add(plan)
+    }
+
 }
 
 class VerticalItemDecorator(private val divHeight : Int) : RecyclerView.ItemDecoration() {

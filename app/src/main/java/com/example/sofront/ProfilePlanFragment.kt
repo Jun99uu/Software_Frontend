@@ -38,36 +38,30 @@ class ProfilePlanFragment : Fragment() {
             Log.d("uid", "null value")
         }
 
-
-
-        binding.profilePlanRecycler.layoutManager = linearLayoutManager
-        adapter = ProfilePlanAdapter(planList)
-        binding.profilePlanRecycler.adapter = adapter
-        adapter.notifyDataSetChanged()
-        binding.profilePlanRecycler.addItemDecoration(VerticalItemDecorator(30))
-
         return binding.root
     }
 
     fun listenPlan(listendPlans:ArrayList<Plan>){
         //서버에서 받아온 플랜리스트 여기에 파라미터로 넣어주기
-        for(plan in listendPlans){
-            planList.add(plan)
-        }
+        Log.d("시발", listendPlans.toString())
+        binding.profilePlanRecycler.layoutManager = linearLayoutManager
+        adapter = ProfilePlanAdapter(listendPlans)
+        binding.profilePlanRecycler.adapter = adapter
         adapter.notifyDataSetChanged()
+        binding.profilePlanRecycler.addItemDecoration(VerticalItemDecorator(30))
         binding.noViewLayout.visibility = View.GONE
         binding.profilePlanRecycler.visibility = View.VISIBLE
     }
 
     fun _getPlanByUid(){
         var myPlan = ArrayList<Plan>()
-        RetrofitService.retrofitService.getPlanByUid(myUid!!).enqueue(object : Callback<ArrayList<Plan>> {
+        RetrofitService.retrofitService.getMyPlanInProfile(myUid!!).enqueue(object : Callback<ArrayList<Plan>> {
             override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
                 if (response.isSuccessful) {
                     Log.d("getPlan test", "success")
                     myPlan = response.body()!!
-                    if(planList.size > 0){
-                        listenPlan(planList)
+                    if(myPlan.size > 0){
+                        listenPlan(myPlan)
                     }
                 } else {
                     Log.d("getPlan test", "success but something error")

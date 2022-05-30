@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
@@ -37,6 +38,7 @@ class MakePortfolioActivity : AppCompatActivity() {
     val user = Firebase.auth.currentUser
     val myUid = user?.uid.toString()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMakePortfolioBinding.inflate(layoutInflater)
@@ -78,6 +80,7 @@ class MakePortfolioActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val Launcher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if(it.resultCode == RESULT_OK && it.data !=null) {
@@ -89,7 +92,8 @@ class MakePortfolioActivity : AppCompatActivity() {
                                 this.contentResolver,
                                 currentImageUri
                             )
-                            afterImageView.setImageBitmap(bitmap)
+                            afterImageView?.setImageBitmap(bitmap)
+                            file = converter.bitmapToString(bitmap)
                             afterView.visibility = View.VISIBLE
                             beforeView.visibility = View.GONE
                         } else {
@@ -162,7 +166,7 @@ class MakePortfolioActivity : AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<SendPortfolio>, t: Throwable) {
-                Log.d("editPortfolio test", "fail")
+                Log.d("postPortfolio test", "fail")
             }
         })
     }

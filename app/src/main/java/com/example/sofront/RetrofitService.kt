@@ -35,6 +35,9 @@ interface RetrofitService {
     @GET("/workout/planGet/{uid}/UID") //uid로 플랜 가져오기
     fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
 
+    @GET("/workout/plan/my/{UID}") //내 프로필 안에서 플랜 받아오기
+    fun getMyPlanInProfile(@Path("UID") UID:String) : Call<ArrayList<Plan>>
+
     @GET("/workout/plan/all/{uid}")
     fun getDownloadPlan(@Path("uid") uid : String) : Call<ArrayList<Plan>>
 
@@ -51,7 +54,9 @@ interface RetrofitService {
     fun postLike(@Body planLike:planLike) : Call<planLike>
 
     //플랜 이름으로 다운로드 회원 보내기
-    //플랜 이름으로 댓글 받아오기
+
+    @GET("workout/plan/comment/{planName}") //플랜 이름으로 댓글 받아오기
+    fun getCommentByPlanName(@Path("planName")planName: String) : Call<ArrayList<Comment>>
 
     @GET("profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
     fun getProfile(@Path("UID") UID:String) : Call<Profile>
