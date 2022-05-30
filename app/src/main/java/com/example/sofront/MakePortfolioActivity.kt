@@ -63,7 +63,7 @@ class MakePortfolioActivity : AppCompatActivity() {
         binding.portfolioSaveBtn.setOnClickListener{
             title = binding.makePortfolioTitle.text.toString()
             content = binding.makePortfolioContent.text.toString()
-            savePressed(title, file, content, intent)
+            savePressed(title, file, content)
         }
 
         binding.portfolioCancleBtn.setOnClickListener{
@@ -74,7 +74,7 @@ class MakePortfolioActivity : AppCompatActivity() {
     private val Launcher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if(it.resultCode == RESULT_OK && it.data !=null) {
-                var currentImageUri = it.data?.data
+                val currentImageUri = it.data?.data
                 try {
                     currentImageUri?.let {
                         if(Build.VERSION.SDK_INT < 28) {
@@ -82,13 +82,13 @@ class MakePortfolioActivity : AppCompatActivity() {
                                 this.contentResolver,
                                 currentImageUri
                             )
-                            afterImageView?.setImageBitmap(bitmap)
+                            afterImageView.setImageBitmap(bitmap)
                             afterView.visibility = View.VISIBLE
                             beforeView.visibility = View.GONE
                         } else {
                             val source = ImageDecoder.createSource(this.contentResolver, currentImageUri)
                             val bitmap = ImageDecoder.decodeBitmap(source)
-                            afterImageView?.setImageBitmap(bitmap)
+                            afterImageView.setImageBitmap(bitmap)
                             file = converter.bitmapToString(bitmap)
                         }
                     }
@@ -97,7 +97,7 @@ class MakePortfolioActivity : AppCompatActivity() {
                     e.printStackTrace()
                 }
             } else if(it.resultCode == RESULT_CANCELED){
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show()
             }else{
                 Log.d("ActivityResult","something wrong")
             }
@@ -121,7 +121,7 @@ class MakePortfolioActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun savePressed(title:String, file:String, content:String, intent:Intent){
+    fun savePressed(title:String, file:String, content:String){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("포트폴리오를 저장하시겠습니까?")
             .setMessage("정말로 저장하시겠습니까?")
@@ -130,7 +130,7 @@ class MakePortfolioActivity : AppCompatActivity() {
                     //확인클릭
                     val tmp = SendPortfolio(myUid, title, file, content)
                     sendPortfolio = tmp
-                    _postPortfolio(sendPortfolio, intent)
+                    _postPortfolio(sendPortfolio)
                 })
             .setNegativeButton("취소",
                 DialogInterface.OnClickListener { dialog, id ->
@@ -141,13 +141,13 @@ class MakePortfolioActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun _postPortfolio(sendPortfolio: SendPortfolio, intent:Intent){
+    fun _postPortfolio(sendPortfolio: SendPortfolio){
         RetrofitService.retrofitService.postPortfolio(sendPortfolio).enqueue(object :
             Callback<SendPortfolio> {
             override fun onResponse(call: Call<SendPortfolio>, response: Response<SendPortfolio>) {
                 if(response.isSuccessful){
-                    Log.d("editProfile test success", response.body().toString())
-                    startActivity(intent)
+                    Log.d("postProfile test success", response.body().toString())
+                    finish()
                 }else{
                     Log.d("editProfile test", "success but something error")
                 }
