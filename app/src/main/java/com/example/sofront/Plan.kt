@@ -55,3 +55,22 @@ data class Comment(
     @SerializedName("commentN")
     var commentN:String
 ) : Serializable
+
+
+data class summaryPlan(
+    var planName:String,
+    var hashTagList:ArrayList<String>,
+    @SerializedName("UID")
+    var makerUid:String,
+    var liked:Boolean,
+    var likeNum:Int,
+    var commentNum: Int,
+    var downLoadNum: Int,
+    var planDay: Int
+): Serializable
+
+data class planComment(
+    var comment:String,
+    var UID:String,
+    var planName:String
+)

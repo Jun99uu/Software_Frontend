@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Sofront">
+        android:theme="@style/Theme.Sofront"
+        android:hardwareAccelerated="false">
         <activity
             android:name=".DailyRoutinePlayActivity"
             android:exported="false" />

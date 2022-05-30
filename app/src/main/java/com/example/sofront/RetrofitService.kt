@@ -41,8 +41,8 @@ interface RetrofitService {
     @GET("/workout/plan/all/{uid}")
     fun getDownloadPlan(@Path("uid") uid : String) : Call<ArrayList<Plan>>
 
-    @GET("/workout/planGetHashTag/{hashtag}")//해시태그로 플랜 가져오기
-    fun getPlanByHashTag(@Path("hashtag") hashTag:String) : Call<ArrayList<Plan>>
+    @GET("/workout/plan/share/")//해시태그로 플랜 가져오기
+    fun getPlanByHashTag() : Call<ArrayList<ArrayList<summaryPlan>>>
 
     @GET("/profiles/get_portfolio/{uid}") //uid로 포트폴리오 가져오기
     fun getPortfolio(@Path("uid") uid:String) : Call<ArrayList<Portfolio>>
@@ -53,9 +53,10 @@ interface RetrofitService {
     @POST("/plan/like") //플랜 이름으로 좋아요 보내기
     fun postLike(@Body planLike:planLike) : Call<planLike>
 
-    //플랜 이름으로 다운로드 회원 보내기
+    @POST("/workout/plan/comment") //플랜에서 댓글 작성
+    fun postCommentInPlan(@Body comment:planComment) : Call<planComment>
 
-    @GET("workout/plan/comment/{planName}") //플랜 이름으로 댓글 받아오기
+    @GET("/workout/plan/comment/{planName}") //플랜 이름으로 댓글 받아오기
     fun getCommentByPlanName(@Path("planName")planName: String) : Call<ArrayList<Comment>>
 
     @GET("profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
@@ -77,6 +78,9 @@ interface RetrofitService {
     fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
     @DELETE("profiles/delete_comments/{commentID}")
     fun deleteComment(@Path("commentID") commentID : String) : Call<Comment>
+
+    @GET("/profiles/img/name/{UID}")
+    fun getCertainProfile(@Path("UID") UID: String) : Call<certainProfile>
 
     companion object{
         //var gson = GsonBuilder().setLenient().create()
@@ -231,25 +235,6 @@ interface RetrofitService {
                 override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
                     Log.d("getDownLoadPlan test", "fail")
                     Log.d("getDownloadPlan error code",t.message.toString())
-                }
-            })
-            return myPlan
-        }
-
-        fun _getPlanByHashTag(hashTag: String) : ArrayList<Plan>{
-            var myPlan = ArrayList<Plan>()
-            retrofitService.getPlanByHashTag(hashTag).enqueue(object : Callback<ArrayList<Plan>> {
-                override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
-                    if (response.isSuccessful) {
-                        Log.d("getPlan test success", response.body().toString())
-                        myPlan = response.body()!!
-                    } else {
-                        Log.d("getPlan test", "success but something error")
-                    }
-                }
-
-                override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
-                    Log.d("getPlan test", "fail")
                 }
             })
             return myPlan
