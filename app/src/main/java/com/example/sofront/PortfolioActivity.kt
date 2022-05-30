@@ -1,7 +1,6 @@
 package com.example.sofront
 
 import android.content.Context
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,20 +12,21 @@ import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 import kotlin.collections.ArrayList
 
 class PortfolioActivity : AppCompatActivity() {
     val commentList  = ArrayList<Comment>()
     val adapter = CommentAdapter(commentList)
-    private val binding = ActivityPortfolioBinding.inflate(layoutInflater)
+
+    private var time = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val binding = ActivityPortfolioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val intent = intent
         val portfolio  = intent.getSerializableExtra("portfolio") as Portfolio
-        initView(portfolio)
+        initView(portfolio, binding)
         getPortfolioComment(portfolio.id.toString())
 
         val user = adapter.user
@@ -45,10 +45,10 @@ class PortfolioActivity : AppCompatActivity() {
         binding.commentSaveBtn.setOnClickListener {
             val text = binding.commentInput.text.toString()
             val comment = Comment(portfolio.id.toString(),uid,userName,"방금 전",FirebaseAuth.getInstance().currentUser?.photoUrl.toString(),text,"")
-            postPortfolioComment(comment)
+            postPortfolioComment(comment,binding)
             //TODO("디비에 저장하고 불러오기")
 
-            CloseKeyboard()
+            closeKeyboard()
             binding.commentInput.setText("")
         }
 
@@ -58,7 +58,7 @@ class PortfolioActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(VerticalItemDecorator(30))
     }
-    fun initView(portfolio: Portfolio){
+    private fun initView(portfolio: Portfolio, binding : ActivityPortfolioBinding){
         binding.portfolioTitle.text  = portfolio.title
         binding.portfolioContent.text = portfolio.content
         binding.portfolioCommentNum.text = portfolio.commentNum.toString()
@@ -67,10 +67,23 @@ class PortfolioActivity : AppCompatActivity() {
             .load(portfolio.contentImage)
             .into(binding.portfolioImg)
         if(portfolio.liked){
-            binding.like.setBackgroundColor(Color.RED)
+            binding.like.setBackgroundResource(R.drawable.ic_heart_fill)
+        }
+
+        binding.portfolioImg.setOnClickListener{
+            if(System.currentTimeMillis() - time < 900){
+                    postPortfolioLike(
+                        PortfolioLike(
+                            portfolio.id.toString(),
+                            FirebaseAuth.getInstance().uid.toString(),
+                        ), binding, portfolio.liked
+                    )
+            }
+            else
+            time = System.currentTimeMillis()
         }
     }
-    fun CloseKeyboard()
+    private fun closeKeyboard()
     {
         val view = this.currentFocus
 
@@ -80,14 +93,15 @@ class PortfolioActivity : AppCompatActivity() {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
-    fun postPortfolioComment(comment: Comment){
+    private fun postPortfolioComment(comment: Comment, binding: ActivityPortfolioBinding){
         RetrofitService.retrofitService.postPortfolioComment(comment).enqueue(object :
             Callback<Comment> {
             override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
                 if(response.isSuccessful){
                     Log.d("postPortfolioComment test success", response.body().toString())
                     commentList.add(comment)
-                    binding.portfolioCommentNum.text = (binding.portfolioCommentNum.text.toString().toInt()+1).toString()
+                    val commentNum = binding.portfolioCommentNum.text.toString().toInt()+1
+                    binding.portfolioCommentNum.text = commentNum.toString()
                     adapter.notifyItemInserted(adapter.itemCount-1)
                 }else{
                     Log.e("postPortfolioComment test", "success but something error")
@@ -102,8 +116,8 @@ class PortfolioActivity : AppCompatActivity() {
 
         })
     }
-    fun getPortfolioComment(porfolioID: String) {
-        RetrofitService.retrofitService.getPortfolioComment(porfolioID).enqueue(object :Callback<ArrayList<Comment>>{
+    private fun getPortfolioComment(portfolioID: String) {
+        RetrofitService.retrofitService.getPortfolioComment(portfolioID).enqueue(object :Callback<ArrayList<Comment>>{
             override fun onResponse(call: Call<ArrayList<Comment>>, response: Response<ArrayList<Comment>>) {
                 if(response.isSuccessful){
                     Log.d("getPortfolioComment test success", response.body().toString())
@@ -122,6 +136,35 @@ class PortfolioActivity : AppCompatActivity() {
                 Log.d("getPortfolioComment test", "fail")
                 Log.d("왜 오류남", t.message.toString())
             }
+        })
+    }
+    private fun postPortfolioLike(like : PortfolioLike, binding: ActivityPortfolioBinding, liked : Boolean){
+        RetrofitService.retrofitService.postPortfolioLike(like).enqueue(object : Callback<PortfolioLike>{
+            override fun onResponse(call: Call<PortfolioLike>, response: Response<PortfolioLike>) {
+                if(response.isSuccessful){
+                    if(liked) {
+                        binding.like.setBackgroundResource(R.drawable.ic_heart)
+                        val likeNum = binding.portfolioLikeNum.text.toString()
+                        binding.portfolioLikeNum.text = (likeNum.toInt() -1).toString()
+                    }
+                    else {
+                        binding.like.setBackgroundResource(R.drawable.ic_heart_fill)
+                        val likeNum = binding.portfolioLikeNum.text.toString().toInt() +1
+                        binding.portfolioLikeNum.text = likeNum.toString()
+                    }
+                    Log.d("postPortfolioLike","success")
+                }
+                else{
+                    Log.e("postPortfolioLike","success but error")
+                    Log.e("postPortfolioLike error code", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<PortfolioLike>, t: Throwable) {
+                Log.e("postPortfolioLike","fail")
+                Log.e("postPortfolioLike error msg",t.message!!)
+            }
+
         })
     }
 }
