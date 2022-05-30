@@ -56,11 +56,8 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
         holder.planHashTag.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         holder.planHashTag.adapter = ProfilePlanHashtagAdapter(planList[position].hashTagList)
         holder.itemView.setOnClickListener{
-            tmpCommentList.add(tmpComment)
-            tmpCommentList.add(tmpComment)
-            tmpCommentList.add(tmpComment)
-            tmpCommentList.add(tmpComment)
-            tmpCommentList.add(tmpComment)
+            //TODO 댓글 리스트 받아오기
+
             val intent = Intent(context, PlanDetailViewActivity::class.java)
             intent.putExtra("plan", planList[position])
             intent.putExtra("comments", tmpCommentList)
@@ -74,6 +71,10 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
 
     fun deleteFirstItem(){
         planList.removeAt(0)
+    }
+
+    fun addItem(plan:Plan){
+        planList.add(plan)
     }
 
 }
