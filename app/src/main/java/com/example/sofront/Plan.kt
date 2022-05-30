@@ -49,6 +49,7 @@ data class Comment(
     @SerializedName("commentWriterName")
     var writerName:String, //댓글 작성자 이름
     var commentDate:String, // yyyy-mm-dd-hh-mm
+    @SerializedName("commentWriterProfile")
     var writerProfileImg:String, //댓글 작성자 프사
     @SerializedName("comContent")
     var commentContent:String, //댓글 내용

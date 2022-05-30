@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.sofront.databinding.ActivityPortfolioBinding
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
@@ -18,14 +19,14 @@ import kotlin.collections.ArrayList
 class PortfolioActivity : AppCompatActivity() {
     val commentList  = ArrayList<Comment>()
     val adapter = CommentAdapter(commentList)
+    private val binding = ActivityPortfolioBinding.inflate(layoutInflater)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityPortfolioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val intent = intent
         val portfolio  = intent.getSerializableExtra("portfolio") as Portfolio
-        initView(portfolio,binding)
+        initView(portfolio)
         getPortfolioComment(portfolio.id.toString())
 
         val user = adapter.user
@@ -38,12 +39,12 @@ class PortfolioActivity : AppCompatActivity() {
         else{
             uid = user.uid
 //            userName = user.displayName!!
-            userName = "tmp"
+            userName = "나!"
         }
 
         binding.commentSaveBtn.setOnClickListener {
             val text = binding.commentInput.text.toString()
-            val comment = Comment(portfolio.id.toString(),uid,userName, Date().toString(),"",text,"")
+            val comment = Comment(portfolio.id.toString(),uid,userName,"방금 전",FirebaseAuth.getInstance().currentUser?.photoUrl.toString(),text,"")
             postPortfolioComment(comment)
             //TODO("디비에 저장하고 불러오기")
 
@@ -57,11 +58,14 @@ class PortfolioActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(VerticalItemDecorator(30))
     }
-    fun initView(portfolio: Portfolio, binding: ActivityPortfolioBinding){
+    fun initView(portfolio: Portfolio){
         binding.portfolioTitle.text  = portfolio.title
         binding.portfolioContent.text = portfolio.content
         binding.portfolioCommentNum.text = portfolio.commentNum.toString()
         binding.portfolioLikeNum.text = portfolio.likeNum.toString()
+        Glide.with(this)
+            .load(portfolio.contentImage)
+            .into(binding.portfolioImg)
         if(portfolio.liked){
             binding.like.setBackgroundColor(Color.RED)
         }
@@ -83,7 +87,8 @@ class PortfolioActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     Log.d("postPortfolioComment test success", response.body().toString())
                     commentList.add(comment)
-                    adapter.notifyDataSetChanged()
+                    binding.portfolioCommentNum.text = (binding.portfolioCommentNum.text.toString().toInt()+1).toString()
+                    adapter.notifyItemInserted(adapter.itemCount-1)
                 }else{
                     Log.e("postPortfolioComment test", "success but something error")
                     Log.e("postPortfolioComment error code",response.code().toString())

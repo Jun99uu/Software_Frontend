@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
@@ -24,7 +25,7 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
     var position = 0
     val user = Firebase.auth.currentUser
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
         val profileImg:CircleImageView = itemView.findViewById(R.id.comment_profile) //댓글 작성자 프사 url
         val commentName: TextView = itemView.findViewById(R.id.comment_name)
         val commentDate: TextView = itemView.findViewById(R.id.comment_date)
@@ -34,6 +35,11 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
             commentName.text = item.writerName
             commentDate.text = item.commentDate
             commentContent.text = item.commentContent
+            Glide.with(context)
+                .load(item.writerProfileImg)
+                .placeholder(R.drawable.gymdori)
+                .error(R.drawable.gymdori)
+                .into(profileImg)
         }
     }
 
@@ -41,7 +47,7 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.comment_item, parent, false)
         context = parent.context
-        return MyViewHolder(view)
+        return MyViewHolder(view,context)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -70,7 +76,7 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
                     //확인클릭
                     //통신을 통해 댓글삭제.
                     //TODO 서버에서 댓글 삭제가 완료되면 리스트에서도 삭제.
-                    RetrofitService.retrofitService.deleteComment(commentID).enqueue(object : Callback<Comment> {
+                    RetrofitService.retrofitService.deletePortfolioComment(commentID).enqueue(object : Callback<Comment> {
                         override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
                             if(response.isSuccessful){
                                 Log.d("delete comment","success")

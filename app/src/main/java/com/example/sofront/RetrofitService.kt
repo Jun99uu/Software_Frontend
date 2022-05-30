@@ -76,8 +76,9 @@ interface RetrofitService {
     @POST("profiles/makes_portfolios/")
     fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
     @DELETE("profiles/delete_comments/{commentID}")
-    fun deleteComment(@Path("commentID") commentID : String) : Call<Comment>
-
+    fun deletePortfolioComment(@Path("commentID") commentID : String) : Call<Comment>
+    @DELETE("plan/comment/del/{commentN}")
+    fun deletePlanComment(@Path("commentN") commmentN : String) : Call<Comment>
     companion object{
         //var gson = GsonBuilder().setLenient().create()
         private const val BASE_URL = "http://e1e7-219-255-158-172.ngrok.io"

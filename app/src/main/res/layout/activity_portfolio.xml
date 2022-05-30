@@ -14,6 +14,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <TextView
+                android:id="@+id/portfolio_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nixgonb"
+                android:layout_marginTop="@dimen/default_margin"
+                android:textSize="@dimen/big_font_size"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                android:text="@string/title"/>
     <ImageView
         android:id="@+id/portfolio_img"
         android:layout_width="wrap_content"
@@ -22,15 +32,7 @@
         android:layout_margin="@dimen/default_margin"
         android:contentDescription="@string/image" />
 
-    <TextView
-        android:id="@+id/portfolio_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nixgonb"
-        android:textSize="@dimen/big_font_size"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:text="@string/title"/>
+
     <TextView
         android:id="@+id/portfolio_content"
         android:layout_width="match_parent"

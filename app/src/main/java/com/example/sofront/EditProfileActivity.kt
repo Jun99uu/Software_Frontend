@@ -45,7 +45,7 @@ class EditProfileActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = com.example.sofront.databinding.ActivityEditProfileBinding.inflate(layoutInflater)
+        val binding = ActivityEditProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         profileImg = binding.profileImagePreview
@@ -72,9 +72,6 @@ class EditProfileActivity : AppCompatActivity() {
             .fallback(defaultBack) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
             .into(binding.backgroundPreview) // 이미지를 넣을 뷰
 
-
-        afterSubtitle = prevSubtitle
-        afterNickname = prevNickname
 
         binding.editCancleBtn.setOnClickListener{
             if(!state){
@@ -166,6 +163,7 @@ class EditProfileActivity : AppCompatActivity() {
         builder.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val profileActivityLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if(it.resultCode == RESULT_OK && it.data !=null) {
@@ -178,6 +176,7 @@ class EditProfileActivity : AppCompatActivity() {
                                 currentImageUri
                             )
                             profileImg?.setImageBitmap(bitmap)
+                            afterProfileImg = converter.bitmapToString(bitmap)
                         } else {
                             val source = ImageDecoder.createSource(this.contentResolver, currentImageUri)
                             val bitmap = ImageDecoder.decodeBitmap(source)
@@ -197,6 +196,7 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val backgroundActivityLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if(it.resultCode == RESULT_OK && it.data !=null) {
@@ -209,6 +209,7 @@ class EditProfileActivity : AppCompatActivity() {
                                 currentImageUri
                             )
                             backgroundImg?.setImageBitmap(bitmap)
+                            afterBackground = converter.bitmapToString(bitmap)
                         } else {
                             val source = ImageDecoder.createSource(this.contentResolver, currentImageUri)
                             val bitmap = ImageDecoder.decodeBitmap(source)
