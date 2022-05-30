@@ -86,7 +86,7 @@ class TestFactory {
             return list
         }
         fun getSomeComment() : Comment{
-            return Comment("tmpPlanName","tmpUid","tmpName","2022-08-17","","content")
+            return Comment("tmpPlanName","tmpUid","tmpName","2022-08-17","","content","")
         }
     }
 }

@@ -62,14 +62,16 @@ interface RetrofitService {
     @POST("/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
-    @GET("/포트폴리오 댓글리스트 겟/{portfolioID}")
+    @GET("/profiles/get_comments/{portfolioID}")
     fun getPortfolioComment(@Path("portfolioID") porfolioID:String) : Call<ArrayList<Comment>>
 
-    @POST("/plan/comment/{porfolioID}")
-    fun postPortfolioComment(@Path("portfolioID") portfolioID : String,@Body comment: Comment) : Call<Comment>
+    @POST("/profiles/post_comments/")
+    fun postPortfolioComment(@Body comment: Comment) : Call<Comment>
 
     @POST("profiles/makes_portfolios/")
     fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
+    @DELETE("profiles/delete_comments/{commentID}")
+    fun deleteComment(@Path("commentID") commentID : String) : Call<Comment>
 
     companion object{
         //var gson = GsonBuilder().setLenient().create()
@@ -313,26 +315,26 @@ interface RetrofitService {
             })
             return commentList
         }
-        fun _postPortfolioComment(portfolioID: String,comment: Comment) : Boolean{
-            var bool  = true
-            retrofitService.postPortfolioComment(portfolioID,comment).enqueue(object : Callback<Comment>{
-                override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
-                    if(response.isSuccessful){
-                        Log.d("getPortfolioComment test success", response.body().toString())
-                        bool = true
-                    }else{
-                        bool= false
-                        Log.d("getPortfolioComment test", "success but something error")
-                    }
-                }
-
-                override fun onFailure(call: Call<Comment>, t: Throwable) {
-                    Log.e("getPortfolioComment Test","error")
-                    bool= false
-                }
-
-            })
-            return bool
-        }
+//        fun _postPortfolioComment(portfolioID: String,comment: Comment) : Boolean{
+//            var bool  = true
+//            retrofitService.postPortfolioComment(portfolioID,comment).enqueue(object : Callback<Comment>{
+//                override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
+//                    if(response.isSuccessful){
+//                        Log.d("getPortfolioComment test success", response.body().toString())
+//                        bool = true
+//                    }else{
+//                        bool= false
+//                        Log.d("getPortfolioComment test", "success but something error")
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<Comment>, t: Throwable) {
+//                    Log.e("getPortfolioComment Test","error")
+//                    bool= false
+//                }
+//
+//            })
+//            return bool
+//        }
     }
 }

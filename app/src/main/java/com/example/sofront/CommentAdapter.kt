@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView.Adapter<CommentAdapter.MyViewHolder>() {
     lateinit var context: Context
@@ -47,7 +50,7 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
             holder.deleteBtn.visibility = View.VISIBLE
         }
         holder.deleteBtn.setOnClickListener{
-            deleteComment(position)
+            deleteComment(position,commentList[position].commentN)
         }
         holder.profileImg.setOnClickListener{
             onClickProfileImg(commentList[position].writerUid)
@@ -58,7 +61,7 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
         return commentList.size
     }
 
-    fun deleteComment(position:Int) {
+    fun deleteComment(position:Int, commentID: String) {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("정말로 삭제하시겠습니까?")
             .setMessage("삭제된 댓글은 복구하실 수 없습니다.\n정말로 삭제하시겠습니까?")
@@ -67,9 +70,28 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
                     //확인클릭
                     //통신을 통해 댓글삭제.
                     //TODO 서버에서 댓글 삭제가 완료되면 리스트에서도 삭제.
-                    commentList.removeAt(position)
-                    notifyDataSetChanged()
-                    Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    RetrofitService.retrofitService.deleteComment(commentID).enqueue(object : Callback<Comment> {
+                        override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
+                            if(response.isSuccessful){
+                                Log.d("delete comment","success")
+                                commentList.removeAt(position)
+                                notifyDataSetChanged()
+                                Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                            else{
+                                Log.e("delete comment", "success but error")
+                                Log.e("delete comment error code",response.code().toString())
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Comment>, t: Throwable){
+                            Log.e("delete comment","fail")
+                            Log.e("delete comment error msg",t.message.toString())
+                        }
+
+                    })
+
+
                 })
             .setNegativeButton("취소",
                 DialogInterface.OnClickListener { dialog, id ->

@@ -66,6 +66,7 @@ class MakePortfolioActivity : AppCompatActivity() {
             }else if(file.equals("")){
                 Toast.makeText(this, "사진을 첨부해주세요", Toast.LENGTH_SHORT).show()
             }else{
+                Log.d("profileText",binding.makePortfolioTitle.text.toString())
                 title = binding.makePortfolioTitle.text.toString()
                 content = binding.makePortfolioContent.text.toString()
                 savePressed(title, file, content)
