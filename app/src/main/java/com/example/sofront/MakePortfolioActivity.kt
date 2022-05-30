@@ -42,12 +42,10 @@ class MakePortfolioActivity : AppCompatActivity() {
         val binding = ActivityMakePortfolioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
         afterImageView = binding.afterContentImageView
         beforeView = binding.beforeContentImage
         afterView = binding.afterContentImage
+
         binding.beforeContentImage.setOnClickListener{
             val PIintent = Intent(Intent.ACTION_GET_CONTENT)
             PIintent.setType("image/*")
@@ -61,9 +59,17 @@ class MakePortfolioActivity : AppCompatActivity() {
         }
 
         binding.portfolioSaveBtn.setOnClickListener{
-            title = binding.makePortfolioTitle.text.toString()
-            content = binding.makePortfolioContent.text.toString()
-            savePressed(title, file, content, intent)
+            if(binding.makePortfolioTitle.text.equals("")){
+                Toast.makeText(this, "제목을 입력해주세요", Toast.LENGTH_SHORT).show()
+            }else if(binding.makePortfolioContent.text.equals("")){
+                Toast.makeText(this, "내용을 입력해주세요", Toast.LENGTH_SHORT).show()
+            }else if(file.equals("")){
+                Toast.makeText(this, "사진을 첨부해주세요", Toast.LENGTH_SHORT).show()
+            }else{
+                title = binding.makePortfolioTitle.text.toString()
+                content = binding.makePortfolioContent.text.toString()
+                savePressed(title, file, content)
+            }
         }
 
         binding.portfolioCancleBtn.setOnClickListener{
@@ -90,6 +96,8 @@ class MakePortfolioActivity : AppCompatActivity() {
                             val bitmap = ImageDecoder.decodeBitmap(source)
                             afterImageView?.setImageBitmap(bitmap)
                             file = converter.bitmapToString(bitmap)
+                            afterView.visibility = View.VISIBLE
+                            beforeView.visibility = View.GONE
                         }
                     }
 
@@ -121,16 +129,16 @@ class MakePortfolioActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun savePressed(title:String, file:String, content:String, intent:Intent){
+    fun savePressed(title:String, file:String, content:String){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("포트폴리오를 저장하시겠습니까?")
             .setMessage("정말로 저장하시겠습니까?")
             .setPositiveButton("확인",
                 DialogInterface.OnClickListener { dialog, id ->
                     //확인클릭
-                    val tmp = SendPortfolio(myUid, title, file, content)
+                    val tmp = SendPortfolio(myUid, title, content, file)
                     sendPortfolio = tmp
-                    _postPortfolio(sendPortfolio, intent)
+                    _postPortfolio(sendPortfolio)
                 })
             .setNegativeButton("취소",
                 DialogInterface.OnClickListener { dialog, id ->
@@ -141,15 +149,15 @@ class MakePortfolioActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun _postPortfolio(sendPortfolio: SendPortfolio, intent:Intent){
+    fun _postPortfolio(sendPortfolio: SendPortfolio){
         RetrofitService.retrofitService.postPortfolio(sendPortfolio).enqueue(object :
             Callback<SendPortfolio> {
             override fun onResponse(call: Call<SendPortfolio>, response: Response<SendPortfolio>) {
                 if(response.isSuccessful){
-                    Log.d("editProfile test success", response.body().toString())
-                    startActivity(intent)
+                    Log.d("postPortfolio test success", response.body().toString())
+                    finish()
                 }else{
-                    Log.d("editProfile test", "success but something error")
+                    Log.d("postPortfolio test", "success but something error")
                 }
             }
             override fun onFailure(call: Call<SendPortfolio>, t: Throwable) {

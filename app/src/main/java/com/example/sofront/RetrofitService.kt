@@ -32,7 +32,7 @@ interface RetrofitService {
     @GET("/workout/planGet/{planName}/plan") //플랜이름으로 받아오기
     fun getPlanByPlanName(@Path("planName") planName : String) : Call<Plan>
 
-    @GET("/planGet/{uid}/UID") //uid로 플랜 가져오기
+    @GET("/workout/planGet/{uid}/UID") //uid로 플랜 가져오기
     fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
 
     @GET("/workout/plan/all/{uid}")
@@ -44,7 +44,7 @@ interface RetrofitService {
     @GET("/profiles/get_portfolio/{uid}") //uid로 포트폴리오 가져오기
     fun getPortfolio(@Path("uid") uid:String) : Call<ArrayList<Portfolio>>
 
-    @GET("/portfolio/subscription/{uid}") //uid로 구독 목록 가져오기
+    @GET("subscription/portfolio/{uid}") //uid로 구독 목록 가져오기
     fun getSubscribingPortfolio(@Path("uid")uid: String) : Call<ArrayList<Portfolio>>
 
     @POST("/plan/like") //플랜 이름으로 좋아요 보내기
@@ -73,7 +73,7 @@ interface RetrofitService {
 
     companion object{
         //var gson = GsonBuilder().setLenient().create()
-        private const val BASE_URL = "http://985e-49-142-63-121.ngrok.io"
+        private const val BASE_URL = "http://e1e7-219-255-158-172.ngrok.io"
 
         val retrofitService = create()
 
