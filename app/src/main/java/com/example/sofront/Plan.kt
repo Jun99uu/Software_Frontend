@@ -49,3 +49,5 @@ data class Comment(
     var writerProfileImg:String, //댓글 작성자 프사
     var commentContent:String //댓글 내용
 ) : Serializable
+
+//쓴사람 uid, 쓴사람 이름, 댓글날짜, 내용

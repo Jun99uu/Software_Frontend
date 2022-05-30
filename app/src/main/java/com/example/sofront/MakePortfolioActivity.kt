@@ -89,6 +89,7 @@ class MakePortfolioActivity : AppCompatActivity() {
                                 currentImageUri
                             )
                             afterImageView?.setImageBitmap(bitmap)
+                            file = converter.bitmapToString(bitmap)
                             afterView.visibility = View.VISIBLE
                             beforeView.visibility = View.GONE
                         } else {
@@ -161,7 +162,7 @@ class MakePortfolioActivity : AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<SendPortfolio>, t: Throwable) {
-                Log.d("editPortfolio test", "fail")
+                Log.d("postPortfolio test", "fail")
             }
         })
     }
