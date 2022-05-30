@@ -29,3 +29,8 @@ data class subscribeProfile(
     var hostUid:String,
     var myUid:String
 )
+
+data class certainProfile(
+    var name:String,
+    var profileImg: String
+)

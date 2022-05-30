@@ -8,10 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class CollectionTabAdapter(private var hashList: ArrayList<String>): RecyclerView.Adapter<CollectionTabAdapter.MyViewHolder>() {
+class CollectionTabAdapter(private var hashList: ArrayList<String>, private var summaryList:ArrayList<ArrayList<summaryPlan>>): RecyclerView.Adapter<CollectionTabAdapter.MyViewHolder>() {
     lateinit var context:Context
     var position = 0
     var firstTitle = ""
@@ -22,6 +26,7 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>): RecyclerVie
 
         val firstPlanLayout: ConstraintLayout = itemView.findViewById(R.id.first_pc_layout)
         val secondPlanLayout: ConstraintLayout = itemView.findViewById(R.id.second_pc_layout)
+        val noViewLayout: TextView = itemView.findViewById(R.id.no_view)
 
         val firstPlanTitle: TextView = itemView.findViewById(R.id.first_pc_title)
         val firstPlanDays: TextView = itemView.findViewById(R.id.first_pc_days)
@@ -38,6 +43,7 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>): RecyclerVie
         val detailBtn: Button = itemView.findViewById(R.id.detail_collection_btn)
         fun bind(item:String){
             tabTitle.text = "#${item}"
+
         }
     }
 
@@ -52,79 +58,129 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>): RecyclerVie
 
     override fun onBindViewHolder(holder: CollectionTabAdapter.MyViewHolder, position: Int) {
         holder.bind(hashList[position])
-        var plans = ArrayList<Plan>()
-
-        //임시 객체 생성
-        val tmpHash = ArrayList<String>()
-        tmpHash.add("안녕")
-        tmpHash.add("그래")
-        tmpHash.add("잘가")
-        tmpHash.add("하하")
-        tmpHash.add("깃허브")
-        val routineList = ArrayList<Routine>()
-        val initSet = ArrayList<Set>()
-        initSet.add(Set(1,10))
-        initSet.add(Set(1,10))
-        initSet.add(Set(1,10))
-        initSet.add(Set(1,10))
-        initSet.add(Set(1,10))
-        val initWorkout = ArrayList<Workout>()
-        initWorkout.add(Workout("바보운동", 5, initSet))
-        initWorkout.add(Workout("바보운동", 5, initSet))
-        initWorkout.add(Workout("바보운동", 5, initSet))
-        routineList.add(Routine(false, initWorkout))
-        routineList.add(Routine(false, initWorkout))
-        routineList.add(Routine(false, initWorkout))
-        routineList.add(Routine(false, initWorkout))
-        val tmpPlan = Plan("하이", tmpHash, routineList, "사람uid", false, 0,0 ,0)
-        plans.add(tmpPlan)
-        plans.add(tmpPlan)
-        plans.add(tmpPlan)
         val tmpCommentList = ArrayList<Comment>()
 //        tmpCommentList.add(Comment("하이", "12345", "홍길동","2022-05-25 | 10:18", "ㅎㅇ", "하잉요오오ㅗ"))
 
 
 //        TODO 아래주석 서버 통신 + 바인딩 구문
-//        plans = RetrofitService._getPlanByHashTag(hashList[position])
 
-        if(plans[0].planName.length > 7) firstTitle = plans[0].planName.substring(0,6) + "…"
-        else firstTitle = plans[0].planName
-        if(plans[1].planName.length > 7) secondTitle = plans[1].planName.substring(0,6) + "…"
-        else secondTitle = plans[1].planName
+        if(summaryList[position].size > 2) {
+            if (summaryList[position][0].planName.length > 7) firstTitle =
+                summaryList[position][0].planName.substring(0, 6) + "…"
+            else firstTitle = summaryList[position][0].planName
+            if (summaryList[position][1].planName.length > 7) secondTitle =
+                summaryList[position][1].planName.substring(0, 6) + "…"
+            else secondTitle = summaryList[position][1].planName
 
-        holder.firstPlanTitle.text = firstTitle
-        holder.firstPlanDays.text = "${plans[0].routineList.size}days"
-        holder.firstPlanDowns.text = plans[0].downLoadNum.toString()
-        holder.firstPlanComment.text = plans[0].commentNum.toString()
-        holder.firstplanLike.text = plans[0].likeNum.toString()
+            holder.firstPlanTitle.text = firstTitle
+            holder.firstPlanDays.text = "${summaryList[position][0].planDay}days"
+            holder.firstPlanDowns.text = summaryList[position][0].downLoadNum.toString()
+            holder.firstPlanComment.text = summaryList[position][0].commentNum.toString()
+            holder.firstplanLike.text = summaryList[position][0].likeNum.toString()
 
-        holder.secondPlanTitle.text = secondTitle
-        holder.secondPlanDays.text = "${plans[1].routineList.size}days"
-        holder.secondPlanDowns.text = plans[1].downLoadNum.toString()
-        holder.secondPlanComment.text = plans[1].commentNum.toString()
-        holder.secondplanLike.text = plans[1].likeNum.toString()
+            holder.secondPlanTitle.text = secondTitle
+            holder.secondPlanDays.text = "${summaryList[position][1].planDay}days"
+            holder.secondPlanDowns.text = summaryList[position][1].downLoadNum.toString()
+            holder.secondPlanComment.text = summaryList[position][1].commentNum.toString()
+            holder.secondplanLike.text = summaryList[position][1].likeNum.toString()
 
-        val intent = Intent(context, PlanDetailViewActivity::class.java)
-        holder.firstPlanLayout.setOnClickListener{
-            intent.putExtra("plan", plans[0])
-            intent.putExtra("comments", tmpCommentList)
-            context.startActivity(intent)
-        }
-        holder.secondPlanLayout.setOnClickListener{
-            intent.putExtra("plan", plans[1])
-            intent.putExtra("comments", tmpCommentList)
-            context.startActivity(intent)
+            val intent = Intent(context, PlanDetailViewActivity::class.java)
+            holder.firstPlanLayout.setOnClickListener {
+                intent.putExtra("comments", tmpCommentList)
+                _getPlanByPlanName(summaryList[position][0].planName, intent)
+            }
+            holder.secondPlanLayout.setOnClickListener {
+                intent.putExtra("comments", tmpCommentList)
+                _getPlanByPlanName(summaryList[position][1].planName, intent)
+            }
+        }else if(summaryList[position].size == 2){
+            if (summaryList[position][0].planName.length > 7) firstTitle =
+                summaryList[position][0].planName.substring(0, 6) + "…"
+            else firstTitle = summaryList[position][0].planName
+            if (summaryList[position][1].planName.length > 7) secondTitle =
+                summaryList[position][1].planName.substring(0, 6) + "…"
+            else secondTitle = summaryList[position][1].planName
+
+            holder.firstPlanTitle.text = firstTitle
+            holder.firstPlanDays.text = "${summaryList[position][0].planDay}days"
+            holder.firstPlanDowns.text = summaryList[position][0].downLoadNum.toString()
+            holder.firstPlanComment.text = summaryList[position][0].commentNum.toString()
+            holder.firstplanLike.text = summaryList[position][0].likeNum.toString()
+
+            holder.secondPlanTitle.text = secondTitle
+            holder.secondPlanDays.text = "${summaryList[position][1].planDay}days"
+            holder.secondPlanDowns.text = summaryList[position][1].downLoadNum.toString()
+            holder.secondPlanComment.text = summaryList[position][1].commentNum.toString()
+            holder.secondplanLike.text = summaryList[position][1].likeNum.toString()
+
+            val intent = Intent(context, PlanDetailViewActivity::class.java)
+            holder.firstPlanLayout.setOnClickListener {
+                intent.putExtra("comments", tmpCommentList)
+                _getPlanByPlanName(summaryList[position][0].planName, intent)
+            }
+            holder.secondPlanLayout.setOnClickListener {
+                intent.putExtra("comments", tmpCommentList)
+                _getPlanByPlanName(summaryList[position][1].planName, intent)
+            }
+            holder.detailBtn.visibility = View.INVISIBLE
+        }else if(summaryList[position].size == 1){
+            if (summaryList[position][0].planName.length > 7) firstTitle =
+                summaryList[position][0].planName.substring(0, 6) + "…"
+            else firstTitle = summaryList[position][0].planName
+            holder.firstPlanTitle.text = firstTitle
+            holder.firstPlanDays.text = "${summaryList[position][0].planDay}days"
+            holder.firstPlanDowns.text = summaryList[position][0].downLoadNum.toString()
+            holder.firstPlanComment.text = summaryList[position][0].commentNum.toString()
+            holder.firstplanLike.text = summaryList[position][0].likeNum.toString()
+
+            val intent = Intent(context, PlanDetailViewActivity::class.java)
+            holder.firstPlanLayout.setOnClickListener {
+                intent.putExtra("comments", tmpCommentList)
+                _getPlanByPlanName(summaryList[position][0].planName, intent)
+            }
+
+            holder.secondPlanLayout.visibility = View.INVISIBLE
+            holder.detailBtn.visibility = View.INVISIBLE
+        }else if(summaryList[position].size == 0){
+            holder.firstPlanLayout.visibility = View.INVISIBLE
+            holder.secondPlanLayout.visibility = View.INVISIBLE
+            holder.detailBtn.visibility = View.INVISIBLE
+            holder.noViewLayout.visibility = View.VISIBLE
         }
 
         val intentToDetail = Intent(context, PlanCollectionDetailActivity::class.java)
         holder.detailBtn.setOnClickListener{
             intentToDetail.putExtra("hashtag",hashList[position])
-            intentToDetail.putExtra("plans", plans)
+            intentToDetail.putExtra("plans", summaryList[position])
             context.startActivity(intentToDetail)
         }
     }
 
     override fun getItemCount(): Int {
         return hashList.size
+    }
+
+    fun _getPlanByPlanName(planName:String, intent:Intent) {
+        var myPlan = Plan("", ArrayList(), ArrayList(), "", true, 0, 0, 0)
+        RetrofitService.retrofitService.getPlanByPlanName(planName).enqueue(object :
+            Callback<Plan> {
+            override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
+                if (response.isSuccessful) {
+                    Log.d("getPlan test", "success")
+                    Log.d("getPlan test success", response.body().toString())
+                    myPlan = response.body()!!
+                    intent.putExtra("plan", myPlan) // 여기 자세한 정보로
+                    Log.d("플랜", myPlan.toString())
+                    context.startActivity(intent)
+                } else {
+                    Log.d("getPlan test", "success but something error")
+                    Toast.makeText(context, "뭔가 오류가 발생했어요😱", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<Plan>, t: Throwable) {
+                Log.d("getPlan test", "fail")
+                Toast.makeText(context, "예상치 못한 오류가 발생했어요😱", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

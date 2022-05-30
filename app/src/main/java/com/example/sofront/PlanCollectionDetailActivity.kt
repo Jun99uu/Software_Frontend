@@ -7,8 +7,8 @@ import com.example.sofront.databinding.ActivityPlanCollectionDetailBinding
 
 class PlanCollectionDetailActivity : AppCompatActivity() {
     lateinit var hashTag:String
-    lateinit var plans:ArrayList<Plan>
-    lateinit var adapter:ProfilePlanAdapter
+    lateinit var plans:ArrayList<summaryPlan>
+    lateinit var adapter:PlanCollectionDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,8 +16,8 @@ class PlanCollectionDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         hashTag = "#${intent.getStringExtra("hashtag").toString()}"
-        plans = intent.getSerializableExtra("plans") as ArrayList<Plan>
-        adapter = ProfilePlanAdapter(plans)
+        plans = intent.getSerializableExtra("plans") as ArrayList<summaryPlan>
+        adapter = PlanCollectionDetailAdapter(plans)
 
         binding.hashTitle.text = hashTag
         binding.hashDetailRc.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
