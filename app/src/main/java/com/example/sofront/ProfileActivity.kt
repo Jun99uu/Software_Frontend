@@ -65,13 +65,14 @@ class ProfileActivity : AppCompatActivity() {
             if(true){
                 val intent = Intent(this, EditProfileActivity::class.java)
                 //프로필사진, 배경사진(비트맵) _ 보고있는 프로필의 uid, 이름, 소개글(String)으로 넘겨줘야함.
+                binding.makePortfolioBtn.visibility = View.GONE
                 intent.putExtra("nickname", profile.name)
                 intent.putExtra("subtitle", profile.subTitle)
                 intent.putExtra("profileImg", profile.profileImg)
                 intent.putExtra("background", profile.backgroundImg)
                 startActivity(intent)
             }else{
-                //구독
+
             }
         }
 

@@ -47,7 +47,7 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.comment_item, parent, false)
         context = parent.context
-        return MyViewHolder(view,context)
+        return MyViewHolder(view, context)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -113,5 +113,9 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
         val intent = Intent(context, ProfileActivity::class.java)
         intent.putExtra("UID", uid)
         context.startActivity(intent)
+    }
+
+    fun addItem(comment:Comment){
+        commentList.add(comment)
     }
 }

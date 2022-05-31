@@ -18,43 +18,42 @@ class PlanCollectionFragment : Fragment() {
     private val binding get() = mBinding!!
     lateinit var adapter:CollectionTabAdapter
     private val linearLayoutManager by lazy { LinearLayoutManager(activity) }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         mBinding = FragmentPlanCollectionBinding.inflate(layoutInflater)
-        var itemList = ArrayList<String>()
-        itemList.add("유산소")
-        itemList.add("가슴")
-        itemList.add("등")
-        itemList.add("어깨")
-        itemList.add("하체")
-        itemList.add("팔")
-        binding.plantabMenu.layoutManager = linearLayoutManager
-        adapter = CollectionTabAdapter(itemList)
-        binding.plantabMenu.adapter = adapter
-        binding.plantabMenu.addItemDecoration(VerticalItemDecorator(40))
+        _getPlanByHashTag()
         return binding.root
     }
 
-    fun _getPlanByHashTag(hashTag: String) : ArrayList<Plan>{
-        var myPlan = ArrayList<Plan>()
-        RetrofitService.retrofitService.getPlanByHashTag(hashTag).enqueue(object :
-            Callback<ArrayList<Plan>> {
-            override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
+    fun _getPlanByHashTag(){
+        var myPlan:ArrayList<ArrayList<summaryPlan>>
+        var itemList = ArrayList<String>()
+        itemList.add("가슴")
+        itemList.add("등")
+        itemList.add("하체")
+        itemList.add("어깨")
+        itemList.add("팔")
+        itemList.add("유산소")
+        RetrofitService.retrofitService.getPlanByHashTag().enqueue(object : Callback<ArrayList<ArrayList<summaryPlan>>> {
+            override fun onResponse(call: Call<ArrayList<ArrayList<summaryPlan>>>, response: Response<ArrayList<ArrayList<summaryPlan>>>) {
                 if (response.isSuccessful) {
-                    Log.d("getPlan test success", response.body().toString())
+                    Log.d("getPlan by hashtag test success", response.body().toString())
                     myPlan = response.body()!!
+                    binding.plantabMenu.layoutManager = linearLayoutManager
+                    adapter = CollectionTabAdapter(itemList, myPlan)
+                    binding.plantabMenu.adapter = adapter
+                    binding.plantabMenu.addItemDecoration(VerticalItemDecorator(40))
+                    adapter.notifyDataSetChanged()
                 } else {
-                    Log.d("getPlan test", "success but something error")
+                    Log.d("getPlan by hashtag test", "success but something error")
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
-                Log.d("getPlan test", "fail")
+            override fun onFailure(call: Call<ArrayList<ArrayList<summaryPlan>>>, t: Throwable) {
+                Log.d("getPlan by hashtag test", "fail")
             }
         })
-        return myPlan
     }
 }
