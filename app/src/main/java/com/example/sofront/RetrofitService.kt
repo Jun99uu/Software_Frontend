@@ -92,6 +92,9 @@ interface RetrofitService {
     @DELETE("/workout/planDel/{planName}")
     fun deletePlanByPlanName(@Path("planName") planName:String) : Call<String>
 
+    @POST("/workout/plan/download")
+    fun downloadPlanByPlanName(@Body downloadPlan: planDownload) : Call<planDownload>
+
     companion object{
         private const val BASE_URL = "http://5f82-219-255-158-172.ngrok.io"
 

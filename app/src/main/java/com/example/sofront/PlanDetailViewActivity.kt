@@ -136,7 +136,10 @@ class PlanDetailViewActivity : AppCompatActivity() {
             builder.show()
         }
 
-        binding.downloadPlanBtn
+        binding.downloadPlanBtn.setOnClickListener {
+            val download = planDownload(myUid, planName)
+            _downloadPlan(download)
+        }
     }
     fun CloseKeyboard()
     {
@@ -259,7 +262,22 @@ class PlanDetailViewActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.d("plan delete", "fail")
-                Log.e("ㅅㅂ", t.toString())
+                startActivity(intent)
+            }
+        })
+    }
+
+    fun _downloadPlan(plan:planDownload){
+        RetrofitService.retrofitService.downloadPlanByPlanName(plan).enqueue(object: Callback<planDownload>{
+            override fun onResponse(call: Call<planDownload>, response: Response<planDownload>) {
+                if(response.isSuccessful){
+                    Log.d("plan save", "success")
+                }else {
+                    Log.d("plan save", "success but something error")
+                }
+            }
+            override fun onFailure(call: Call<planDownload>, t: Throwable) {
+                Log.d("plan save", "fail")
             }
         })
     }
