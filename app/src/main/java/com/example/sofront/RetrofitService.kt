@@ -78,7 +78,6 @@ interface RetrofitService {
     fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
     @DELETE("/profiles/delete_comments/{commentID}")
     fun deletePortfolioComment(@Path("commentID") commentID : String) : Call<Comment>
-    @DELETE("/plan/comment/del/{commentN}")
 
     @DELETE("/workout/plan/comment/del/{commentN}")
     fun deletePlanComment(@Path("commentN") commmentN : String) : Call<Comment>
