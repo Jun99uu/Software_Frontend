@@ -43,6 +43,11 @@ class HeartFragment : Fragment() {
                 response: Response<ArrayList<Portfolio>>
             ) {
                 if (response.isSuccessful) {
+                    if(response.body()!!.size==0){
+                        binding.heartPortfolioRv.visibility = View.GONE
+                        binding.noSubscribe.visibility = View.VISIBLE
+
+                    }
                     Log.d("getSubscribingPortfolio test success", response.body().toString())
                     for(item in response.body()!!) {
                         adapter.addItem(item)
