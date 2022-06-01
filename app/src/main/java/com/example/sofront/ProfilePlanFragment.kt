@@ -38,7 +38,6 @@ class ProfilePlanFragment(val myUid : String) : Fragment() {
 
     fun listenPlan(listendPlans:ArrayList<Plan>){
         //서버에서 받아온 플랜리스트 여기에 파라미터로 넣어주기
-        Log.d("시발", listendPlans.toString())
         binding.profilePlanRecycler.layoutManager = linearLayoutManager
         adapter = ProfilePlanAdapter(listendPlans)
         binding.profilePlanRecycler.adapter = adapter
@@ -50,11 +49,12 @@ class ProfilePlanFragment(val myUid : String) : Fragment() {
 
     fun _getPlanByUid(){
         var myPlan = ArrayList<Plan>()
-        RetrofitService.retrofitService.getMyPlanInProfile(myUid).enqueue(object : Callback<ArrayList<Plan>> {
+        RetrofitService.retrofitService.getMyPlanInProfile(myUid!!, myUid).enqueue(object : Callback<ArrayList<Plan>> {
             override fun onResponse(call: Call<ArrayList<Plan>>, response: Response<ArrayList<Plan>>) {
                 if (response.isSuccessful) {
                     Log.d("getPlan test", "success")
                     myPlan = response.body()!!
+                    Log.d("씨이발", response.body().toString())
                     if(myPlan.size > 0){
                         listenPlan(myPlan)
                     }

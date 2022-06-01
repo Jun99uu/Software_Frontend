@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.FragmentCalendarDialogBinding
 import com.example.sofront.databinding.FragmentCalendarPlanBottomSheetListDialogBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.prolificinteractive.materialcalendarview.CalendarDatabase
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.CalendarEntity
@@ -31,6 +33,8 @@ private const val ARG_PARAM2 = "param2"
 
 
 class CalendarDialogFragment(private val date : CalendarDay,private val planEntity: CalendarEntity) : DialogFragment(){
+    val user = Firebase.auth.currentUser
+    val myUid = user!!.uid
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -93,7 +97,7 @@ class CalendarDialogFragment(private val date : CalendarDay,private val planEnti
         Log.d("CalendarDialogFragment","onResume")
     }
     fun getRoutineByPlanName(planName : String){
-        RetrofitService.retrofitService.getPlanByPlanName(planName).enqueue(object :
+        RetrofitService.retrofitService.getPlanByPlanName(planName, myUid).enqueue(object :
             Callback<Plan> {
             override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
                 if (response.isSuccessful) {

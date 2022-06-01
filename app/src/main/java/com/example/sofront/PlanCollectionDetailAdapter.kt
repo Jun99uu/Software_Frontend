@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,6 +24,7 @@ class PlanCollectionDetailAdapter(
     lateinit var context: Context
     var position = 0
     val tmpCommentList = ArrayList<Comment>()
+    val uid = Firebase.auth.currentUser!!.uid
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val planImage : CircleImageView = itemView.findViewById(R.id.plan_profile_img)
@@ -68,7 +71,7 @@ class PlanCollectionDetailAdapter(
 
     fun _getPlanByPlanName(planName:String, intent:Intent) {
         var myPlan = Plan("", ArrayList(), ArrayList(), "", true, 0, 0, 0)
-        RetrofitService.retrofitService.getPlanByPlanName(planName).enqueue(object :
+        RetrofitService.retrofitService.getPlanByPlanName(planName, uid).enqueue(object :
             Callback<Plan> {
             override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
                 if (response.isSuccessful) {

@@ -36,9 +36,9 @@ data class planDownload(
     var downloaderUid:String,
 )
 
-data class planLike(
-    var planName:String,
-    var likerUid:String
+data class PlanLike(
+    var UID:String,
+    var planName:String
 )
 
 data class Comment(
