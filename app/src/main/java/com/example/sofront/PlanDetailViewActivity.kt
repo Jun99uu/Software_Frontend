@@ -138,7 +138,11 @@ class PlanDetailViewActivity : AppCompatActivity() {
 
         binding.downloadPlanBtn.setOnClickListener {
             val download = planDownload(myUid, planName)
-            _downloadPlan(download)
+            if(myUid.equals(planUid)){
+                Toast.makeText(this, "내가 만든 플랜은 다운받을 수 없어요😨",Toast.LENGTH_SHORT).show()
+            }else{
+                _downloadPlan(download)
+            }
         }
     }
     fun CloseKeyboard()
