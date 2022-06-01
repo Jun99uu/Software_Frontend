@@ -59,24 +59,52 @@ class ProfileActivity : AppCompatActivity() {
         if(thisUid.equals(myUid)){
             //현재 uid와 들어온 프로필의 uid가 같다면
             binding.suboreditBtn.text = "편집"
+            binding.makePortfolioBtn.setOnClickListener{
+                val intent = Intent(this, MakePortfolioActivity::class.java)
+                startActivity(intent)
+            }
+
+        }
+        else{
+            binding.makePortfolioBtn.visibility = View.GONE
         }
 
         binding.suboreditBtn.setOnClickListener{
-            if(true){
-                val intent = Intent(this, EditProfileActivity::class.java)
+            if(thisUid.equals(myUid)){
+
                 //프로필사진, 배경사진(비트맵) _ 보고있는 프로필의 uid, 이름, 소개글(String)으로 넘겨줘야함.
-                binding.makePortfolioBtn.visibility = View.GONE
+//                binding.makePortfolioBtn.visibility = View.GONE
                 intent.putExtra("nickname", profile.name)
                 intent.putExtra("subtitle", profile.subTitle)
                 intent.putExtra("profileImg", profile.profileImg)
                 intent.putExtra("background", profile.backgroundImg)
-                startActivity(intent)
-            }else{
 
+            }else{
+                val subScribeProfile = subscribeProfile(thisUid,myUid)
+                RetrofitService.retrofitService.postSubscribe(subScribeProfile).enqueue(object : Callback<subscribeProfile>{
+                    override fun onResponse(
+                        call: Call<subscribeProfile>,
+                        response: Response<subscribeProfile>
+                    ) {
+                        if(response.isSuccessful){
+                            Log.d("postSubscribe success", response.body().toString())
+                            binding.suboreditBtn.text = "구독중"
+                        }
+                        else{
+                            Log.e("postSubscribe success","but something error")
+                            Log.e("postSubscribe error code",response.code().toString())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<subscribeProfile>, t: Throwable) {
+                        Log.e("postSubsctibe fail",t.message.toString())
+                    }
+
+                })
             }
         }
 
-        val fragmentList = listOf(ProfilePortfolioFragment(), ProfilePlanFragment())
+        val fragmentList = listOf(ProfilePortfolioFragment(thisUid), ProfilePlanFragment(thisUid))
         val adapter = ProfileVPAdapter(this)
         adapter.fragments = fragmentList
         binding.profileMainSheet.adapter = adapter
