@@ -62,10 +62,10 @@ interface RetrofitService {
     @GET("profiles/get_profile/{UID}/{myUID}") //회원 uid로 프로필 정보 받아오기
     fun getProfile(@Path("UID") UID:String, @Path("myUID") myUID:String) : Call<Profile>
 
-    @PUT("profiles/modify_profile/{UID}") //프로필 수정
+    @PUT("/profiles/modify_profile/{UID}") //프로필 수정
     fun editProfile(@Path("UID") UID:String, @Body editProfile:editProfile) : Call<editProfile>
 
-    @POST("/subscribe") //구독하기
+    @POST("/profiles/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
     @GET("/profiles/get_comments/{portfolioID}")
@@ -74,15 +74,14 @@ interface RetrofitService {
     @POST("/profiles/post_comments/")
     fun postPortfolioComment(@Body comment: Comment) : Call<Comment>
 
-    @POST("profiles/makes_portfolios/")
+    @POST("/profiles/makes_portfolios/")
     fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
-    @DELETE("profiles/delete_comments/{commentID}")
+    @DELETE("/profiles/delete_comments/{commentID}")
     fun deletePortfolioComment(@Path("commentID") commentID : String) : Call<Comment>
 
     @DELETE("/workout/plan/comment/del/{commentN}")
     fun deletePlanComment(@Path("commentN") commmentN : String) : Call<Comment>
-
-    @POST("profiles/portfolio_like")
+    @POST("/profiles/portfolio_like")
     fun postPortfolioLike(@Body like : PortfolioLike) : Call<PortfolioLike>
     fun deleteComment(@Path("commentID") commentID : String) : Call<Comment>
 
@@ -264,10 +263,11 @@ interface RetrofitService {
                     response: Response<ArrayList<Portfolio>>
                 ) {
                     if (response.isSuccessful) {
-                        Log.d("getPortfolio test success", response.body().toString())
+                        Log.d("getSubscribingPortfolio test success", response.body().toString())
                         myPortfolio = response.body()!!
                     } else {
-                        Log.d("getPortfolio test", "success but something error")
+                        Log.e("getSubscribingPortfolio test", "success but something error")
+                        Log.e("getSubscribingPortfolio error code", response.code().toString())
                     }
                 }
 

@@ -47,7 +47,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = ActivityProfileBinding.inflate(layoutInflater)
 
         _getProfile(myUid)
@@ -79,7 +79,7 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
-        val fragmentList = listOf(ProfilePortfolioFragment(), ProfilePlanFragment())
+        val fragmentList = listOf(ProfilePortfolioFragment(myUid), ProfilePlanFragment(myUid))
         val adapter = ProfileVPAdapter(requireActivity())
         adapter.fragments = fragmentList
         binding.profileMainSheet.adapter = adapter

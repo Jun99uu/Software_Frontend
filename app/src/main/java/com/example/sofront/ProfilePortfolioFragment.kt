@@ -1,5 +1,6 @@
 package com.example.sofront
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -21,22 +22,22 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.sql.Blob
 
-class ProfilePortfolioFragment : Fragment() {
+class ProfilePortfolioFragment(val myUid : String) : Fragment() {
     private var mBinding: FragmentProfilePortfolioBinding? = null
     private val binding get() = mBinding!!
 
     lateinit var recyclerView : RecyclerView
     lateinit var portfolioList : ArrayList<Portfolio>
     lateinit var adapter : ProfilePortfolioRecyclerViewAdapter
-    val user = Firebase.auth.currentUser
-    val myUid = user?.uid.toString()
+//    val user = Firebase.auth.currentUser
+//    val myUid = user?.uid.toString()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        mBinding = FragmentProfilePortfolioBinding.inflate(inflater,container,false)
+        mBinding = FragmentProfilePortfolioBinding.inflate(layoutInflater)
         recyclerView = binding.profilePortfolioRv
         setRecyclerView()
         _getPortfolio(myUid)
@@ -69,12 +70,14 @@ class ProfilePortfolioFragment : Fragment() {
                         updatePortfolio()
                     }
                 } else {
-                    Log.d("getPortfolio test", "success but something error")
+                    Log.e("getPortfolio test", "success but something error")
+                    Log.e("getPortfolio error code",response.code().toString())
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<Portfolio>>, t: Throwable) {
-                Log.d("getPortfolio test", "fail")
+                Log.e("getPortfolio", "fail")
+                Log.e("getPortfolio",t.message.toString())
             }
 
         })

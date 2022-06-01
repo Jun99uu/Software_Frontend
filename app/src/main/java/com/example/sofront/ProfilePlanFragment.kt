@@ -1,35 +1,30 @@
 package com.example.sofront
 
-import android.R
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sofront.databinding.ActivityProfileBinding
 import com.example.sofront.databinding.FragmentProfilePlanBinding
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class ProfilePlanFragment : Fragment() {
+class ProfilePlanFragment(val myUid : String) : Fragment() {
     private var mBinding: FragmentProfilePlanBinding? = null
     private val binding get() = mBinding!!
     private var planList = ArrayList<Plan>()
     private val linearLayoutManager by lazy { LinearLayoutManager(activity) }
     private lateinit var adapter: ProfilePlanAdapter
-    val myUid = Firebase.auth.currentUser?.uid
+//    val myUid = Firebase.auth.currentUser?.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = FragmentProfilePlanBinding.inflate(layoutInflater)
 
         if(myUid != null){
