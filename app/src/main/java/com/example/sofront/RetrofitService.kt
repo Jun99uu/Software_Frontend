@@ -29,14 +29,14 @@ interface RetrofitService {
     @POST("/workout/planSet") //플랜 생성
     fun setPlan(@Body Plan: Plan): Call<Plan>
 
-    @GET("/workout/planGet/{planName}/plan") //플랜이름으로 받아오기
-    fun getPlanByPlanName(@Path("planName") planName : String) : Call<Plan>
+    @GET("/workout/planGet/{planName}/{UID}/plan") //플랜이름으로 받아오기 UID는 내 UID
+    fun getPlanByPlanName(@Path("planName") planName : String, @Path("UID") UID:String) : Call<Plan>
 
     @GET("/workout/planGet/{uid}/UID") //uid로 플랜 가져오기
     fun getPlanByUid(@Path("uid") uid:String) : Call<ArrayList<Plan>>
 
-    @GET("/workout/plan/my/{UID}") //내 프로필 안에서 플랜 받아오기
-    fun getMyPlanInProfile(@Path("UID") UID:String) : Call<ArrayList<Plan>>
+    @GET("/workout/plan/my/{UID}/{myUID}") //내 프로필 안에서 플랜 받아오기 앞에가 프로필 주인 뒤에가 내 uid
+    fun getMyPlanInProfile(@Path("UID", ) UID:String, @Path("myUID") myUID : String) : Call<ArrayList<Plan>>
 
     @GET("/workout/plan/all/{uid}")
     fun getDownloadPlan(@Path("uid") uid : String) : Call<ArrayList<Plan>>
@@ -50,8 +50,8 @@ interface RetrofitService {
     @GET("/profiles/subscribe/portfolio/{uid}") //uid로 구독 목록 가져오기
     fun getSubscribingPortfolio(@Path("uid")uid: String) : Call<ArrayList<Portfolio>>
 
-    @POST("/plan/like") //플랜 이름으로 좋아요 보내기
-    fun postLike(@Body planLike:planLike) : Call<planLike>
+    @POST("/workout/plan/like") //플랜 이름으로 좋아요 보내기
+    fun postLike(@Body planLike:PlanLike) : Call<PlanLike>
 
     @POST("/workout/plan/comment") //플랜에서 댓글 작성
     fun postCommentInPlan(@Body comment:planComment) : Call<planComment>
@@ -86,6 +86,9 @@ interface RetrofitService {
 
     @GET("/profiles/img/name/{UID}")
     fun getCertainProfile(@Path("UID") UID: String) : Call<certainProfile>
+
+    @DELETE("/workout/planDel/{planName}")
+    fun deletePlanByPlanName(@Path("planName") planName:String) : Call<String>
 
     companion object{
         //var gson = GsonBuilder().setLenient().create()
@@ -197,25 +200,6 @@ interface RetrofitService {
             })
         }
 
-        fun _getPlanByPlanName(planName:String) : Plan {
-            var myPlan = Plan("", ArrayList(), ArrayList(), "", true, 0, 0, 0)
-            retrofitService.getPlanByPlanName(planName).enqueue(object : Callback<Plan> {
-                override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
-                    if (response.isSuccessful) {
-                        Log.d("getPlan test", "success")
-                        Log.d("getPlan test success", response.body().toString())
-                        myPlan = response.body()!!
-                    } else {
-                        Log.d("getPlan test", "success but something error")
-                    }
-                }
-
-                override fun onFailure(call: Call<Plan>, t: Throwable) {
-                    Log.d("getPlan test", "fail")
-                }
-            })
-            return myPlan
-        }
         fun _getDownloadPlanUsingExecute(uid:String) : ArrayList<Plan>{
             val body = retrofitService.getDownloadPlan(uid).execute().body()
             if(body == null){

@@ -1,6 +1,7 @@
 package com.example.sofront
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.sofront.databinding.ActivityPlanDetailViewBinding
@@ -39,6 +41,8 @@ class PlanDetailViewActivity : AppCompatActivity() {
     private val binding get() = mBinding!!
     val defaultImg = R.drawable.gymdori
     var state = false
+    var likedState = false
+    var prevLikenum = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +56,16 @@ class PlanDetailViewActivity : AppCompatActivity() {
         planName = plan.planName
         commentNum = plan.commentNum
         likeNum = plan.likeNum
+        prevLikenum = likeNum //이전좋아요 수
         downNum = plan.downLoadNum
+        val planLike = PlanLike(myUid, planName)
+
+        Log.d("썅", plan.toString())
+        binding.heartNum.text = likeNum.toString()
+        if(plan.liked) {
+            binding.heartIc.setBackgroundResource(R.drawable.ic_heart_fill)
+            likedState = true
+        }
 
         _getCertainProfile(plan.makerUid)
 
@@ -67,6 +80,9 @@ class PlanDetailViewActivity : AppCompatActivity() {
         binding.downNum.text = downNum.toString()
         binding.heartNum.text = likeNum.toString()
         //TODO 이미지, 플랜 작성자 바인딩해야됨
+
+        val backIntent = Intent(this, HomeActivity::class.java)
+        backIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         binding.detailProfileImg.setOnClickListener{
             if(state){
@@ -96,6 +112,28 @@ class PlanDetailViewActivity : AppCompatActivity() {
             CloseKeyboard()
             commentAdapter.addItem(commentItem)
             commentAdapter.notifyDataSetChanged()
+        }
+
+        binding.heartIc.setOnClickListener{
+            Log.d("시발ㅅㅂ", planLike.toString())
+            _postPlanLike(planLike)
+        }
+
+        binding.deleteBtn.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("정말로 삭제하시겠습니까?")
+                .setMessage("삭제된 플랜은 복구하실 수 없습니다.\n정말로 삭제하시겠습니까?")
+                .setPositiveButton("확인",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        //확인클릭
+                        _deletePlanByPlanName(planName, backIntent)
+                    })
+                .setNegativeButton("취소",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        //취소클릭
+                    })
+            // 다이얼로그를 띄워주기
+            builder.show()
         }
     }
     fun CloseKeyboard()
@@ -177,6 +215,48 @@ class PlanDetailViewActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<planComment>, t: Throwable) {
                 Log.d("post comment in Plan test", "fail")
+            }
+        })
+    }
+
+    fun _postPlanLike(planLike:PlanLike){
+        RetrofitService.retrofitService.postLike(planLike).enqueue(object: Callback<PlanLike>{
+            override fun onResponse(call: Call<PlanLike>, response: Response<PlanLike>) {
+                if(response.isSuccessful){
+                    Log.d("post like in Plan test", "success")
+                    Log.d("post like in Plan success", response.body().toString())
+                    if(likedState){//이미 좋아요를 누른 상태에서 좋아요 눌렀음
+                        likedState = false
+                        binding.heartIc.setBackgroundResource(R.drawable.ic_heart)
+                        binding.heartNum.text = (prevLikenum-1).toString()
+                    }else{//좋아요를 누르지 않은 사람이 좋아요를 눌렀음
+                        likedState = true
+                        binding.heartIc.setBackgroundResource(R.drawable.ic_heart_fill)
+                        binding.heartNum.text = (prevLikenum+1).toString()
+                    }
+                }else {
+                    Log.d("post like in Plan test", "success but something error")
+                }
+            }
+            override fun onFailure(call: Call<PlanLike>, t: Throwable) {
+                Log.d("post like in Plan test", "fail")
+            }
+        })
+    }
+
+    fun _deletePlanByPlanName(planName:String, intent:Intent){
+        RetrofitService.retrofitService.deletePlanByPlanName(planName).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.isSuccessful){
+                    Log.d("plan delete", "success")
+                    Toast.makeText(context, "플랜이 삭제되었습니다", Toast.LENGTH_SHORT).show()
+                    startActivity(intent)
+                }else {
+                    Log.d("plan delete", "success but something error")
+                }
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("plan delete", "fail")
             }
         })
     }

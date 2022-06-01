@@ -17,7 +17,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Adapter<ProfilePlanAdapter.MyViewHolder>() {
     lateinit var context: Context
     var position = 0
-//    val tmpComment = Comment("하이", "1234", "김종국", "2022-05-24 17:23", "프사", "안녕하세요 댓글입니다.\n힘들다...")
     val tmpCommentList = ArrayList<Comment>()
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,13 +55,9 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
         holder.planHashTag.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         holder.planHashTag.adapter = ProfilePlanHashtagAdapter(planList[position].hashTagList)
         holder.itemView.setOnClickListener{
-//            tmpCommentList.add(tmpComment)
-//            tmpCommentList.add(tmpComment)
-//            tmpCommentList.add(tmpComment)
-//            tmpCommentList.add(tmpComment)
-//            tmpCommentList.add(tmpComment)
             val intent = Intent(context, PlanDetailViewActivity::class.java)
             intent.putExtra("plan", planList[position])
+            Log.d("제발요제발", planList[position].toString())
             intent.putExtra("comments", tmpCommentList)
             context.startActivity(intent)
         }
@@ -70,10 +65,6 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
 
     override fun getItemCount(): Int {
         return planList.size
-    }
-
-    fun deleteFirstItem(){
-        planList.removeAt(0)
     }
 
     fun addItem(plan:Plan){

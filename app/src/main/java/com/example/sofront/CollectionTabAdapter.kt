@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +22,7 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>, private var 
     var position = 0
     var firstTitle = ""
     var secondTitle = ""
+    val uid = Firebase.auth.currentUser!!.uid
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tabTitle: TextView = itemView.findViewById(R.id.plan_tab_title)
@@ -162,7 +165,7 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>, private var 
 
     fun _getPlanByPlanName(planName:String, intent:Intent) {
         var myPlan = Plan("", ArrayList(), ArrayList(), "", true, 0, 0, 0)
-        RetrofitService.retrofitService.getPlanByPlanName(planName).enqueue(object :
+        RetrofitService.retrofitService.getPlanByPlanName(planName, uid).enqueue(object :
             Callback<Plan> {
             override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
                 if (response.isSuccessful) {

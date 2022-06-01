@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center"
-                    android:text="내 캘린더에 저장"
+                    android:text="이 플랜 다운로드❤"
                     android:fontFamily="@font/nixgonb"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -146,7 +146,7 @@
                     android:id="@+id/heart_ic"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_heart"
+                    android:background="@drawable/ic_heart"
                     app:layout_constraintLeft_toRightOf="@id/down_num"
                     app:layout_constraintTop_toTopOf="@id/down_ic"
                     android:layout_marginLeft="10dp"/>
