@@ -135,6 +135,11 @@ class PlanDetailViewActivity : AppCompatActivity() {
             // 다이얼로그를 띄워주기
             builder.show()
         }
+
+        binding.downloadPlanBtn.setOnClickListener {
+            val download = planDownload(myUid, planName)
+            _downloadPlan(download)
+        }
     }
     fun CloseKeyboard()
     {
@@ -156,7 +161,7 @@ class PlanDetailViewActivity : AppCompatActivity() {
                     Log.d("getComment in Plan success", response.body().toString())
                     commentList = response.body()!!
                     binding.commentRc.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    commentAdapter = CommentAdapter(commentList)
+                    commentAdapter = CommentAdapter(commentList, true)
                     binding.commentRc.adapter = commentAdapter
                     commentAdapter.notifyDataSetChanged()
                     binding.commentRc.addItemDecoration(VerticalItemDecorator(30))
@@ -257,6 +262,22 @@ class PlanDetailViewActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.d("plan delete", "fail")
+                startActivity(intent)
+            }
+        })
+    }
+
+    fun _downloadPlan(plan:planDownload){
+        RetrofitService.retrofitService.downloadPlanByPlanName(plan).enqueue(object: Callback<planDownload>{
+            override fun onResponse(call: Call<planDownload>, response: Response<planDownload>) {
+                if(response.isSuccessful){
+                    Log.d("plan save", "success")
+                }else {
+                    Log.d("plan save", "success but something error")
+                }
+            }
+            override fun onFailure(call: Call<planDownload>, t: Throwable) {
+                Log.d("plan save", "fail")
             }
         })
     }

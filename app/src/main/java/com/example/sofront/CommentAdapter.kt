@@ -20,7 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView.Adapter<CommentAdapter.MyViewHolder>() {
+class CommentAdapter(private var commentList: ArrayList<Comment>, private var state:Boolean) : RecyclerView.Adapter<CommentAdapter.MyViewHolder>() {
     lateinit var context: Context
     var position = 0
     val user = Firebase.auth.currentUser
@@ -56,7 +56,11 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
             holder.deleteBtn.visibility = View.VISIBLE
         }
         holder.deleteBtn.setOnClickListener{
-            deleteComment(position,commentList[position].commentN)
+            if(state){
+                deletePlanComment(position,commentList[position].commentN)
+            }else{
+                deleteComment(position,commentList[position].commentN)
+            }
         }
         holder.profileImg.setOnClickListener{
             onClickProfileImg(commentList[position].writerUid)
@@ -77,6 +81,48 @@ class CommentAdapter(private var commentList: ArrayList<Comment>) : RecyclerView
                     //통신을 통해 댓글삭제.
                     //TODO 서버에서 댓글 삭제가 완료되면 리스트에서도 삭제.
                     RetrofitService.retrofitService.deletePortfolioComment(commentID).enqueue(object : Callback<Comment> {
+                        override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
+                            if(response.isSuccessful){
+                                Log.d("delete comment","success")
+                                commentList.removeAt(position)
+                                notifyDataSetChanged()
+                                Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                            else{
+                                Log.e("delete comment", "success but error")
+                                Log.e("delete comment error code",response.code().toString())
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Comment>, t: Throwable){
+                            Log.e("delete comment","fail")
+                            Log.e("delete comment error msg",t.message.toString())
+                        }
+
+                    })
+
+
+                })
+            .setNegativeButton("취소",
+                DialogInterface.OnClickListener { dialog, id ->
+                    //취소클릭
+                })
+        // 다이얼로그를 띄워주기
+        builder.show()
+
+        Log.d("지울 댓글", commentList[position].toString())
+    }
+
+    fun deletePlanComment(position:Int, commentID: String){
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("정말로 삭제하시겠습니까?")
+            .setMessage("삭제된 댓글은 복구하실 수 없습니다.\n정말로 삭제하시겠습니까?")
+            .setPositiveButton("확인",
+                DialogInterface.OnClickListener { dialog, id ->
+                    //확인클릭
+                    //통신을 통해 댓글삭제.
+                    //TODO 서버에서 댓글 삭제가 완료되면 리스트에서도 삭제.
+                    RetrofitService.retrofitService.deletePlanComment(commentID).enqueue(object : Callback<Comment> {
                         override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
                             if(response.isSuccessful){
                                 Log.d("delete comment","success")

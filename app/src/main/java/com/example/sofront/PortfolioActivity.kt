@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 
 class PortfolioActivity : AppCompatActivity() {
     val commentList  = ArrayList<Comment>()
-    val adapter = CommentAdapter(commentList)
+    val adapter = CommentAdapter(commentList, false)
 
     private var time = 0L
     override fun onCreate(savedInstanceState: Bundle?) {

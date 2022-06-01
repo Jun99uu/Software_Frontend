@@ -32,8 +32,8 @@ data class Set(
 ) : Serializable
 
 data class planDownload(
-    var planName:String,
-    var downloaderUid:String,
+    var UID:String,
+    var planName:String
 )
 
 data class PlanLike(
