@@ -88,7 +88,12 @@ class ProfileActivity : AppCompatActivity() {
                     ) {
                         if(response.isSuccessful){
                             Log.d("postSubscribe success", response.body().toString())
-                            binding.suboreditBtn.text = "구독중"
+                            if(binding.suboreditBtn.text.equals("구독중")){
+                                binding.suboreditBtn.text = "구독"
+                            }
+                            else {
+                                binding.suboreditBtn.text = "구독중"
+                            }
                         }
                         else{
                             Log.e("postSubscribe success","but something error")
@@ -147,14 +152,15 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     fun _getProfile(uid:String){
-        RetrofitService.retrofitService.getProfile(uid).enqueue(object : Callback<Profile> {
+        RetrofitService.retrofitService.getProfile(uid,myUid).enqueue(object : Callback<Profile> {
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if(response.isSuccessful){
                     Log.d("getProfile test success", response.body().toString())
                     profile = response.body()!!
                     refreshProfile()
                 }else{
-                    Log.d("getProfile test", "success but something error")
+                    Log.e("getProfile test", "success but something error")
+                    Log.e("getProfile error code",response.code().toString())
                 }
             }
             override fun onFailure(call: Call<Profile>, t: Throwable) {
@@ -167,6 +173,13 @@ class ProfileActivity : AppCompatActivity() {
         binding.userName.text = profile.name
         binding.subscribeNum.text = "Sub. ${profile.subscribeNum}명"
         binding.profileContent.text = profile.subTitle
+        if(profile.subscribed){
+            binding.suboreditBtn.text = "구독중"
+        }
+        else{
+            binding.suboreditBtn.text = "구독"
+        }
+
         Glide.with(this)
             .load(profile.profileImg) // 불러올 이미지 url
             .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지

@@ -59,8 +59,8 @@ interface RetrofitService {
     @GET("/workout/plan/comment/{planName}") //플랜 이름으로 댓글 받아오기
     fun getCommentByPlanName(@Path("planName")planName: String) : Call<ArrayList<Comment>>
 
-    @GET("/profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
-    fun getProfile(@Path("UID") UID:String) : Call<Profile>
+    @GET("/profiles/get_profile/{UID}/{myUID}") //회원 uid로 프로필 정보 받아오기
+    fun getProfile(@Path("UID") UID:String,@Path("myUID") myUID:String) : Call<Profile>
 
     @PUT("/profiles/modify_profile/{UID}") //프로필 수정
     fun editProfile(@Path("UID") UID:String, @Body editProfile:editProfile) : Call<editProfile>
