@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:focusableInTouchMode="true"
     tools:context=".PortfolioActivity">
@@ -13,69 +14,112 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="20dp">
             <TextView
                 android:id="@+id/portfolio_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nixgonb"
-                android:layout_marginTop="@dimen/default_margin"
-                android:textSize="@dimen/big_font_size"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:text="@string/title"/>
-    <ImageView
-        android:id="@+id/portfolio_img"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:src="@drawable/gymdori"
-        android:layout_margin="@dimen/default_margin"
-        android:contentDescription="@string/image" />
+                android:text="제목"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:letterSpacing="-0.05"
+                android:layout_marginTop="10dp"/>
 
 
-    <TextView
-        android:id="@+id/portfolio_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nixgonb"
-        android:textSize="@dimen/medium_font_size"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:text="@string/content"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/ic_comment"
-            android:layout_marginStart="@dimen/default_margin"
-            android:layout_marginEnd="6dp"
-            android:contentDescription="@string/image" />
-        <TextView
-            android:id="@+id/portfolio_comment_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_number"
-            android:fontFamily="@font/nixgonb"
-            android:layout_marginEnd="@dimen/default_margin"
-            android:textSize="@dimen/small_font_size"/>
-        <ImageView
-            android:id="@+id/like"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:background="@drawable/ic_heart"
-            android:layout_marginEnd="6dp"
-            android:contentDescription="@string/image" />
-        <TextView
-            android:id="@+id/portfolio_like_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_number"
-            android:fontFamily="@font/nixgonb"
-            android:textSize="@dimen/small_font_size"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/portfolio_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="방금 전"
+                android:fontFamily="@font/nixgonm"
+                android:textColor="@color/gray"
+                android:textSize="15sp"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="3dp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_img_in_portfolio"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/gymdori"/>
+
+                <TextView
+                    android:id="@+id/profile_name_in_portfolio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nixgonm"
+                    android:text="홍길동"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/portfolio_img"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:src="@drawable/gymdori"
+                android:contentDescription="@string/image"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/portfolio_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nixgonm"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:letterSpacing="-0.05"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_comment"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginEnd="6dp"
+                    android:contentDescription="@string/image" />
+                <TextView
+                    android:id="@+id/portfolio_comment_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_number"
+                    android:fontFamily="@font/nixgonm"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/default_margin"
+                    android:textSize="@dimen/small_font_size"/>
+                <ImageView
+                    android:id="@+id/like"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/ic_heart"
+                    android:layout_marginEnd="6dp"
+                    android:contentDescription="@string/image" />
+                <TextView
+                    android:id="@+id/portfolio_like_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_number"
+                    android:fontFamily="@font/nixgonm"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/small_font_size"/>
+            </LinearLayout>
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"

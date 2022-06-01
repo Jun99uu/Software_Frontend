@@ -1,12 +1,15 @@
 package com.example.sofront
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.sofront.databinding.ActivityPlanDetailViewBinding
 import com.example.sofront.databinding.ActivityPortfolioBinding
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
@@ -17,11 +20,15 @@ import kotlin.collections.ArrayList
 class PortfolioActivity : AppCompatActivity() {
     val commentList  = ArrayList<Comment>()
     val adapter = CommentAdapter(commentList, false)
+    val defaultImg = R.drawable.gymdori
+    private var mBinding: ActivityPortfolioBinding? = null
+    private val binding get() = mBinding!!
+    var state = false
 
     private var time = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityPortfolioBinding.inflate(layoutInflater)
+        mBinding = ActivityPortfolioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val intent = intent
@@ -52,6 +59,15 @@ class PortfolioActivity : AppCompatActivity() {
             binding.commentInput.setText("")
         }
 
+        binding.profileImgInPortfolio.setOnClickListener{
+            if(state){
+                val intent = Intent(this, ProfileActivity::class.java)
+                intent.putExtra("UID", portfolio.portfolioWriter)
+                startActivity(intent)
+            }else{
+                Toast.makeText(this, "잠시만 기다려주세요", Toast.LENGTH_SHORT).show()
+            }
+        }
         val recyclerView = binding.commentRc
 
         recyclerView.adapter = adapter
@@ -63,9 +79,14 @@ class PortfolioActivity : AppCompatActivity() {
         binding.portfolioContent.text = portfolio.content
         binding.portfolioCommentNum.text = portfolio.commentNum.toString()
         binding.portfolioLikeNum.text = portfolio.likeNum.toString()
+        binding.portfolioDate.text = portfolio.date
+
+        _getCertainProfile(portfolio.portfolioWriter)
+
         Glide.with(this)
             .load(portfolio.contentImage)
             .into(binding.portfolioImg)
+
         if(portfolio.liked){
             binding.like.setBackgroundResource(R.drawable.ic_heart_fill)
         }
@@ -168,5 +189,37 @@ class PortfolioActivity : AppCompatActivity() {
                 Log.d("왜 오류남", t.message.toString())
             }
         })
+    }
+
+    fun _getCertainProfile(UID:String){
+        var certainProfile:certainProfile
+        RetrofitService.retrofitService.getCertainProfile(UID).enqueue(object : Callback<certainProfile> {
+            override fun onResponse(call: Call<certainProfile>, response: Response<certainProfile>) {
+                if (response.isSuccessful) {
+                    Log.d("getProfile in Plan test", "success")
+                    Log.d("getProfile in Plan success", response.body().toString())
+                    certainProfile = response.body()!!
+                    Log.d("프로필", certainProfile.toString())
+                    binding.profileNameInPortfolio.text = certainProfile.name
+                    openImg(certainProfile.profileImg)
+                } else {
+                    Log.d("getProfile in Plan test", "success but something error")
+                }
+            }
+
+            override fun onFailure(call: Call<certainProfile>, t: Throwable) {
+                Log.d("getProfile in Plan test", "fail")
+            }
+        })
+    }
+
+    fun openImg(profileImg:String){
+        Glide.with(this)
+            .load(profileImg) // 불러올 이미지 url
+            .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
+            .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
+            .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+            .into(binding.profileImgInPortfolio) // 이미지를 넣을 뷰
+        state = true
     }
 }
