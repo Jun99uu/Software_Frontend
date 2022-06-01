@@ -59,8 +59,8 @@ interface RetrofitService {
     @GET("/workout/plan/comment/{planName}") //플랜 이름으로 댓글 받아오기
     fun getCommentByPlanName(@Path("planName")planName: String) : Call<ArrayList<Comment>>
 
-    @GET("profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
-    fun getProfile(@Path("UID") UID:String) : Call<Profile>
+    @GET("profiles/get_profile/{UID}/{myUID}") //회원 uid로 프로필 정보 받아오기
+    fun getProfile(@Path("UID") UID:String, @Path("myUID") myUID:String) : Call<Profile>
 
     @PUT("profiles/modify_profile/{UID}") //프로필 수정
     fun editProfile(@Path("UID") UID:String, @Body editProfile:editProfile) : Call<editProfile>
@@ -78,8 +78,10 @@ interface RetrofitService {
     fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
     @DELETE("profiles/delete_comments/{commentID}")
     fun deletePortfolioComment(@Path("commentID") commentID : String) : Call<Comment>
-    @DELETE("plan/comment/del/{commentN}")
+
+    @DELETE("/workout/plan/comment/del/{commentN}")
     fun deletePlanComment(@Path("commentN") commmentN : String) : Call<Comment>
+
     @POST("profiles/portfolio_like")
     fun postPortfolioLike(@Body like : PortfolioLike) : Call<PortfolioLike>
     fun deleteComment(@Path("commentID") commentID : String) : Call<Comment>
@@ -91,7 +93,6 @@ interface RetrofitService {
     fun deletePlanByPlanName(@Path("planName") planName:String) : Call<String>
 
     companion object{
-        //var gson = GsonBuilder().setLenient().create()
         private const val BASE_URL = "http://5f82-219-255-158-172.ngrok.io"
 
         val retrofitService = create()

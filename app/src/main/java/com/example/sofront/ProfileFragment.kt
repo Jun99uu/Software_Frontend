@@ -127,7 +127,7 @@ class ProfileFragment : Fragment() {
     }
 
     fun _getProfile(uid:String){
-        retrofitService.getProfile(uid).enqueue(object : Callback<Profile> {
+        retrofitService.getProfile(uid, uid).enqueue(object : Callback<Profile> {
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if(response.isSuccessful){
                     Log.d("getProfile test success", response.body().toString())

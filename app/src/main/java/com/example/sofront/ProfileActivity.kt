@@ -119,7 +119,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     fun _getProfile(uid:String){
-        RetrofitService.retrofitService.getProfile(uid).enqueue(object : Callback<Profile> {
+        RetrofitService.retrofitService.getProfile(uid, myUid).enqueue(object : Callback<Profile> {
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if(response.isSuccessful){
                     Log.d("getProfile test success", response.body().toString())
