@@ -162,11 +162,13 @@ class MakePortfolioActivity : AppCompatActivity() {
                     Log.d("postPortfolio test success", response.body().toString())
                     finish()
                 }else{
-                    Log.d("postPortfolio test", "success but something error")
+                    Log.e("postPortfolio test", "success but something error")
+                    Log.e("postPortfolio error code",response.code().toString())
                 }
             }
             override fun onFailure(call: Call<SendPortfolio>, t: Throwable) {
-                Log.d("postPortfolio test", "fail")
+                Log.e("postPortfolio test", "fail")
+                Log.e("postPortfolio error msg",t.message.toString())
             }
         })
     }

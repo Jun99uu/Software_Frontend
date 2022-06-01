@@ -27,7 +27,6 @@ class ListFragment : Fragment() {
     private lateinit var recyclerview:RecyclerView
     private lateinit var calendarView: MaterialCalendarView
 
-    val planArray  = ArrayList<Plan>()
 //    var planLength =0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,7 +91,7 @@ class ListFragment : Fragment() {
 
         }
     }
-    fun decorateDay(list : List<CalendarEntity>){
+    private fun decorateDay(list : List<CalendarEntity>){
         val set = HashSet<CalendarDay>()
         for(item in list){
             val parser = item.planDay.split("-")
@@ -102,42 +101,7 @@ class ListFragment : Fragment() {
         calendarView.addDecorator(EventDecorator(MonthView.colors[MonthView.colorIndex],set))
         MonthView.colorIndex = (MonthView.colorIndex + 1) % MonthView.colors.size
     }
-    fun decorateDay(entity: CalendarEntity){
-        val set:HashSet<CalendarDay> = HashSet()
-        val d = entity.planDay
-        val parse = d.split("-")
-        var calendarDay = CalendarDay.from(parse[0].toInt(),parse[1].toInt(),parse[2].toInt())
-        for(i in 1..entity.planLength){
-            set.add(calendarDay)
-//            Log.d("for",d.toString())
-            calendarDay = addOnetoCalendarDay(calendarDay)
-        }
-        Log.d("Set",set.toString())
-        calendarView.addDecorator(EventDecorator(MonthView.colors[MonthView.colorIndex],set))
-        MonthView.colorIndex = (MonthView.colorIndex + 1) % MonthView.colors.size
-    }
 
-    fun addOnetoCalendarDay(date: CalendarDay):CalendarDay{
-        val days = arrayListOf<Int>(0,31,28,31,30,31,30,31,31,30,31,30,31)
-
-
-        var day = date.day+1
-        var month = date.month
-        var year = date.year
-        if( year % 4 == 0 && ( year % 100 !=0 || year % 400 == 0)){
-            days[2] = 29
-        }
-        if(date.day >= days[date.month]){
-            day = 1
-            month = month+1
-            if(month > 12){
-                month = 1
-                year = year+1
-            }
-
-        }
-        return CalendarDay.from(year,month,day)
-    }
     private fun setRecyclerView(){
         //TODO: 서버에서 플랜을 가져와서 리사이클러뷰로 띄워줌
         val adapter = PlanRecyclerViewAdapter()
@@ -158,7 +122,7 @@ class ListFragment : Fragment() {
         }
         else{
             CoroutineScope(Dispatchers.Main).launch {
-                CoroutineScope(Dispatchers.IO).async {
+                CoroutineScope(Dispatchers.IO).launch {
                     Log.d("firebase uid",FirebaseAuth.getInstance().uid.toString())
 //                val planList = RetrofitService._getDownloadPlanUsingExecute(FirebaseAuth.getInstance().uid.toString())
 //                for(plan in planList){
@@ -188,9 +152,7 @@ class ListFragment : Fragment() {
                         }
 
                     })
-                }.await()
-//            Log.d("ListFragment,다운로드 플랜",planList.size.toString())
-
+                }
             }
 
         }
@@ -233,7 +195,7 @@ class ListFragment : Fragment() {
 
 
     private fun setCalendarView(){
-        calendarView.setOnDateChangedListener { _, date, selected ->
+        calendarView.setOnDateChangedListener { _, date, _ ->
             val ft = parentFragmentManager.beginTransaction()
             ft.remove(this).add(ListFragment(),"hi")
             val db = CalendarDatabase.getInstance(requireContext())
