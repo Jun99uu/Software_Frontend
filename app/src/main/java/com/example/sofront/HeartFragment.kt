@@ -28,6 +28,7 @@ class HeartFragment : Fragment() {
         setRecyclerView(adapter)
         setRecyclerViewAdapter(adapter)
     }
+
     fun setRecyclerView(adapter:ProfilePortfolioRecyclerViewAdapter){
         val auth = FirebaseAuth.getInstance()
         if(auth.uid==null){
@@ -39,11 +40,17 @@ class HeartFragment : Fragment() {
         }
         else{
             val portfolioList = RetrofitService._getSubscribingPortfolio(auth.uid!!)
-            for(portfolio in portfolioList){
-                adapter.addItem(portfolio)
+            if(portfolioList.size == 0){
+                for(portfolio in portfolioList){
+                    adapter.addItem(portfolio)
+                }
+            }else{
+                binding.heartPortfolioRv.visibility = View.GONE
+                binding.noSubscribe.visibility = View.VISIBLE
             }
         }
     }
+
     fun setRecyclerViewAdapter(adapter: ProfilePortfolioRecyclerViewAdapter){
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
