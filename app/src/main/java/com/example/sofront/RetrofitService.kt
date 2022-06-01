@@ -47,7 +47,7 @@ interface RetrofitService {
     @GET("/profiles/get_portfolio/{uid}") //uid로 포트폴리오 가져오기
     fun getPortfolio(@Path("uid") uid:String) : Call<ArrayList<Portfolio>>
 
-    @GET("subscription/portfolio/{uid}") //uid로 구독 목록 가져오기
+    @GET("/profiles/subscribe/portfolio/{uid}") //uid로 구독 목록 가져오기
     fun getSubscribingPortfolio(@Path("uid")uid: String) : Call<ArrayList<Portfolio>>
 
     @POST("/plan/like") //플랜 이름으로 좋아요 보내기
@@ -59,13 +59,13 @@ interface RetrofitService {
     @GET("/workout/plan/comment/{planName}") //플랜 이름으로 댓글 받아오기
     fun getCommentByPlanName(@Path("planName")planName: String) : Call<ArrayList<Comment>>
 
-    @GET("profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
+    @GET("/profiles/get_profile/{UID}") //회원 uid로 프로필 정보 받아오기
     fun getProfile(@Path("UID") UID:String) : Call<Profile>
 
-    @PUT("profiles/modify_profile/{UID}") //프로필 수정
+    @PUT("/profiles/modify_profile/{UID}") //프로필 수정
     fun editProfile(@Path("UID") UID:String, @Body editProfile:editProfile) : Call<editProfile>
 
-    @POST("/subscribe") //구독하기
+    @POST("/profiles/subscribe") //구독하기
     fun postSubscribe(@Body subscribe: subscribeProfile) : Call<subscribeProfile>
 
     @GET("/profiles/get_comments/{portfolioID}")
@@ -74,13 +74,13 @@ interface RetrofitService {
     @POST("/profiles/post_comments/")
     fun postPortfolioComment(@Body comment: Comment) : Call<Comment>
 
-    @POST("profiles/makes_portfolios/")
+    @POST("/profiles/makes_portfolios/")
     fun postPortfolio(@Body sendPortfolio: SendPortfolio) : Call<SendPortfolio>
-    @DELETE("profiles/delete_comments/{commentID}")
+    @DELETE("/profiles/delete_comments/{commentID}")
     fun deletePortfolioComment(@Path("commentID") commentID : String) : Call<Comment>
-    @DELETE("plan/comment/del/{commentN}")
+    @DELETE("/plan/comment/del/{commentN}")
     fun deletePlanComment(@Path("commentN") commmentN : String) : Call<Comment>
-    @POST("profiles/portfolio_like")
+    @POST("/profiles/portfolio_like")
     fun postPortfolioLike(@Body like : PortfolioLike) : Call<PortfolioLike>
     fun deleteComment(@Path("commentID") commentID : String) : Call<Comment>
 
@@ -89,7 +89,7 @@ interface RetrofitService {
 
     companion object{
         //var gson = GsonBuilder().setLenient().create()
-        private const val BASE_URL = "http://e1e7-219-255-158-172.ngrok.io"
+        private const val BASE_URL = "http://5f82-219-255-158-172.ngrok.io"
 
         val retrofitService = create()
 
@@ -276,10 +276,11 @@ interface RetrofitService {
                     response: Response<ArrayList<Portfolio>>
                 ) {
                     if (response.isSuccessful) {
-                        Log.d("getPortfolio test success", response.body().toString())
+                        Log.d("getSubscribingPortfolio test success", response.body().toString())
                         myPortfolio = response.body()!!
                     } else {
-                        Log.d("getPortfolio test", "success but something error")
+                        Log.e("getSubscribingPortfolio test", "success but something error")
+                        Log.e("getSubscribingPortfolio error code", response.code().toString())
                     }
                 }
 

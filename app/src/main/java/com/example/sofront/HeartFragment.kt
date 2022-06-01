@@ -1,6 +1,7 @@
 package com.example.sofront
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sofront.databinding.FragmentHeartBinding
 import com.google.firebase.auth.FirebaseAuth
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HeartFragment : Fragment() {
     lateinit var binding : FragmentHeartBinding
     lateinit var recyclerView: RecyclerView
+    val portfolioList = ArrayList<Portfolio>()
+    val adapter = ProfilePortfolioRecyclerViewAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,28 +30,34 @@ class HeartFragment : Fragment() {
     }
     fun setRecyclerView(){
         recyclerView = binding.heartPortfolioRv
-        val adapter = ProfilePortfolioRecyclerViewAdapter()
-        setRecyclerView(adapter)
-        setRecyclerViewAdapter(adapter)
-    }
-    fun setRecyclerView(adapter:ProfilePortfolioRecyclerViewAdapter){
-        val auth = FirebaseAuth.getInstance()
-        if(auth.uid==null){
-            val portfolioList = TestFactory.getSomePortfolio(10)
-            for(portfolio in portfolioList){
-                adapter.addItem(portfolio)
-            }
-
-        }
-        else{
-            val portfolioList = RetrofitService._getSubscribingPortfolio(auth.uid!!)
-            for(portfolio in portfolioList){
-                adapter.addItem(portfolio)
-            }
-        }
-    }
-    fun setRecyclerViewAdapter(adapter: ProfilePortfolioRecyclerViewAdapter){
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
+        getSubscribingPortfolio(FirebaseAuth.getInstance().uid!!)
+    }
+
+    fun getSubscribingPortfolio(uid:String) {
+        RetrofitService.retrofitService.getSubscribingPortfolio(uid).enqueue(object  :
+            Callback<ArrayList<Portfolio>> {
+            override fun onResponse(
+                call: Call<ArrayList<Portfolio>>,
+                response: Response<ArrayList<Portfolio>>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("getSubscribingPortfolio test success", response.body().toString())
+                    for(item in response.body()!!) {
+                        adapter.addItem(item)
+                        adapter.notifyItemInserted(adapter.itemCount-1)
+                    }
+                } else {
+                    Log.e("getSubscribingPortfolio test", "success but something error")
+                    Log.e("getSubscribingPortfolio error code", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Portfolio>>, t: Throwable) {
+                Log.d("getPortfolio test", "fail")
+            }
+
+        })
     }
 }

@@ -1,7 +1,6 @@
 package com.example.sofront
 
-import android.provider.ContactsContract
-import java.sql.Blob
+import com.google.gson.annotations.SerializedName
 
 data class Profile (
     val UID:String, //해당 프로필 주인 uid
@@ -9,7 +8,8 @@ data class Profile (
     val backgroundImg: String, //배경 이미지
     val name:String, //해당 프로필 주인 이름
     val subTitle:String, //해당 프로필 들어갔을 떄 문구
-    val subscribeNum:Int //구독자 수
+    val subscribeNum:Int, //구독자 수
+    val subscribed: Boolean  //구독 했는지 안했는지
 )
 
 data class Subscribe(
@@ -26,7 +26,9 @@ data class editProfile (
 )
 
 data class subscribeProfile(
+    @SerializedName("pro_user")
     var hostUid:String,
+    @SerializedName("ss_user")
     var myUid:String
 )
 
