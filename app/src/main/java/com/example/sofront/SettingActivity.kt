@@ -4,29 +4,30 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
+import com.example.sofront.databinding.ActivityPlanDetailViewBinding
 import com.example.sofront.databinding.ActivitySettingBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SettingActivity : AppCompatActivity() {
     val user = Firebase.auth.currentUser!!
     val defaultImg = R.drawable.gymdori
+    private var mBinding: ActivitySettingBinding? = null
+    private val binding get() = mBinding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivitySettingBinding.inflate(layoutInflater)
+        mBinding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        binding.userName.text = "${user.displayName}님, 반갑습니다!"
-//        Glide.with(this)
-//            .load(user.photoUrl) // 불러올 이미지 url
-//            .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
-//            .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
-//            .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
-//            .into(binding.profileImage) // 이미지를 넣을 뷰
+        _getCertainProfile(user.uid)
 
         binding.signOutBtn.setOnClickListener{
             Firebase.auth.signOut()
@@ -67,5 +68,37 @@ class SettingActivity : AppCompatActivity() {
             // 다이얼로그를 띄워주기
             builder.show()
         }
+    }
+
+    fun _getCertainProfile(UID:String){
+        var certainProfile:certainProfile
+        RetrofitService.retrofitService.getCertainProfile(UID).enqueue(object :
+            Callback<certainProfile> {
+            override fun onResponse(call: Call<certainProfile>, response: Response<certainProfile>) {
+                if (response.isSuccessful) {
+                    Log.d("getProfile in Plan test", "success")
+                    Log.d("getProfile in Plan success", response.body().toString())
+                    certainProfile = response.body()!!
+                    Log.d("프로필", certainProfile.toString())
+                    binding.userName.text = certainProfile.name
+                    openImg(certainProfile.profileImg)
+                } else {
+                    Log.d("getProfile in Plan test", "success but something error")
+                }
+            }
+
+            override fun onFailure(call: Call<certainProfile>, t: Throwable) {
+                Log.d("getProfile in Plan test", "fail")
+            }
+        })
+    }
+
+    fun openImg(profileImg:String){
+        Glide.with(this)
+            .load(profileImg) // 불러올 이미지 url
+            .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
+            .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
+            .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+            .into(binding.profileImage) // 이미지를 넣을 뷰
     }
 }
