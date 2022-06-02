@@ -95,7 +95,7 @@ interface RetrofitService {
     fun downloadPlanByPlanName(@Body downloadPlan: planDownload) : Call<planDownload>
 
     companion object{
-        private const val BASE_URL = "http://5f82-219-255-158-172.ngrok.io"
+        private const val BASE_URL = "http://54.180.101.62"
 
         val retrofitService = create()
 

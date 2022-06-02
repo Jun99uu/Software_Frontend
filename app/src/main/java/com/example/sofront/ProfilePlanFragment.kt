@@ -54,7 +54,6 @@ class ProfilePlanFragment(val myUid : String) : Fragment() {
                 if (response.isSuccessful) {
                     Log.d("getPlan test", "success")
                     myPlan = response.body()!!
-                    Log.d("씨이발", response.body().toString())
                     if(myPlan.size > 0){
                         listenPlan(myPlan)
                     }

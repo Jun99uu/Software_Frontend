@@ -83,7 +83,7 @@
             android:maxLines="1"
             android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toRightOf="@id/num_first_et"
-            app:layout_constraintTop_toBottomOf="@id/exp"/>
+            app:layout_constraintTop_toTopOf="@id/num_first_et"/>
 
         <EditText
             android:id="@+id/num_third_et"
@@ -100,7 +100,7 @@
             android:maxLines="1"
             android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toRightOf="@id/num_second_et"
-            app:layout_constraintTop_toBottomOf="@id/exp"/>
+            app:layout_constraintTop_toTopOf="@id/num_second_et"/>
 
         <TextView
             android:id="@+id/exp2"
