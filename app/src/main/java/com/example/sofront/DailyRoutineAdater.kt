@@ -22,11 +22,12 @@ class DailyRoutineAdater(val context: Context) : RecyclerView.Adapter<DailyRouti
             progressBar.max = item.setNum
             itemView.setOnClickListener{
                 val intent = Intent(context, DailyRoutineDetailActivity::class.java)
-                intent.putExtra("workoutName",item.workoutName)
-                intent.putExtra("totalSet",item.setNum)
+                intent.putExtra("workout",item)
+//                intent.putExtra("workoutName",item.workoutName)
+//                intent.putExtra("totalSet",item.setNum)
                 val nowSet = 0// 0 대신 여태까지 한 세트수 (내부디비에 있는거) 저장
                 intent.putExtra("nowSet",nowSet)
-                intent.putExtra("set",item.setList[nowSet])
+//                intent.putExtra("set",item.setList[nowSet])
                 context.startActivity(intent)
             }
         }
