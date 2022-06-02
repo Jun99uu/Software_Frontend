@@ -10,12 +10,17 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.room.RoomDatabase
 import com.example.sofront.databinding.ActivityHomeBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.FirebaseAuthKtxRegistrar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.prolificinteractive.materialcalendarview.CalendarDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -68,12 +73,36 @@ class HomeActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val planEntity = calendarDao.getPlanByDay(formatted)
             if(planEntity!=null){
-                transaction.replace(R.id.frame_layout, DailyRoutineFragment())
+                startTodayRoutine(planEntity.planName, planEntity.count)
             }else{
                 transaction.replace(R.id.frame_layout, HomeFragment())
             }
             transaction.commit()
         }
+    }
+    fun startTodayRoutine(planName : String, count : Int){
+        RetrofitService.retrofitService.getPlanByPlanName(planName, FirebaseAuth.getInstance().uid.toString()).enqueue(object : Callback<Plan>{
+            override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
+                if(response.isSuccessful){
+                    Log.d("홈프래그먼트에서 오늘 루틴 가져오기 통신 성공",response.body().toString())
+
+                    val f = DailyRoutineFragment()
+                    val bundle = Bundle()
+                    bundle.putSerializable("routine",response.body()!!.routineList[count])
+                    f.arguments = bundle
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.frame_layout, f).commit()
+                }
+                else{
+                    Log.e("홈프래그먼트에서 오늘 루틴 가져오기 통신 약간 에러",response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<Plan>, t: Throwable) {
+                Log.d("홈프래그먼트에서 오늘 루틴 가져오기 통신 완전 에러",t.message!!)
+            }
+
+        })
     }
 
     fun replaceFragment(fragment:Fragment, value:Int){
@@ -91,9 +120,9 @@ class HomeActivity : AppCompatActivity() {
         if (System.currentTimeMillis() - backPressedTime < 1500) {
 //            ActivityCompat.finishAffinity(this); // 액티비티를 종료하고
 //            System.exit(0); // 프로세스를 종료
-            moveTaskToBack(true);						// 태스크를 백그라운드로 이동
-            finishAndRemoveTask();						// 액티비티 종료 + 태스크 리스트에서 지우기
-            android.os.Process.killProcess(android.os.Process.myPid());	// 앱 프로세스 종료
+            moveTaskToBack(true)						// 태스크를 백그라운드로 이동
+            finishAndRemoveTask()					// 액티비티 종료 + 태스크 리스트에서 지우기
+            android.os.Process.killProcess(android.os.Process.myPid())	// 앱 프로세스 종료
             return
         }
 

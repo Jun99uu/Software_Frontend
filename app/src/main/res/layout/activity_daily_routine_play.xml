@@ -107,7 +107,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="15dp"
-                android:text="99회"
+                android:text="0회"
                 android:textSize="35sp"
                 android:fontFamily="@font/nixgonb"
                 android:letterSpacing="-0.05"

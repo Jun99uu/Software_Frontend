@@ -1,27 +1,23 @@
 package com.example.sofront
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
-import com.example.sofront.databinding.ActivityHomeBinding
-import com.example.sofront.databinding.DrawerMenuBinding
+import androidx.fragment.app.Fragment
 import com.example.sofront.databinding.FragmentHomeBinding
-import com.example.sofront.databinding.FragmentSignInBottomSheetBinding
-import java.util.ArrayList
+
 
 class HomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         val quotes = Quotes()
@@ -36,9 +32,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-        var firstUpper:Boolean = false
-        var secondUpper:Boolean = false
-        var thirdUpper:Boolean = false
+        var firstUpper = false
+        var secondUpper = false
+        var thirdUpper = false
 
         binding.firstUpperBtn.setOnClickListener{
             if(firstUpper){
@@ -90,7 +86,18 @@ class HomeFragment : Fragment() {
         }
 
         binding.metaBtn.setOnClickListener{
-            Toast.makeText(context, "메타버스로 이동합니다.",Toast.LENGTH_SHORT).show()
+
+            val packageName = "com.skt.treal.jumpvrm"
+//            val packageName = "com.android.chrome"
+            if(checkPackageExisting(packageName)){
+                val iflandIntent = requireActivity().getPackageManager().getLaunchIntentForPackage(packageName)
+                Toast.makeText(context, "메타버스로 이동합니다.",Toast.LENGTH_SHORT).show()
+                startActivity(iflandIntent)
+            }
+            else{
+                Toast.makeText(requireContext(),"어플이 없어",Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         return binding.root
@@ -99,6 +106,31 @@ class HomeFragment : Fragment() {
     private class Quotes() {
         var title = arrayOf("헬스장에 가기만 하면\n반은 성공이다💪", "끈기있는 자만이\n득근할 수 있다🏋️‍♀️", "운동 할 생각에\n가슴이 득근두근🤩", "지금의 1RM이\n워밍업이 되도록🔥")
         var hashtag = arrayOf(arrayOf("#오운완", "#할수있다", "#가보자고"), arrayOf("#끈기", "#열정", "#득근"), arrayOf("#기분이", "#설렘", "#득근두근"), arrayOf("#화이팅", "#1RM", "#워밍업"))
+    }
+
+    fun checkPackageExisting(packageName: String?): Boolean {
+        if (packageName == null || packageName.length == 0) {
+            return false
+        }
+        var bExist = false
+        val pkgMgr: PackageManager = requireActivity().packageManager
+        val mainIntent = Intent(Intent.ACTION_MAIN, null)
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
+        val mApps = pkgMgr.queryIntentActivities(mainIntent, 0)
+        if (mApps.size > 0) {
+            for (i in mApps.indices) {
+                try {
+                    if (mApps[i].activityInfo.packageName.startsWith(packageName)) {
+                        bExist = true
+                        break
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    bExist = false
+                }
+            }
+        }
+        return bExist
     }
 
 }
