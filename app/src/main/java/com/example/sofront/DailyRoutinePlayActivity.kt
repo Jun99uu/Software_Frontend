@@ -27,7 +27,7 @@ class DailyRoutinePlayActivity : AppCompatActivity() {
         val workoutDetail = binding.workoutDetail
 
 
-        workoutName.text = intent.getStringExtra("workName") //운동 이름 가져오기
+        workoutName.text = intent.getStringExtra("workoutName") //운동 이름 가져오기
         val totalSet = intent.getIntExtra("totalSet",10) //총 세트수
         val nowSet = intent.getIntExtra("nowSet",5) //지금 세트수
         val set = (intent.getSerializableExtra("set")) as Set //세트 정보(몇키로, 몇번)

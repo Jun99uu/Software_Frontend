@@ -6,7 +6,8 @@
     android:background="@drawable/radius"
     android:backgroundTint="@color/light_gray"
     android:padding="10dp"
-    android:elevation="10dp">
+    android:elevation="10dp"
+    android:layout_marginBottom="@dimen/default_margin">
 
     <TextView
         android:id="@+id/routine_item_title"
@@ -22,6 +23,7 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <ProgressBar
+        android:id="@+id/routine_item_progress_bar"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
