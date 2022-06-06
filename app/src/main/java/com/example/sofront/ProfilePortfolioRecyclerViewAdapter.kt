@@ -13,6 +13,9 @@ import com.example.sofront.databinding.ProfilePortfolioItemBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.NonDisposableHandle.parent
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfilePortfolioRecyclerViewAdapter :
     RecyclerView.Adapter<ProfilePortfolioRecyclerViewAdapter.ViewHolder>() {
@@ -69,12 +72,7 @@ class ProfilePortfolioRecyclerViewAdapter :
             .error(defaultContent) // 로딩 에러 발생 시 표시할 이미지
             .fallback(defaultContent) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
             .into(holder.contentImg) // 이미지를 넣을 뷰
-        Glide.with(context)
-            .load(user?.photoUrl) // 불러올 이미지 url
-            .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
-            .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
-            .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
-            .into(holder.profile) // 이미지를 넣을 뷰
+        _getCertainProfile(portfolioList[position].portfolioWriter, holder)
     }
 
     fun addItem(portfolio : Portfolio){
@@ -86,5 +84,36 @@ class ProfilePortfolioRecyclerViewAdapter :
 
     fun deleteFirstItem(){
         portfolioList.removeAt(0)
+    }
+
+    fun _getCertainProfile(UID:String, holder:ViewHolder){
+        var certainProfile:certainProfile
+        RetrofitService.retrofitService.getCertainProfile(UID).enqueue(object :
+            Callback<certainProfile> {
+            override fun onResponse(call: Call<certainProfile>, response: Response<certainProfile>) {
+                if (response.isSuccessful) {
+                    Log.d("getProfile in Plan test", "success")
+                    Log.d("getProfile in Plan success", response.body().toString())
+                    certainProfile = response.body()!!
+                    updateImg(certainProfile.profileImg, holder)
+                    Log.d("프로필", certainProfile.toString())
+                } else {
+                    Log.d("getProfile in Plan test", "success but something error")
+                }
+            }
+
+            override fun onFailure(call: Call<certainProfile>, t: Throwable) {
+                Log.d("getProfile in Plan test", "fail")
+            }
+        })
+    }
+
+    fun updateImg(url:String, holder:ViewHolder){
+        Glide.with(context)
+            .load(url) // 불러올 이미지 url
+            .placeholder(defaultImg) // 이미지 로딩 시작하기 전 표시할 이미지
+            .error(defaultImg) // 로딩 에러 발생 시 표시할 이미지
+            .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
+            .into(holder.profile) // 이미지를 넣을 뷰
     }
 }

@@ -172,7 +172,6 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>, private var 
                     Log.d("getPlan test", "success")
                     Log.d("getPlan test success", response.body().toString())
                     myPlan = response.body()!!
-                    intent.putExtra("plan", myPlan) // 여기 자세한 정보로
                     Log.d("플랜", myPlan.toString())
                     context.startActivity(intent)
                 } else {
