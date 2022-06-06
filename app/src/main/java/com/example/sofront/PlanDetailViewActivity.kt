@@ -115,7 +115,6 @@ class PlanDetailViewActivity : AppCompatActivity() {
         }
 
         binding.heartIc.setOnClickListener{
-            Log.d("시발ㅅㅂ", planLike.toString())
             _postPlanLike(planLike)
         }
 
@@ -237,11 +236,13 @@ class PlanDetailViewActivity : AppCompatActivity() {
                     if(likedState){//이미 좋아요를 누른 상태에서 좋아요 눌렀음
                         likedState = false
                         binding.heartIc.setBackgroundResource(R.drawable.ic_heart)
-                        binding.heartNum.text = (prevLikenum-1).toString()
+                        prevLikenum = prevLikenum - 1
+                        binding.heartNum.text = (prevLikenum).toString()
                     }else{//좋아요를 누르지 않은 사람이 좋아요를 눌렀음
                         likedState = true
                         binding.heartIc.setBackgroundResource(R.drawable.ic_heart_fill)
-                        binding.heartNum.text = (prevLikenum+1).toString()
+                        prevLikenum = prevLikenum + 1
+                        binding.heartNum.text = (prevLikenum).toString()
                     }
                 }else {
                     Log.d("post like in Plan test", "success but something error")
@@ -276,6 +277,8 @@ class PlanDetailViewActivity : AppCompatActivity() {
             override fun onResponse(call: Call<planDownload>, response: Response<planDownload>) {
                 if(response.isSuccessful){
                     Log.d("plan save", "success")
+                    Toast.makeText(context, "플랜이 다운로드 되었어요!", Toast.LENGTH_SHORT).show()
+                    binding.downNum.text = (downNum+1).toString()
                 }else {
                     Log.d("plan save", "success but something error")
                 }
