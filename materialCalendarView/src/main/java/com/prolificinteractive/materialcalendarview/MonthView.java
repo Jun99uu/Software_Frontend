@@ -94,7 +94,7 @@ import org.threeten.bp.LocalDate;
                     String generatedString = new String(array, StandardCharsets.UTF_8);
                     for(int i=0; i<days; i++){
                       set.add(tmp);
-                      dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i,generatedString));
+                      dao.insertPlan(new CalendarEntity(planName,tmp.getYear()+"-"+tmp.getMonth()+"-"+tmp.getDay(),days,i,generatedString,0));
                       tmp = addOneToCalendarDay(tmp);
                     }
                   }

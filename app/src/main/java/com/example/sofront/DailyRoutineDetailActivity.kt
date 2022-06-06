@@ -24,8 +24,7 @@ class DailyRoutineDetailActivity : AppCompatActivity() {
         startButton.setOnClickListener{
             val intent = Intent(this,DailyRoutinePlayActivity::class.java)
             intent.putExtra("workoutName",workout.workoutName)
-            intent.putExtra("totalSet",workout.setNum)
-            intent.putExtra("nowSet",nowSet)
+            intent.putExtra("totalCount",workout.setList[0].count)
             intent.putExtra("set",workout.setList[nowSet])
             startActivity(intent)
         }

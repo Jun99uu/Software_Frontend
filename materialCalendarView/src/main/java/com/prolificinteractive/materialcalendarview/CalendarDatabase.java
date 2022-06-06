@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {CalendarEntity.class}, version = 5,exportSchema = false)
+@Database(entities = {CalendarEntity.class}, version = 6,exportSchema = false)
 public abstract class CalendarDatabase extends RoomDatabase {
     private static CalendarDatabase instance;
     private static String DATABASE_NAME = "database";

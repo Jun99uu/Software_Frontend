@@ -148,7 +148,7 @@ class ListFragment : Fragment() {
                         }
 
                         override fun onFailure(call: Call<ArrayList<Plan>>, t: Throwable) {
-                            Log.e("getDownloadPlan","error{${t.message}")
+                            Log.e("getDownloadPlan",t.message!!)
                         }
 
                     })
