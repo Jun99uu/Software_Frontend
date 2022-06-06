@@ -5,7 +5,9 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
 import android.media.Image
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,6 +29,8 @@ import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.net.URI
 
 class EditProfileActivity : AppCompatActivity() {
     val user = Firebase.auth.currentUser
@@ -179,10 +183,10 @@ class EditProfileActivity : AppCompatActivity() {
                             afterProfileImg = converter.bitmapToString(bitmap)
                         } else {
                             val source = ImageDecoder.createSource(this.contentResolver, currentImageUri)
-                            val bitmap = ImageDecoder.decodeBitmap(source)
+//                            val bitmap = ImageDecoder.decodeBitmap(source)
+                            val bitmap = currentImageUri.uriToBitmap(this)
                             profileImg?.setImageBitmap(bitmap)
                             afterProfileImg = converter.bitmapToString(bitmap)
-//                            Log.d("프사", afterProfileImg)
                         }
                     }
 
@@ -212,7 +216,8 @@ class EditProfileActivity : AppCompatActivity() {
                             afterBackground = converter.bitmapToString(bitmap)
                         } else {
                             val source = ImageDecoder.createSource(this.contentResolver, currentImageUri)
-                            val bitmap = ImageDecoder.decodeBitmap(source)
+//                            val bitmap = ImageDecoder.decodeBitmap(source)
+                            val bitmap = currentImageUri.uriToBitmap(this)
                             backgroundImg?.setImageBitmap(bitmap)
                             afterBackground = converter.bitmapToString(bitmap)
                         }
@@ -259,4 +264,20 @@ class EditProfileActivity : AppCompatActivity() {
             }
         })
     }
+
+    @Throws(IOException::class)
+    fun Uri.uriToBitmap(context: Context): Bitmap =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            ImageDecoder.decodeBitmap(
+                ImageDecoder.createSource(context.contentResolver, this)
+            ) { decoder: ImageDecoder, _: ImageDecoder.ImageInfo?, _: ImageDecoder.Source? ->
+                decoder.isMutableRequired = true
+                decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+            }
+        } else {
+            BitmapDrawable(
+                context.resources,
+                MediaStore.Images.Media.getBitmap(context.contentResolver, this)
+            ).bitmap
+        }
 }
