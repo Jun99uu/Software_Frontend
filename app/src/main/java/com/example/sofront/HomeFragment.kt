@@ -88,7 +88,6 @@ class HomeFragment : Fragment() {
         binding.metaBtn.setOnClickListener{
 
             val packageName = "com.skt.treal.jumpvrm"
-//            val packageName = "com.android.chrome"
             if(checkPackageExisting(packageName)){
                 val iflandIntent = requireActivity().getPackageManager().getLaunchIntentForPackage(packageName)
                 Toast.makeText(context, "메타버스로 이동합니다.",Toast.LENGTH_SHORT).show()

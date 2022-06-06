@@ -26,4 +26,8 @@ public interface CalendarDao{
     CalendarEntity getPlanByDay(String planDay);
     @Query("DELETE FROM CalendarEntity WHERE planId = :planId")
     void deletePlanByPlanId(String planId);
+    @Query("Update calendarentity SET workoutCount = :count")
+    void updateWorkoutCount(int count);
+    @Query("Select workoutCount from calendarentity")
+    int getWorkoutCount();
 }
