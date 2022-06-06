@@ -17,24 +17,23 @@ class DailyRoutinePlayActivity : AppCompatActivity() {
         val binding = ActivityDailyRoutinePlayBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         val workoutName = binding.workoutName //운동이름
         val workoutBar = binding.workoutBar //진행바
+        val workoutSet = binding.workoutSet
         val playBtn = binding.playBtn //세트진행 버튼
         val nextBtn = binding.nextBtn //다음세트 버튼
         val help = binding.help //응원문구 (세트끝나면 잘했다고 바꿔주기)
         val workoutDetail = binding.workoutDetail
 
-
         workoutName.text = intent.getStringExtra("workoutName") //운동 이름 가져오기
-        val totalSet = intent.getIntExtra("totalCount",10) //총 세트수
-        val nowSet = intent.getIntExtra("nowSet",1) //지금 세트수
+//        val currCount = intent.getIntExtra("currCount",10) //총 세트수
+//        val currWeight = intent.getIntExtra("currSet",0) //지금 세트수
         val set = (intent.getSerializableExtra("set")) as Set //세트 정보(몇키로, 몇번)
+        workoutSet.text = "${(application as WorkoutProgress).getSetCount()+1}세트"
         workoutDetail.text = "${set.weight}kg으로 ${set.count}회 할거에요💪"
 
-        workoutBar.max = totalSet
-        workoutBar.progress = nowSet
+        workoutBar.max = set.count
+//        workoutBar.progress = nowSet
         var count = 0
         playBtn.setOnClickListener{
             if(count<set.count){
@@ -42,16 +41,22 @@ class DailyRoutinePlayActivity : AppCompatActivity() {
                 playBtn.text = count.toString()+"회"
                 workoutBar.progress = count
             }
-            else{
+            if(count==set.count){
                 playBtn.setBackgroundColor(resources.getColor(R.color.patel_yellow))
                 nextBtn.visibility = View.VISIBLE
                 help.text = "잘했다"
             }
         }
         nextBtn.setOnClickListener{
-            val resultIntent = Intent(this,DailyRoutineFragment::class.java)
-            resultIntent.putExtra("result${nowSet}",true)
-            setResult(Activity.RESULT_OK,resultIntent)
+//            val resultIntent = Intent(this,DailyRoutineDetailActivity::class.java)
+//            val bundle = Bundle()
+//            bundle.putInt("result1",10)
+//            resultIntent.putExtras(bundle)
+//            resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//            resultIntent.putExtra("endSet",1)
+//            setResult(Activity.RESULT_OK,resultIntent)
+//            startActivity(resultIntent)
+            (application as WorkoutProgress).plusSetCount()
             finish()
         }
     }

@@ -15,13 +15,17 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.FragmentDailyRoutineBinding
 import com.prolificinteractive.materialcalendarview.CalendarDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DailyRoutineFragment : Fragment() {
     lateinit var adapter : DailyRoutineAdater
+    lateinit var todayRoutine : Routine
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = DailyRoutineAdater(this.requireContext())
-        val todayRoutine = arguments?.getSerializable("routine") as Routine
+        todayRoutine = arguments?.getSerializable("routine") as Routine
         for(workout in todayRoutine.workoutList){
             adapter.addItem(workout)
         }
@@ -36,6 +40,14 @@ class DailyRoutineFragment : Fragment() {
         val quoLen = quotes.title.size-1
         val range = (0..quoLen).random()
         val workoutRecyclerView = binding.dailyRc
+        val progressBar = binding.allProgress
+        progressBar.max = todayRoutine.workoutList.size
+        CoroutineScope(Dispatchers.IO).launch {
+            val instance = CalendarDatabase.getInstance(context)
+            val dao = instance.calendarDao()
+            progressBar.progress = dao.getWorkoutCount()
+        }
+
 
         binding.title.text = quotes.title[range]
         for(i in 0..2){

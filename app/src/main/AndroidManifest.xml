@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".WorkoutProgress"
         android:allowBackup="true"
         android:icon="@mipmap/main_ic_gymdori"
         android:label="짐꾼"
