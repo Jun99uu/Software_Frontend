@@ -92,21 +92,10 @@ class HomeFragment : Fragment() {
 
         val clipboard: ClipboardManager = requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         binding.metaBtn.setOnClickListener{
-
-//            val packageName = "com.skt.treal.jumpvrm"
-////            val packageName = "com.android.chrome"
-//            if(checkPackageExisting(packageName)){
-//                val iflandIntent = requireActivity().getPackageManager().getLaunchIntentForPackage(packageName)
-//                Toast.makeText(context, "메타버스로 이동합니다.",Toast.LENGTH_SHORT).show()
-//                startActivity(iflandIntent)
-//            }
-//            else{
-//                Toast.makeText(requireContext(),"어플이 없어",Toast.LENGTH_SHORT).show()
-//            }
-            val metaPwd = "9617"
+            val metaPwd = "9986"
             val clip = ClipData.newPlainText("label", metaPwd)
             clipboard.setPrimaryClip(clip)
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://link.ifland.ai/fa5t"))
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://link.ifland.ai/tNCX"))
             Toast.makeText(requireContext(), "메타버스 입장 비밀번호가 클립보드에 복사되었습니다!", Toast.LENGTH_LONG).show()
             startActivity(intent)
         }
