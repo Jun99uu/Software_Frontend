@@ -57,7 +57,7 @@ class PlanDetailViewActivity : AppCompatActivity() {
         commentNum = plan.commentNum
         likeNum = plan.likeNum
         prevLikenum = likeNum //이전좋아요 수
-        downNum = plan.downLoadNum
+        downNum = plan.downloadNum
         val planLike = PlanLike(myUid, planName)
 
         Log.d("썅", plan.toString())
