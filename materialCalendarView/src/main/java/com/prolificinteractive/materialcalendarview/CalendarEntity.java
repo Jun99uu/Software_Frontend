@@ -16,11 +16,12 @@ import java.util.List;
 public class CalendarEntity {
     private String planName;
     @PrimaryKey
-            @NonNull
+    @NonNull
     private String planDay;
     private int planLength;
     private int count;
     private String planId;
+    private int workoutCount;
     public String getPlanId(){ return planId;}
     public void setPlanId(String planId){
         this.planId = planId;
@@ -28,6 +29,7 @@ public class CalendarEntity {
     public String getPlanName(){
         return planName;
     }
+    @NonNull
     public String getPlanDay(){
         return planDay;
     }
@@ -40,7 +42,7 @@ public class CalendarEntity {
     public void setPlanName(String planName){
         this.planName = planName;
     }
-    public void setPlanDay(String planDay){
+    public void setPlanDay(@NonNull String planDay){
         this.planDay = planDay;
     }
     public void setPlanLength(int length){
@@ -49,12 +51,16 @@ public class CalendarEntity {
     public void setCount(int count){
         this.count = count;
     }
-    public CalendarEntity(String planName,String planDay,int planLength,int count, String planId){
+    public int getWorkoutCount(){ return workoutCount; }
+    public void setWorkoutCount(int workoutCount){ this.workoutCount = workoutCount; }
+    public CalendarEntity(String planName, @NonNull String planDay, int planLength, int count, String planId, int workoutCount){
         this.planName = planName;
         this.planDay = planDay;
         this.planLength = planLength;
         this.count = count;
         this.planId = planId;
+        this.workoutCount = workoutCount;
     }
 }
+
 

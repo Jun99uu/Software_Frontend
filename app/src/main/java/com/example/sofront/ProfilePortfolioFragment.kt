@@ -76,8 +76,7 @@ class ProfilePortfolioFragment(val myUid : String) : Fragment() {
             }
 
             override fun onFailure(call: Call<ArrayList<Portfolio>>, t: Throwable) {
-                Log.e("getPortfolio", "fail")
-                Log.e("getPortfolio",t.message.toString())
+                Log.e("getPortfolio", t.message.toString())
             }
 
         })

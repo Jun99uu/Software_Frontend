@@ -134,11 +134,11 @@ class ProfileFragment : Fragment() {
                     profile = response.body()!!
                     refreshProfile()
                 }else{
-                    Log.d("getProfile test", "success but something error")
+                    Log.e("getProfile test", "success but something error")
                 }
             }
             override fun onFailure(call: Call<Profile>, t: Throwable) {
-                Log.d("getProfile test", "fail")
+                Log.e("getProfile test", t.message!!)
             }
         })
     }
