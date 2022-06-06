@@ -44,8 +44,8 @@ class PlansInnerVPAdapter(private var planinnerList: ArrayList<Workout>): Recycl
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(planinnerList[position])
-        var exerciseArray: Array<String> = arrayOf("예시1", "예시2", "예시3", "예시4")
-        var setArray: Array<String> = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
+        var exerciseArray: Array<String> = arrayOf("벤치프레스", "덤벨프레스", "인클라인 벤치프레스", "인클라인 덤벨프레스", "디클라인 덤벨프레스", "덤벨 플라이", "데드리프트", "루마니안 데드리프트", "랫풀다운", "시티드 로우", "바벨로우", "원암 덤벨 로우", "밀리터리 프레스", "덤벨 숄더 프레스", "사이드 레터럴 레이즈", "프론트 레이즈", "리버스 팩덱 플라이", "바벨스쿼트", "핵 스쿼트", "레그 프레스", "레그 익스텐션", "레그컬", "레그 카프 레이즈", "워킹 런지", "바벨 컬", "이지바 컬", "얼터네이트 덤벨컬", "라잉트라이셉스 익스텐션", "덤벨 킥백", "케이블 푸쉬다운", "러닝머신", "줄넘기", "등산")
+        var setArray: Array<String> = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15")
         holder.selectExerciseBtn.setOnClickListener{
             val builder = AlertDialog.Builder(context)
             builder.setTitle("운동 선택")

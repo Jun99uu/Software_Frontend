@@ -1,9 +1,13 @@
 package com.example.sofront
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.ActivityDailyRoutineDetailBinding
 import com.prolificinteractive.materialcalendarview.CalendarDatabase
@@ -34,6 +38,7 @@ class DailyRoutineDetailActivity : AppCompatActivity() {
                     val dao = instance.calendarDao()
                     (application as WorkoutProgress).plusWorkoutCount()
                     dao.updateWorkoutCount((application as WorkoutProgress).getWorkoutCount())
+                    (application as WorkoutProgress).resetSetCount()
                     finish()
                 }
 
@@ -51,11 +56,26 @@ class DailyRoutineDetailActivity : AppCompatActivity() {
         super.onResume()
         Log.d("DailyRoutineDetailActivity","onResume")
         nowSet = (application as WorkoutProgress).getSetCount()
+        routineDetailAdapter.notifyDataSetChanged()
         Log.d("DailyRoutineDetailActivity",count.toString())
     }
 
     override fun onBackPressed() {
         //뒤로가기
-        super.onBackPressed()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("정말로 나가시겠습니까?")
+            .setMessage("진행중이던 사항은 저장되지 않습니다.\n정말로 나가시겠습니까?")
+            .setPositiveButton("확인",
+                DialogInterface.OnClickListener { dialog, id ->
+                    //확인클릭
+                    Toast.makeText(this, "오늘 운동은 여기까지…😨", Toast.LENGTH_SHORT).show()
+                    finish()
+                })
+            .setNegativeButton("취소",
+                DialogInterface.OnClickListener { dialog, id ->
+                    //취소클릭
+                })
+        // 다이얼로그를 띄워주기
+        builder.show()
     }
 }

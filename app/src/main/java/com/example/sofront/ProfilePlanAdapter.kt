@@ -57,7 +57,6 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
         holder.itemView.setOnClickListener{
             val intent = Intent(context, PlanDetailViewActivity::class.java)
             intent.putExtra("plan", planList[position])
-            Log.d("제발요제발", planList[position].toString())
             intent.putExtra("comments", tmpCommentList)
             context.startActivity(intent)
         }

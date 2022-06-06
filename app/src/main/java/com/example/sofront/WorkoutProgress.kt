@@ -17,4 +17,7 @@ class WorkoutProgress : Application() {
     fun plusWorkoutCount(){
         this.workoutCount++
     }
+    fun resetSetCount(){
+        this.setCount = -1
+    }
 }
