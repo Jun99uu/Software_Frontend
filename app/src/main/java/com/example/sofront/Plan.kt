@@ -12,7 +12,7 @@ data class Plan(
     var liked:Boolean,
     var likeNum:Int,
     var commentNum: Int,
-    var downLoadNum: Int
+    var downloadNum: Int
 ) : Serializable
 
 data class Routine(

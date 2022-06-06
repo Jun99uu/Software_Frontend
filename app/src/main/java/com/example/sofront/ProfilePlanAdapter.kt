@@ -31,7 +31,7 @@ class ProfilePlanAdapter(private var planList: ArrayList<Plan>): RecyclerView.Ad
         fun bind(item: Plan){
             planName.text = item.planName
             planDate.text = "${item.routineList.size.toString()}day"
-            planDownload.text = item.downLoadNum.toString()
+            planDownload.text = item.downloadNum.toString()
             planComment.text = item.commentNum.toString()
             planLike.text = item.likeNum.toString()
         }

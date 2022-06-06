@@ -57,7 +57,7 @@ class PlanDetailViewActivity : AppCompatActivity() {
         commentNum = plan.commentNum
         likeNum = plan.likeNum
         prevLikenum = likeNum //이전좋아요 수
-        downNum = plan.downLoadNum
+        downNum = plan.downloadNum
         val planLike = PlanLike(myUid, planName)
 
         Log.d("썅", plan.toString())
@@ -277,7 +277,7 @@ class PlanDetailViewActivity : AppCompatActivity() {
             override fun onResponse(call: Call<planDownload>, response: Response<planDownload>) {
                 if(response.isSuccessful){
                     Log.d("plan save", "success")
-                    Toast.makeText(context, "플랜이 다운로드 되었어요!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PlanDetailViewActivity, "플랜이 다운로드 되었어요!", Toast.LENGTH_SHORT).show()
                     binding.downNum.text = (downNum+1).toString()
                 }else {
                     Log.d("plan save", "success but something error")
