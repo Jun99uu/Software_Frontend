@@ -22,48 +22,63 @@
         android:hardwareAccelerated="false">
         <activity
             android:name=".DailyRoutinePlayActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".DailyRoutineDetailActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".NetworkNotConnectedActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MakePortfolioActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".SettingActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".PlanCollectionDetailActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".PortfolioActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".EditProfileActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MakePlanActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".NumAuth"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".SignUpAuth"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,9 +88,11 @@
         </activity>
         <activity
             android:name=".DetailInfoActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".PlanDetailViewActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
     </application>
 
