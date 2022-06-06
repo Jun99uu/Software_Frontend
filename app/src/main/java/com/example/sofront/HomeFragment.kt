@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.hamburger.setOnClickListener{
-            val intent = Intent(requireContext(), SettingActivity::class.java)
+            val intent = Intent(context, SettingActivity::class.java)
             this.startActivity(intent)
         }
 
