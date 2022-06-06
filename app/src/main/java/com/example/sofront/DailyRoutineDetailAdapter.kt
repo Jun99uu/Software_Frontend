@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class DailyRoutineDetailAdapter : RecyclerView.Adapter<DailyRoutineDetailAdapter.ViewHolder>() {
+class DailyRoutineDetailAdapter() : RecyclerView.Adapter<DailyRoutineDetailAdapter.ViewHolder>() {
     private val setArrayList = ArrayList<Set>()
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val info : TextView = itemView.findViewById(R.id.workout_detail)
         private val nowSet : TextView = itemView.findViewById(R.id.workout_set)
+        val stateBox:ConstraintLayout = itemView.findViewById(R.id.state_box)
         fun bind(item : Set, position: Int){
             val nowText = (position+1).toString()+"set"
             nowSet.text = nowText
@@ -32,5 +34,9 @@ class DailyRoutineDetailAdapter : RecyclerView.Adapter<DailyRoutineDetailAdapter
     }
     fun addItem(item : Set){
         setArrayList.add(item)
+    }
+
+    fun fillColor(holder:ViewHolder){
+        holder.stateBox.backgroundTintMode
     }
 }

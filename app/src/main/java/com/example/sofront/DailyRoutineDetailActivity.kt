@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class DailyRoutineDetailActivity : AppCompatActivity() {
     val routineDetailAdapter = DailyRoutineDetailAdapter()
-    var count = 0;
+    var count = 0
     var nowSet = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +40,13 @@ class DailyRoutineDetailActivity : AppCompatActivity() {
             }
             val intent = Intent(this,DailyRoutinePlayActivity::class.java)
             intent.putExtra("workoutName",workout.workoutName)
-//            intent.putExtra("currCount",workout.setList[nowSet].count)
-//            intent.putExtra("currWeight",workout.setList[nowSet].weight)
             intent.putExtra("set",workout.setList[nowSet])
             startActivity(intent)
         }
         rv.adapter = routineDetailAdapter
         rv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
     }
+
     override fun onResume(){
         super.onResume()
         Log.d("DailyRoutineDetailActivity","onResume")
@@ -55,13 +54,8 @@ class DailyRoutineDetailActivity : AppCompatActivity() {
         Log.d("DailyRoutineDetailActivity",count.toString())
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        Log.d("DailyRoutineDetailActivity","onActivityResult")
-//        if(requestCode == 101){
-//            if(resultCode == RESULT_OK){
-//                count++
-//            }
-//        }
-//    }
+    override fun onBackPressed() {
+        //뒤로가기
+        super.onBackPressed()
+    }
 }

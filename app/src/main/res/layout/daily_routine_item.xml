@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/radius"
-    android:backgroundTint="@color/light_gray"
+    android:background="@drawable/routine_no_radius"
     android:padding="10dp"
     android:elevation="10dp"
     android:layout_marginBottom="@dimen/default_margin">
