@@ -20,6 +20,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.drawToBitmap
 import androidx.core.view.get
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -42,6 +44,7 @@ class ProfileFragment : Fragment() {
     val defaultImg = R.drawable.gymdori
     val defaultBack = R.drawable.womanrun
     lateinit var profile:Profile
+    lateinit var adapter:ProfileVPAdapter
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -80,7 +83,7 @@ class ProfileFragment : Fragment() {
         }
 
         val fragmentList = listOf(ProfilePortfolioFragment(myUid), ProfilePlanFragment(myUid))
-        val adapter = ProfileVPAdapter(requireActivity())
+        adapter = ProfileVPAdapter(requireActivity())
         adapter.fragments = fragmentList
         binding.profileMainSheet.adapter = adapter
 
@@ -123,6 +126,13 @@ class ProfileFragment : Fragment() {
                 }
             }
         })
+
+        binding.swipe.setOnRefreshListener {
+//            refreshFragment(this, parentFragmentManager)
+            adapter.notifyDataSetChanged()
+            binding.swipe.isRefreshing = false
+        }
+
         return binding.root
     }
 
@@ -175,6 +185,11 @@ class ProfileFragment : Fragment() {
             .into(binding.backgroundImage) // 이미지를 넣을 뷰
 
         updatePhotoUrl(profile.profileImg)
+    }
+
+    fun refreshFragment(fragment: Fragment, fragmentManager: FragmentManager) {
+        var ft: FragmentTransaction = fragmentManager.beginTransaction()
+        ft.detach(fragment).attach(fragment).commit()
     }
 
 }

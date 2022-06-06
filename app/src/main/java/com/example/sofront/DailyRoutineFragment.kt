@@ -1,11 +1,16 @@
 package com.example.sofront
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sofront.databinding.FragmentDailyRoutineBinding
@@ -90,9 +95,19 @@ class DailyRoutineFragment : Fragment() {
             this.startActivity(intent)
         }
 
-
         workoutRecyclerView.adapter = adapter
         workoutRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+
+        val clipboard: ClipboardManager = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        binding.metaBtn.setOnClickListener{
+            val metaPwd = "9617"
+            val clip = ClipData.newPlainText("label", metaPwd)
+            clipboard.setPrimaryClip(clip)
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://link.ifland.ai/fa5t"))
+            Toast.makeText(requireContext(), "메타버스 입장 비밀번호가 클립보드에 복사되었습니다!", Toast.LENGTH_LONG).show()
+            startActivity(intent)
+        }
+
         return binding.root
     }
 

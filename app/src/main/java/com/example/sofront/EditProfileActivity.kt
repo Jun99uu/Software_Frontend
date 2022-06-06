@@ -186,7 +186,6 @@ class EditProfileActivity : AppCompatActivity() {
                             val bitmap = currentImageUri.uriToBitmap(this)
                             profileImg?.setImageBitmap(bitmap)
                             afterProfileImg = converter.bitmapToString(bitmap)
-//                            Log.d("프사", afterProfileImg)
                         }
                     }
 
@@ -216,7 +215,8 @@ class EditProfileActivity : AppCompatActivity() {
                             afterBackground = converter.bitmapToString(bitmap)
                         } else {
                             val source = ImageDecoder.createSource(this.contentResolver, currentImageUri)
-                            val bitmap = ImageDecoder.decodeBitmap(source)
+//                            val bitmap = ImageDecoder.decodeBitmap(source)
+                            val bitmap = currentImageUri.uriToBitmap(this)
                             backgroundImg?.setImageBitmap(bitmap)
                             afterBackground = converter.bitmapToString(bitmap)
                         }

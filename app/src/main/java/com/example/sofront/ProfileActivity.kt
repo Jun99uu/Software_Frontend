@@ -149,6 +149,12 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
         })
+
+        binding.swipe.setOnRefreshListener {
+            //TODO 새로고침
+            adapter.notifyDataSetChanged()
+            binding.swipe.isRefreshing = false
+        }
     }
 
     fun _getProfile(uid:String){
