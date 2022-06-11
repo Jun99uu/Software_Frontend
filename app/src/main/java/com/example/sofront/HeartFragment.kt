@@ -26,6 +26,12 @@ class HeartFragment : Fragment() {
         binding = FragmentHeartBinding.inflate(inflater,container,false)
         setRecyclerView()
 
+        val activity = requireActivity() as HomeActivity
+        binding.viewPlanBtn.setOnClickListener {
+            val planFragment = PlanCollectionFragment()
+            activity.replaceFragment(planFragment, 1)
+        }
+
         return binding.root
     }
     fun setRecyclerView(){

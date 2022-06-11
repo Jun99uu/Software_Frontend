@@ -144,7 +144,7 @@
                     app:layout_constraintRight_toRightOf="parent"/>
 
                 <Button
-                    android:id="@+id/make_plan_btn"
+                    android:id="@+id/view_plan_btn"
                     android:layout_width="250dp"
                     android:layout_height="55dp"
                     android:background="@drawable/radius"

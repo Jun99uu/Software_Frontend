@@ -53,13 +53,13 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>, private var 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CollectionTabAdapter.MyViewHolder {
+    ): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.plan_collection_item, parent, false)
         context = parent.context
         return MyViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CollectionTabAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(hashList[position])
         val tmpCommentList = ArrayList<Comment>()
 //        tmpCommentList.add(Comment("하이", "12345", "홍길동","2022-05-25 | 10:18", "ㅎㅇ", "하잉요오오ㅗ"))
@@ -164,7 +164,7 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>, private var 
     }
 
     fun _getPlanByPlanName(planName:String, intent:Intent) {
-        var myPlan = Plan("", ArrayList(), ArrayList(), "", true, 0, 0, 0)
+        var myPlan: Plan
         RetrofitService.retrofitService.getPlanByPlanName(planName, uid).enqueue(object :
             Callback<Plan> {
             override fun onResponse(call: Call<Plan>, response: Response<Plan>) {
@@ -173,6 +173,7 @@ class CollectionTabAdapter(private var hashList: ArrayList<String>, private var 
                     Log.d("getPlan test success", response.body().toString())
                     myPlan = response.body()!!
                     Log.d("플랜", myPlan.toString())
+                    intent.putExtra("plan", myPlan)
                     context.startActivity(intent)
                 } else {
                     Log.d("getPlan test", "success but something error")

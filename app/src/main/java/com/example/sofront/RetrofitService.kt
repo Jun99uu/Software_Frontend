@@ -94,6 +94,9 @@ interface RetrofitService {
     @POST("/workout/plan/download")
     fun downloadPlanByPlanName(@Body downloadPlan: planDownload) : Call<planDownload>
 
+    @DELETE("/profiles/delete_portfolio/{postNumber}")
+    fun deletePortfolio(@Path("postNumber") postNumber:Int) : Call<Portfolio>
+
     companion object{
         private const val BASE_URL = "http://54.180.101.62"
 

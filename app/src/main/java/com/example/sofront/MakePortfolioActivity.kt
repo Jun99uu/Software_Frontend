@@ -1,8 +1,12 @@
 package com.example.sofront
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,6 +27,7 @@ import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class MakePortfolioActivity : AppCompatActivity() {
     lateinit var sendPortfolio: SendPortfolio
@@ -92,13 +97,12 @@ class MakePortfolioActivity : AppCompatActivity() {
                                 this.contentResolver,
                                 currentImageUri
                             )
-                            afterImageView?.setImageBitmap(bitmap)
+                            afterImageView.setImageBitmap(bitmap)
                             file = converter.bitmapToString(bitmap)
                             afterView.visibility = View.VISIBLE
                             beforeView.visibility = View.GONE
                         } else {
-                            val source = ImageDecoder.createSource(this.contentResolver, currentImageUri)
-                            val bitmap = ImageDecoder.decodeBitmap(source)
+                            val bitmap = currentImageUri.uriToBitmap(this)
                             afterImageView.setImageBitmap(bitmap)
                             file = converter.bitmapToString(bitmap)
                             afterView.visibility = View.VISIBLE
@@ -172,4 +176,19 @@ class MakePortfolioActivity : AppCompatActivity() {
             }
         })
     }
+    @Throws(IOException::class)
+    fun Uri.uriToBitmap(context: Context): Bitmap =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            ImageDecoder.decodeBitmap(
+                ImageDecoder.createSource(context.contentResolver, this)
+            ) { decoder: ImageDecoder, _: ImageDecoder.ImageInfo?, _: ImageDecoder.Source? ->
+                decoder.isMutableRequired = true
+                decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+            }
+        } else {
+            BitmapDrawable(
+                context.resources,
+                MediaStore.Images.Media.getBitmap(context.contentResolver, this)
+            ).bitmap
+        }
 }

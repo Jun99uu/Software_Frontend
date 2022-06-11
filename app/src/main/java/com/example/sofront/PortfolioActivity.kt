@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,12 +13,15 @@ import com.bumptech.glide.Glide
 import com.example.sofront.databinding.ActivityPlanDetailViewBinding
 import com.example.sofront.databinding.ActivityPortfolioBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
 
 class PortfolioActivity : AppCompatActivity() {
+    val myUid = Firebase.auth.currentUser?.uid
     val commentList  = ArrayList<Comment>()
     val adapter = CommentAdapter(commentList, false)
     val defaultImg = R.drawable.gymdori
@@ -61,9 +65,9 @@ class PortfolioActivity : AppCompatActivity() {
 
         binding.profileImgInPortfolio.setOnClickListener{
             if(state){
-                val intent = Intent(this, ProfileActivity::class.java)
-                intent.putExtra("UID", portfolio.portfolioWriter)
-                startActivity(intent)
+                val myintent = Intent(this, ProfileActivity::class.java)
+                myintent.putExtra("UID", portfolio.portfolioWriter)
+                startActivity(myintent)
             }else{
                 Toast.makeText(this, "잠시만 기다려주세요", Toast.LENGTH_SHORT).show()
             }
@@ -73,6 +77,13 @@ class PortfolioActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(VerticalItemDecorator(30))
+
+        if(portfolio.portfolioWriter.equals(myUid)){
+            binding.deletePf.visibility = View.VISIBLE
+        }
+        binding.deletePf.setOnClickListener {
+            _deletePortfolio(portfolio.id)
+        }
     }
     private fun initView(portfolio: Portfolio, binding : ActivityPortfolioBinding){
         binding.portfolioTitle.text  = portfolio.title
@@ -221,5 +232,28 @@ class PortfolioActivity : AppCompatActivity() {
             .fallback(defaultImg) // 로드할 url 이 비어있을(null 등) 경우 표시할 이미지
             .into(binding.profileImgInPortfolio) // 이미지를 넣을 뷰
         state = true
+    }
+
+    fun _deletePortfolio(portfolioNumber: Int){
+        RetrofitService.retrofitService.deletePortfolio(portfolioNumber).enqueue(object : Callback<Portfolio>{
+            override fun onResponse(call: Call<Portfolio>, response: Response<Portfolio>) {
+                if (response.isSuccessful) {
+                    Log.d("delete portfolio test", "success")
+                    Log.d("delete portfolio success", response.body().toString())
+                    toast()
+                    finish()
+                } else {
+                    Log.d("delete portfolio test", "success but something error")
+                }
+            }
+
+            override fun onFailure(call: Call<Portfolio>, t: Throwable) {
+                Log.d("delete portfolio test", "fail")
+            }
+        })
+    }
+
+    fun toast(){
+        Toast.makeText(this, "포트폴리오가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
     }
 }
